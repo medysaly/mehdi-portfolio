@@ -1,0 +1,48 @@
+Upgrade this existing Next.js 14 portfolio website for Mehdi Salhi. The project is at /tmp/mehdi-portfolio. Make ALL of these improvements:
+
+1. HERO SECTION — upgrade globals.css and Hero.tsx:
+   - Add a typing animation that cycles through: "AI/ML Engineer", "Cloud Architect", "Founder @ Unkommon.ai", "Full-Stack Developer"
+   - Add an animated dot-grid or subtle mesh background (pure CSS or SVG, no extra libraries)
+   - Make the gradient orb pulse slowly with a keyframe animation
+   - Add a subtle glowing border animation around the CTA buttons on hover
+
+2. SKILLS SECTION — upgrade Skills.tsx:
+   - Replace plain text skill badges with glowing pill badges (indigo/blue glow on hover)
+   - Add a subtle animated border on hover for each skill category card
+   - Group skills visually with icons (use emoji as icons — no icon library needed)
+
+3. PROJECTS SECTION — upgrade Projects.tsx:
+   - Add animated gradient border on card hover (indigo → purple → blue rotating gradient)
+   - Add a "Featured" badge on the Unkommon.ai card with a glow effect
+   - Improve the tech stack tags with colored dots
+   - Add smooth scale transform on card hover
+
+4. NEW SECTION — add a "Currently Building" section between About and Skills:
+   - Shows Unkommon.ai as the current focus
+   - Dark card with animated left border (pulsing indigo)
+   - Shows: company name, description, status badge ("🟢 Active"), what he's building
+   - Content: "Building AI agents for SMBs — voice receptionists that answer calls 24/7, qualify leads, and book appointments. Targeting dental offices, law firms, and real estate agencies in the Stamford/NYC area."
+
+5. SEO + METADATA — update src/app/layout.tsx:
+   - Add proper title: "Mehdi Salhi — AI/ML Engineer & Cloud Architect"
+   - Add meta description: "AI/ML Engineer and Cloud Architect building intelligent systems on AWS. Founder of Unkommon.ai. Based in Stamford, CT."
+   - Add Open Graph tags for link preview
+   - Add Twitter card tags
+
+6. NAVBAR — upgrade Navbar.tsx:
+   - Add a frosted glass effect (backdrop-blur) with subtle border when scrolled
+   - Add smooth underline animation on nav link hover
+   - Add a "Hire Me" or "Let's Talk" CTA button in the nav (links to #contact)
+
+7. CONTACT SECTION — upgrade Contact.tsx:
+   - Add glowing icon buttons for GitHub, LinkedIn, X, Email
+   - Each icon should have its own hover glow color (GitHub=white, LinkedIn=blue, X=white, Email=indigo)
+   - Add a subtle animated background card
+
+8. FOOTER — upgrade Footer.tsx:
+   - Add "Built with Next.js, Tailwind & ❤️" 
+   - Add current year dynamically
+
+Make sure ALL existing content is preserved. Do not remove any sections or information. Only enhance visually and add new features.
+
+After making all changes, run: openclaw system event --text "Done: Portfolio upgrades complete — typing animation, glowing cards, Currently Building section, SEO tags all added" --mode now

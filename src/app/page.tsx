@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import CurrentlyBuilding from "@/components/CurrentlyBuilding";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
@@ -10,6 +11,7 @@ export default function Home() {
     <main>
       <Hero />
       <About />
+      <CurrentlyBuilding />
       <Skills />
       <Projects />
       <Contact />
