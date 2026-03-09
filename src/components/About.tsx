@@ -17,14 +17,13 @@ export default function About() {
           className="space-y-6 text-base leading-relaxed text-neutral-400 sm:text-lg"
         >
           <p>
-            I build and deploy intelligent systems &mdash; AI agents, RAG
-            pipelines, and agentic workflows &mdash; primarily on AWS. My work
-            sits at the intersection of machine learning engineering and cloud
-            architecture, turning complex AI capabilities into production-ready
-            products.
+            I build AI agents, RAG pipelines, and agentic workflows on AWS.
+            Most of my work lives at the intersection of machine learning and
+            cloud architecture, and I genuinely enjoy the process of taking
+            something complex and making it actually ship.
           </p>
           <p>
-            I founded{" "}
+            I started{" "}
             <a
               href="https://unkommon.ai"
               target="_blank"
@@ -33,13 +32,15 @@ export default function About() {
             >
               Unkommon.ai
             </a>{" "}
-            in the Stamford / NYC area, where we build AI-powered automation
-            for businesses &mdash; from voice agents to intelligent lead
-            response systems.
+            out of Stamford with a pretty simple idea: small businesses deserve
+            the same AI infrastructure that big companies have. We build voice
+            agents and lead automation systems that actually work.
           </p>
           <p>
-            I&apos;m currently finishing my Computer Science degree at Southern
-            New Hampshire University (GPA 3.71), graduating July 2026.
+            On the side I&apos;m wrapping up my Computer Science degree at
+            Southern New Hampshire University, graduating July 2026 with a 3.71
+            GPA. School has been good but honestly building things has taught
+            me more.
           </p>
         </motion.div>
 
