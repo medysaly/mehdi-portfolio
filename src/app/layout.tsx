@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   description: "AI/ML Engineer and Cloud Architect building intelligent systems on AWS. Founder of Unkommon.ai. Based in Stamford, CT.",
   keywords: ["AI Engineer", "ML Engineer", "Cloud Architect", "AWS", "Next.js", "Unkommon", "Stamford CT"],
   authors: [{ name: "Mehdi Salhi" }],
+  icons: {
+    icon: "/mehdi.png",
+    apple: "/mehdi.png",
+  },
   openGraph: {
     title: "Mehdi Salhi — AI/ML Engineer & Cloud Architect",
     description: "Building intelligent systems, AI agents, and agentic workflows on AWS. Founder of Unkommon.ai.",
