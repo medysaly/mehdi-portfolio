@@ -8,7 +8,10 @@ export default function Footer() {
         <div className="flex gap-6">
           {[
             { label: "GitHub", href: "https://github.com/medysaly" },
-            { label: "LinkedIn", href: "https://linkedin.com/in/mehdi-salhi-work" },
+            {
+              label: "LinkedIn",
+              href: "https://linkedin.com/in/mehdi-salhi-work",
+            },
             { label: "X", href: "https://x.com/medysaly" },
           ].map((link) => (
             <a

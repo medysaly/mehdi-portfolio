@@ -9,8 +9,18 @@ const socials = [
     href: "mailto:medysalywork@gmail.com",
     display: "medysalywork@gmail.com",
     icon: (
-      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+      <svg
+        className="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth={1.5}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+        />
       </svg>
     ),
   },
@@ -49,38 +59,40 @@ const socials = [
 export default function Contact() {
   return (
     <section id="contact" className="px-6 py-32">
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-5xl">
         <SectionHeading
           title="Get in Touch"
           subtitle="Always open to new opportunities and conversations"
         />
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-          className="space-y-3"
-        >
-          {socials.map((social) => (
-            <a
+        <div className="grid gap-3 sm:grid-cols-2">
+          {socials.map((social, i) => (
+            <motion.a
               key={social.label}
               href={social.href}
               target={social.label === "Email" ? undefined : "_blank"}
-              rel={social.label === "Email" ? undefined : "noopener noreferrer"}
-              className="flex items-center gap-4 rounded-lg border border-white/5 bg-surface p-4 transition-all hover:border-white/10 hover:bg-white/[0.02]"
+              rel={
+                social.label === "Email" ? undefined : "noopener noreferrer"
+              }
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              className="group flex items-center gap-4 rounded-xl border border-white/[0.06] bg-surface p-5 transition-all duration-300 hover:border-accent/20 hover:bg-surface-raised"
             >
-              <span className="text-neutral-500">{social.icon}</span>
+              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-bg text-neutral-500 transition-colors group-hover:text-accent-glow">
+                {social.icon}
+              </span>
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-white">
+                <p className="font-display text-sm font-semibold text-white">
                   {social.label}
                 </p>
-                <p className="truncate text-sm text-neutral-500">
+                <p className="truncate font-body text-sm text-neutral-500">
                   {social.display}
                 </p>
               </div>
               <svg
-                className="h-4 w-4 flex-shrink-0 text-neutral-600"
+                className="h-4 w-4 flex-shrink-0 text-neutral-700 transition-all group-hover:translate-x-0.5 group-hover:text-neutral-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -92,9 +104,9 @@ export default function Contact() {
                   d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
                 />
               </svg>
-            </a>
+            </motion.a>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
