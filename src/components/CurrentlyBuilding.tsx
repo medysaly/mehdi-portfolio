@@ -42,21 +42,22 @@ export default function CurrentlyBuilding() {
               </h3>
 
               <p className="mt-3 max-w-2xl font-body leading-relaxed text-neutral-400">
-                AI agents for small businesses — voice receptionists that answer
-                calls 24/7, qualify leads, and book appointments automatically.
-                Targeting dental offices, law firms, and real estate agencies in
-                the{" "}
-                <span className="text-neutral-300">Stamford/NYC area.</span>
+                Custom AI/ML engineering studio. We build production-grade RAG
+                systems, AI agents, ML integrations, and cloud infrastructure
+                for companies with complex problems.{" "}
+                <span className="text-neutral-300">
+                  AWS-native. HIPAA-compliant architecture.
+                </span>
               </p>
             </div>
 
             <div className="flex flex-col gap-4 md:col-span-2">
               <div className="flex flex-wrap gap-2">
                 {[
-                  "Voice AI",
-                  "AWS Lambda",
-                  "Agentic Systems",
-                  "SMB Automation",
+                  "RAG Systems",
+                  "AI Agents",
+                  "AWS",
+                  "LangGraph",
                 ].map((tag) => (
                   <span
                     key={tag}

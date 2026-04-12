@@ -102,8 +102,8 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mt-6 max-w-lg font-body text-lg leading-relaxed text-neutral-400"
           >
-            Building intelligent systems on AWS — AI agents, RAG pipelines, and
-            agentic workflows.{" "}
+            Building custom AI systems on AWS. RAG pipelines, AI agents, and
+            production ML infrastructure.{" "}
             <span className="text-neutral-300">
               Based in Stamford, CT / NYC.
             </span>

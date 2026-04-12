@@ -22,13 +22,14 @@ export default function About() {
             className="space-y-6 font-body text-base leading-relaxed text-neutral-400 sm:text-lg md:col-span-3"
           >
             <p>
-              I build AI agents, RAG pipelines, and agentic workflows on AWS.
-              Most of my work lives at the intersection of machine learning and
-              cloud architecture, and I genuinely enjoy the process of taking
-              something complex and making it actually ship.
+              I build custom AI systems on AWS. RAG pipelines that let teams
+              search thousands of documents in seconds, AI agents that automate
+              multi-step workflows, and the production infrastructure to run it
+              all reliably. Most of my work sits at the intersection of machine
+              learning engineering and cloud architecture.
             </p>
             <p>
-              I started{" "}
+              I founded{" "}
               <a
                 href="https://unkommon.ai"
                 target="_blank"
@@ -37,9 +38,12 @@ export default function About() {
               >
                 Unkommon.ai
               </a>{" "}
-              out of Stamford with a pretty simple idea: small businesses deserve
-              the same AI infrastructure that big companies have. We build voice
-              agents and lead automation systems that actually work.
+              to solve a problem I kept seeing: companies spending months on AI
+              projects that never make it to production. The model works in a
+              notebook but breaks on real data. The chatbot demo impresses
+              leadership but can&apos;t handle actual customer questions.
+              Unkommon builds the systems that actually ship — on your
+              infrastructure, with your data, in weeks.
             </p>
             <p>
               On the side I&apos;m wrapping up my Computer Science degree at

@@ -40,6 +40,7 @@ const categories = [
       "Vector Databases",
       "Prompt Engineering",
       "Fine-Tuning",
+      "LangGraph",
       "Claude Code",
       "Cursor",
     ],
