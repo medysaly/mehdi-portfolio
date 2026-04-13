@@ -1,48 +1,19 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { SilkBackground } from "./ui/silk-background-animation";
 
-const titles = [
-  "AI/ML Engineer",
-  "Cloud Architect",
-  "Founder @ Unkommon.ai",
-  "Full-Stack Developer",
-];
-
 export default function Hero() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((i) => (i + 1) % titles.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden px-6">
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6">
       {/* Silk animated background */}
       <SilkBackground />
       <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-bg/30 via-transparent to-bg/60" />
 
       {/* Content — left-aligned on desktop */}
-      <div className="relative z-20 mx-auto w-full max-w-6xl">
-        <div className="max-w-2xl">
-          {/* Status badge */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-8 inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/5 px-4 py-1.5"
-          >
-            <span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
-            <span className="font-mono text-xs text-neutral-400">
-              Available for opportunities
-            </span>
-          </motion.div>
-
+      <div className="relative z-20 mx-auto w-full max-w-3xl text-center">
+        <div>
           {/* Name */}
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -53,28 +24,22 @@ export default function Hero() {
             Mehdi Salhi
           </motion.h2>
 
-          {/* Morphing title */}
-          <div className="relative mt-4 h-[56px] sm:h-[72px] lg:h-[84px] flex items-start">
-            <AnimatePresence mode="wait">
-              <motion.h1
-                key={index}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="absolute font-display text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
-              >
-                {titles[index]}
-              </motion.h1>
-            </AnimatePresence>
-          </div>
+          {/* Title */}
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-4 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
+          >
+            AI/ML Engineer &<br />Cloud Architect
+          </motion.h1>
 
           {/* Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-6 max-w-lg font-body text-lg leading-relaxed text-neutral-400"
+            className="mx-auto mt-6 max-w-lg font-body text-lg leading-relaxed text-neutral-400"
           >
             Building custom AI systems on AWS. RAG pipelines, AI agents, and
             production ML infrastructure.{" "}
@@ -88,7 +53,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-10 flex flex-wrap items-center gap-4"
+            className="mt-10 flex flex-wrap items-center justify-center gap-4"
           >
             <a
               href="#projects"
@@ -135,7 +100,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="mt-16 flex flex-wrap gap-8 border-t border-white/5 pt-8"
+            className="mt-16 flex flex-wrap justify-center gap-8 border-t border-white/5 pt-8"
           >
             {[
               { value: "Unkommon.ai", label: "Founder" },
