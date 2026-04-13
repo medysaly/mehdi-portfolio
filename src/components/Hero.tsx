@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { SilkBackground } from "./ui/silk-background-animation";
 
 const titles = [
   "AI/ML Engineer",
@@ -22,39 +23,12 @@ export default function Hero() {
 
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden px-6">
-      {/* Dot grid background */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.05]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, #6366f1 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-        }}
-      />
-
-      {/* Gradient orbs */}
-      <div className="pointer-events-none absolute top-1/4 right-0 -translate-y-1/2">
-        <motion.div
-          animate={{ scale: [1, 1.1, 1], opacity: [0.12, 0.2, 0.12] }}
-          transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-          className="h-[600px] w-[600px] rounded-full bg-accent/10 blur-[160px]"
-        />
-      </div>
-      <div className="pointer-events-none absolute bottom-0 left-0">
-        <motion.div
-          animate={{ scale: [1, 1.08, 1], opacity: [0.06, 0.1, 0.06] }}
-          transition={{
-            repeat: Infinity,
-            duration: 10,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-          className="h-[400px] w-[400px] rounded-full bg-purple-500/10 blur-[140px]"
-        />
-      </div>
+      {/* Silk animated background */}
+      <SilkBackground />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-bg/30 via-transparent to-bg/60" />
 
       {/* Content — left-aligned on desktop */}
-      <div className="relative z-10 mx-auto w-full max-w-6xl">
+      <div className="relative z-20 mx-auto w-full max-w-6xl">
         <div className="max-w-2xl">
           {/* Status badge */}
           <motion.div
