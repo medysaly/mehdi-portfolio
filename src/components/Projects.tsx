@@ -35,10 +35,16 @@ const projects = [
 
 const coursework = [
   {
-    title: "CS-340 Dashboard",
+    title: "Full Stack Development",
     description:
-      "Full-stack CRUD dashboard for Grazioso Salvare — real client project with data visualization and MongoDB backend.",
-    stack: ["Python", "MongoDB", "Jupyter", "Dash"],
+      "End-to-end web application development — frontend, backend, database, and deployment. The same stack Unkommon delivers to clients.",
+    stack: ["JavaScript", "Node.js", "MongoDB", "REST APIs"],
+  },
+  {
+    title: "Computer Science Capstone",
+    description:
+      "Final capstone project integrating software engineering, data structures, and algorithms into a comprehensive deliverable.",
+    stack: ["Python", "Software Engineering"],
   },
   {
     title: "CS-300 DSA",
@@ -47,16 +53,22 @@ const coursework = [
     stack: ["C++"],
   },
   {
-    title: "CS-330 3D Graphics",
-    description:
-      "3D scene rendering with realistic lighting, texture mapping, and interactive camera controls built from scratch.",
-    stack: ["C++", "OpenGL"],
-  },
-  {
     title: "CS-320 Software Testing",
     description:
       "Contact management system built with rigorous JUnit test-driven development and full test coverage.",
     stack: ["Java", "JUnit"],
+  },
+  {
+    title: "CS-340 Dashboard",
+    description:
+      "Full-stack CRUD dashboard for Grazioso Salvare — real client project with data visualization and MongoDB backend.",
+    stack: ["Python", "MongoDB", "Jupyter", "Dash"],
+  },
+  {
+    title: "Introduction to Scripting",
+    description:
+      "Python fundamentals — scripting, automation, and data manipulation. Foundation for the ML and cloud tooling work that followed.",
+    stack: ["Python"],
   },
   {
     title: "CS-255 System Design",
