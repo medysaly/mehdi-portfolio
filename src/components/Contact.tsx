@@ -56,7 +56,7 @@ const socials = [
   },
   {
     label: "Upwork",
-    href: "https://www.upwork.com/freelancers/mehdisalhi",
+    href: "https://www.upwork.com/freelancers/~01ead5d2164efa6f07?viewMode=1",
     display: "Mehdi Salhi",
     icon: (
       <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
