@@ -62,10 +62,10 @@ export default function About() {
             className="flex flex-col gap-4 md:col-span-2"
           >
             {[
-              { label: "GPA", value: "3.71", detail: "Southern New Hampshire University" },
-              { label: "Graduating", value: "Jul 2026", detail: "Computer Science, B.S." },
-              { label: "Location", value: "CT / NYC", detail: "Stamford, Connecticut" },
-              { label: "Focus", value: "AI + Cloud", detail: "AWS, LLMs, Agentic Systems" },
+              { label: "GPA", value: "3.71", detail: "Southern New Hampshire University", tag: "Dean's List" },
+              { label: "Graduating", value: "Jul 2026", detail: "Computer Science, B.S.", tag: undefined },
+              { label: "Location", value: "CT / NYC", detail: "Stamford, Connecticut", tag: undefined },
+              { label: "Focus", value: "AI + Cloud", detail: "AWS, LLMs, Agentic Systems", tag: undefined },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -75,9 +75,16 @@ export default function About() {
                 transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
                 className="group rounded-lg border border-white/5 bg-surface p-5 transition-all duration-300 hover:border-accent/20 hover:bg-surface-raised"
               >
-                <p className="font-display text-xl font-bold text-white">
-                  {stat.value}
-                </p>
+                <div className="flex items-center gap-2">
+                  <p className="font-display text-xl font-bold text-white">
+                    {stat.value}
+                  </p>
+                  {stat.tag && (
+                    <span className="rounded border border-white/[0.06] bg-white/[0.03] px-2 py-0.5 text-[10px] font-medium text-neutral-500">
+                      {stat.tag}
+                    </span>
+                  )}
+                </div>
                 <p className="mt-1 font-mono text-xs text-accent-glow/70">
                   {stat.label}
                 </p>
