@@ -37,7 +37,7 @@ const coursework = [
   {
     title: "Full Stack Development",
     description:
-      "End-to-end web application development — frontend, backend, database, and deployment. The same stack Unkommon delivers to clients.",
+      "End-to-end web application development. Frontend, backend, database, and deployment. The same stack Unkommon delivers to clients.",
     stack: ["JavaScript", "Node.js", "MongoDB", "REST APIs"],
   },
   {
@@ -61,13 +61,13 @@ const coursework = [
   {
     title: "CS-340 Dashboard",
     description:
-      "Full-stack CRUD dashboard for Grazioso Salvare — real client project with data visualization and MongoDB backend.",
+      "Full-stack CRUD dashboard for Grazioso Salvare. Real client project with data visualization and MongoDB backend.",
     stack: ["Python", "MongoDB", "Jupyter", "Dash"],
   },
   {
     title: "Introduction to Scripting",
     description:
-      "Python fundamentals — scripting, automation, and data manipulation. Foundation for the ML and cloud tooling work that followed.",
+      "Python fundamentals. Scripting, automation, and data manipulation. Foundation for the ML and cloud tooling work that followed.",
     stack: ["Python"],
   },
   {

@@ -42,7 +42,7 @@ export default function About() {
               projects that never make it to production. The model works in a
               notebook but breaks on real data. The chatbot demo impresses
               leadership but can&apos;t handle actual customer questions.
-              Unkommon builds the systems that actually ship — on your
+              Unkommon builds the systems that actually ship. On your
               infrastructure, with your data, in weeks.
             </p>
             <p>

@@ -4,7 +4,7 @@ import { spaceGrotesk, ibmPlexSans, jetbrainsMono } from "./fonts";
 import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
-  title: "Mehdi Salhi — AI/ML Engineer & Cloud Architect",
+  title: "Mehdi Salhi | AI/ML Engineer & Cloud Architect",
   description:
     "AI/ML Engineer and Cloud Architect building intelligent systems on AWS. Founder of Unkommon.ai. Based in Stamford, CT.",
   keywords: [
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     apple: "/mehdi.png",
   },
   openGraph: {
-    title: "Mehdi Salhi — AI/ML Engineer & Cloud Architect",
+    title: "Mehdi Salhi | AI/ML Engineer & Cloud Architect",
     description:
       "Building intelligent systems, AI agents, and agentic workflows on AWS. Founder of Unkommon.ai.",
     url: "https://mehdi-portfolio.vercel.app",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mehdi Salhi — AI/ML Engineer & Cloud Architect",
+    title: "Mehdi Salhi | AI/ML Engineer & Cloud Architect",
     description:
       "Building intelligent systems, AI agents, and agentic workflows on AWS. Founder of Unkommon.ai.",
     creator: "@medysaly",
