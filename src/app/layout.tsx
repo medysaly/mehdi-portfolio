@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     title: "Mehdi Salhi | AI/ML Engineer & Cloud Architect",
     description:
       "Building intelligent systems, AI agents, and agentic workflows on AWS. Founder of Unkommon.ai.",
-    url: "https://mehdi-portfolio.vercel.app",
+    url: "https://mehdisalhi.com",
     siteName: "Mehdi Salhi",
     type: "website",
   },

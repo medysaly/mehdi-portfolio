@@ -2,7 +2,7 @@
 
 Personal portfolio site for Mehdi Salhi. AI/ML Engineer, Cloud Architect, and founder of [Unkommon.ai](https://unkommon.ai).
 
-**Live:** [mehdi-portfolio.vercel.app](https://mehdi-portfolio.vercel.app)
+**Live:** [mehdisalhi.com](https://mehdisalhi.com)
 
 ## Tech Stack
 
