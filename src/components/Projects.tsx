@@ -8,8 +8,20 @@ const featured = [
   {
     title: "Unkommon.ai",
     description:
-      "Custom AI/ML engineering platform. RAG systems, multi-agent architectures, ML consulting, and production cloud infrastructure. Built with React, TypeScript, Express, deployed on AWS.",
-    stack: ["React", "TypeScript", "AWS", "Python"],
+      "Solo-built AI services platform on AWS. Voice receptionist (Vapi + Bedrock + Lambda) and website chatbot that qualify leads and book appointments via Google Calendar. Fully serverless. Lambda, Bedrock (Claude Sonnet 4.5 / Haiku 4.5), DynamoDB, API Gateway, Cognito, Amplify. React + TypeScript frontend, deployed via AWS SAM.",
+    stack: [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Tailwind",
+      "Python",
+      "AWS Lambda",
+      "Bedrock",
+      "DynamoDB",
+      "Cognito",
+      "AWS SAM",
+      "Vapi",
+    ],
     link: "https://unkommon.ai",
     badge: "Featured",
   },
