@@ -103,7 +103,7 @@ export default function Hero() {
             className="mt-16 flex flex-wrap justify-center gap-8 border-t border-white/5 pt-8"
           >
             {[
-              { value: "Unkommon.ai", label: "Founder" },
+              { value: "Unkommon.ai", label: "Built" },
               { value: "AWS", label: "Cloud Platform" },
               { value: "3.71", label: "GPA @ SNHU" },
             ].map((stat) => (

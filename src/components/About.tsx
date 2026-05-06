@@ -22,11 +22,12 @@ export default function About() {
             className="space-y-6 font-body text-base leading-relaxed text-neutral-400 sm:text-lg md:col-span-3"
           >
             <p>
-              I build custom AI systems on AWS. RAG pipelines that let teams
-              search thousands of documents in seconds, AI agents that automate
-              multi-step workflows, and the production infrastructure to run it
-              all reliably. Most of my work sits at the intersection of machine
-              learning engineering and cloud architecture.
+              Computer Science student at Southern New Hampshire University,
+              graduating August 2026 (GPA 3.71). I build on AWS: serverless
+              apps, RAG systems, and voice agents using Lambda, Bedrock,
+              DynamoDB, API Gateway, Cognito, and AWS SAM. AWS Certified Cloud
+              Practitioner (May 2026); pursuing Solutions Architect Associate
+              (June 2026) and HashiCorp Terraform Associate (late June 2026).
             </p>
             <p>
               I founded{" "}
