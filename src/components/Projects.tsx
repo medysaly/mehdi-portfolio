@@ -29,7 +29,7 @@ const featured = [
     title: "Company Policy RAG System",
     description:
       "Production-grade RAG system with hybrid search, cross-encoder reranking, and RAGAS evaluation metrics. Upload any document and ask questions in natural language. Built with Python, LangChain, FastAPI, deployed on Hugging Face.",
-    stack: ["Python", "LangChain", "FastAPI", "ChromaDB"],
+    stack: ["Python", "LangChain", "FastAPI", "BM25", "Sentence Transformers", "RAGAS"],
     link: "https://huggingface.co/spaces/medysaly/company-policy-rag",
     github: "https://github.com/medysaly/company-policy-rag",
     badge: "Live Demo",
