@@ -31,7 +31,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-4 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
           >
-            AI/ML Engineer &<br />Cloud Architect
+            Cloud + AI<br />on AWS
           </motion.h1>
 
           {/* Subtitle */}
@@ -41,8 +41,8 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mx-auto mt-6 max-w-lg font-body text-lg leading-relaxed text-neutral-400"
           >
-            Building custom AI systems on AWS. RAG pipelines, AI agents, and
-            production ML infrastructure.{" "}
+            Computer Science student graduating August 2026 (SNHU). Building
+            serverless apps on AWS.{" "}
             <span className="text-neutral-300">
               Based in Stamford, CT / NYC.
             </span>

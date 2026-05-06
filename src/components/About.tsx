@@ -47,7 +47,7 @@ export default function About() {
             </p>
             <p>
               On the side I&apos;m wrapping up my Computer Science degree at
-              Southern New Hampshire University, graduating July 2026 with a
+              Southern New Hampshire University, graduating August 2026 with a
               3.71 GPA. School has been good but honestly building things has
               taught me more.
             </p>
@@ -63,7 +63,7 @@ export default function About() {
           >
             {[
               { label: "GPA", value: "3.71", detail: "Southern New Hampshire University", tag: "Dean's List" },
-              { label: "Graduating", value: "Jul 2026", detail: "Computer Science, B.S.", tag: undefined },
+              { label: "Graduating", value: "Aug 2026", detail: "Computer Science, B.S.", tag: undefined },
               { label: "Location", value: "CT / NYC", detail: "Stamford, Connecticut", tag: undefined },
               { label: "Focus", value: "AI + Cloud", detail: "AWS, LLMs, Agentic Systems", tag: undefined },
             ].map((stat, i) => (
