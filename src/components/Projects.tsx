@@ -71,18 +71,22 @@ const coursework = [
     description:
       "Academic advising system using hash table and binary search tree data structures for efficient course lookup.",
     stack: ["C++"],
+    github:
+      "https://github.com/medysaly/cs300-data-structures-algorithms-portfolio",
   },
   {
     title: "CS-320 Software Testing",
     description:
       "Contact management system built with rigorous JUnit test-driven development and full test coverage.",
     stack: ["Java", "JUnit"],
+    github: "https://github.com/medysaly/cs-320-portfolio",
   },
   {
     title: "CS-340 Dashboard",
     description:
       "Full-stack CRUD dashboard for Grazioso Salvare. Real client project with data visualization and MongoDB backend.",
     stack: ["Python", "MongoDB", "Jupyter", "Dash"],
+    github: "https://github.com/medysaly/CS-340-Client-server-Development",
   },
   {
     title: "Introduction to Scripting",
@@ -95,6 +99,7 @@ const coursework = [
     description:
       "Cloud-based driver education platform (DriverPass) with UML diagrams, requirements documentation, and system architecture.",
     stack: ["UML", "System Design"],
+    github: "https://github.com/medysaly/medysaly-system-analysis-and-design",
   },
 ];
 
