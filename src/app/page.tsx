@@ -1,6 +1,5 @@
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import CurrentlyBuilding from "@/components/CurrentlyBuilding";
 import Skills from "@/components/Skills";
 import Certifications from "@/components/Certifications";
 import Projects from "@/components/Projects";
@@ -12,7 +11,6 @@ export default function Home() {
     <main id="main-content">
       <Hero />
       <About />
-      <CurrentlyBuilding />
       <Skills />
       <Certifications />
       <Projects />
