@@ -31,7 +31,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-4 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
           >
-            Cloud + AI<br />on AWS
+            AWS Cloud<br />Engineer
           </motion.h1>
 
           {/* Subtitle */}
@@ -42,7 +42,7 @@ export default function Hero() {
             className="mx-auto mt-6 max-w-lg font-body text-lg leading-relaxed text-neutral-400"
           >
             Computer Science student graduating August 2026 (SNHU). Building
-            serverless apps on AWS.{" "}
+            serverless apps and AI agents on AWS.{" "}
             <span className="text-neutral-300">
               Based in Stamford, CT / NYC.
             </span>
