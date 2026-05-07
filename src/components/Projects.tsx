@@ -34,6 +34,24 @@ const featured = [
     github: "https://github.com/medysaly/company-policy-rag",
     badge: "Live Demo",
   },
+  {
+    title: "Bees Knees AI",
+    description:
+      "Live marketing site for an AI agency with an embedded chatbot (Buzz) built on Claude Sonnet 4. Streaming SSE, prompt caching for ~90% cost reduction on repeated requests, per-IP rate limiting, and full security headers (HSTS, CSP, Permissions-Policy). Includes Cal.com booking integration for inline conversion and a custom WebGL shader hero.",
+    stack: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Tailwind v4",
+      "Claude API",
+      "Cal.com",
+      "WebGL",
+      "Vercel",
+    ],
+    link: "https://beesknees.ai",
+    github: "https://github.com/medysaly/beesknees-website",
+    badge: "Live Site",
+  },
 ];
 
 const projects = [
