@@ -6,8 +6,8 @@ import SectionHeading from "./SectionHeading";
 const socials = [
   {
     label: "Email",
-    href: "mailto:medysalywork@gmail.com",
-    display: "medysalywork@gmail.com",
+    href: "mailto:mehdisalhi.dev@gmail.com",
+    display: "mehdisalhi.dev@gmail.com",
     icon: (
       <svg
         className="h-5 w-5"
