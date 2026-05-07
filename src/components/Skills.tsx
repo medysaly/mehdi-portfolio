@@ -28,6 +28,7 @@ const categories = [
       "Terraform",
       "CloudFormation",
       "Serverless",
+      "Kubernetes",
     ],
     colSpan: "md:col-span-2",
     rowSpan: "",

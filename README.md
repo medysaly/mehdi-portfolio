@@ -1,6 +1,6 @@
 # mehdi-portfolio
 
-Personal portfolio site for Mehdi Salhi. AI/ML Engineer, Cloud Architect, and founder of [Unkommon.ai](https://unkommon.ai).
+Personal portfolio site for Mehdi Salhi. Cloud + AI on AWS. Solo-built [Unkommon.ai](https://unkommon.ai).
 
 **Live:** [mehdisalhi.com](https://mehdisalhi.com)
 
