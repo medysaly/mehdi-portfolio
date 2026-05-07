@@ -241,16 +241,16 @@ export default function Projects() {
         <div className="mt-12">
           <button
             onClick={() => setShowCoursework(!showCoursework)}
-            className="group mx-auto flex items-center gap-2 rounded-lg border border-white/[0.06] bg-surface px-5 py-2.5 text-sm font-medium text-neutral-400 transition-all hover:border-white/10 hover:text-neutral-300"
+            className="group mx-auto flex items-center gap-2.5 rounded-lg border border-accent/30 bg-accent/10 px-6 py-3 text-sm font-semibold text-white transition-all hover:border-accent/50 hover:bg-accent/15 hover:shadow-[0_0_30px_rgba(99,102,241,0.2)]"
           >
             <span>
               {showCoursework ? "Hide" : "Show"} Coursework
             </span>
-            <span className="font-mono text-xs text-neutral-600">
+            <span className="rounded-full bg-accent/20 px-2 py-0.5 font-mono text-xs text-accent-glow">
               {coursework.length}
             </span>
             <svg
-              className={`h-4 w-4 transition-transform duration-200 ${showCoursework ? "rotate-180" : ""}`}
+              className={`h-4 w-4 text-accent-glow transition-transform duration-200 ${showCoursework ? "rotate-180" : ""}`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
