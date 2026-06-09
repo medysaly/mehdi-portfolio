@@ -1,15 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { SilkBackground } from "./ui/silk-background-animation";
+import { MeshGradientBackground } from "./ui/mesh-gradient-background";
 
 export default function Hero() {
 
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6">
-      {/* Silk animated background */}
-      <SilkBackground />
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-bg/30 via-transparent to-bg/60" />
+      {/* Mesh gradient animated background */}
+      <MeshGradientBackground />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-bg/40 via-transparent to-bg/70" />
 
       {/* Content — left-aligned on desktop */}
       <div className="relative z-20 mx-auto w-full max-w-3xl text-center">
