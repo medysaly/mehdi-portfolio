@@ -19,7 +19,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-mono text-sm tracking-[0.2em] text-accent-glow uppercase"
+            className="text-xs tracking-[0.3em] text-neutral-400 uppercase"
           >
             Mehdi Salhi
           </motion.h2>
@@ -57,7 +57,7 @@ export default function Hero() {
           >
             <a
               href="#projects"
-              className="group inline-flex items-center gap-2.5 rounded-lg bg-accent px-6 py-3 text-sm font-medium text-white transition-all hover:bg-accent-subtle hover:shadow-[0_0_30px_rgba(99,102,241,0.3)]"
+              className="group inline-flex items-center gap-2.5 rounded-lg bg-white px-6 py-3 text-sm font-medium text-black transition-all hover:bg-neutral-200 hover:shadow-[0_0_40px_rgba(255,255,255,0.15)]"
             >
               View My Work
               <svg

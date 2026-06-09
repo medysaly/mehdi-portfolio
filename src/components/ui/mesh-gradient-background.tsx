@@ -10,7 +10,7 @@ export function MeshGradientBackground() {
     >
       <MeshGradient
         className="h-full w-full"
-        colors={["#000000", "#0a0a0a", "#1a1a1a", "#6366f1"]}
+        colors={["#000000", "#1a1a1a", "#333333", "#ffffff"]}
         speed={0.4}
       />
     </div>

@@ -88,9 +88,9 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="group flex items-center gap-4 rounded-xl border border-white/[0.06] bg-surface p-5 transition-all duration-300 hover:border-accent/20 hover:bg-surface-raised"
+              className="group flex items-center gap-4 rounded-xl border border-white/[0.06] bg-surface/60 p-5 transition-all duration-300 hover:border-white/15 hover:bg-surface"
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-bg text-neutral-500 transition-colors group-hover:text-accent-glow">
+              <span className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/[0.08] bg-bg/60 text-neutral-400 transition-colors group-hover:text-white">
                 {social.icon}
               </span>
               <div className="min-w-0 flex-1">

@@ -127,7 +127,7 @@ export default function Projects() {
   return (
     <section id="projects" className="relative px-6 py-32">
       {/* Background treatment */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-accent/[0.015] to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.015] to-transparent" />
 
       <div className="relative mx-auto max-w-5xl">
         <SectionHeading
@@ -144,21 +144,18 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className="group relative overflow-hidden rounded-2xl border border-accent/15 bg-surface"
+              className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-surface/60 transition-all hover:border-white/15"
             >
-              {/* Gradient background */}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent/[0.06] via-transparent to-purple-500/[0.03]" />
-
               <div className="relative flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-10">
                 <div className="max-w-xl">
                   <div className="mb-4 flex items-center gap-3">
-                    <span className="flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium text-accent-glow">
-                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent-glow" />
+                    <span className="flex items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.04] px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-neutral-300">
+                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white/60" />
                       {project.badge}
                     </span>
                   </div>
 
-                  <h3 className="font-display text-2xl font-bold text-white">
+                  <h3 className="font-display text-2xl font-semibold text-white">
                     {project.title}
                   </h3>
                   <p className="mt-3 font-body leading-relaxed text-neutral-400">
@@ -169,7 +166,7 @@ export default function Projects() {
                     {project.stack.map((tech) => (
                       <span
                         key={tech}
-                        className="flex items-center gap-1.5 rounded-md border border-accent/15 bg-accent/5 px-2.5 py-1 font-mono text-xs text-accent-glow/80"
+                        className="rounded-md border border-white/[0.08] bg-bg/60 px-2.5 py-1 font-mono text-[11px] text-neutral-400"
                       >
                         {tech}
                       </span>
@@ -182,7 +179,7 @@ export default function Projects() {
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group/link inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-white transition-all hover:border-accent/30 hover:bg-accent/10"
+                    className="group/link inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-medium text-black transition-all hover:bg-neutral-200"
                     aria-label={`Visit ${project.title}`}
                   >
                     {project.github ? "Live Demo" : "Visit Site"}
@@ -259,16 +256,16 @@ export default function Projects() {
         <div className="mt-12">
           <button
             onClick={() => setShowCoursework(!showCoursework)}
-            className="group mx-auto flex items-center gap-2.5 rounded-lg border border-accent/30 bg-accent/10 px-6 py-3 text-sm font-semibold text-white transition-all hover:border-accent/50 hover:bg-accent/15 hover:shadow-[0_0_30px_rgba(99,102,241,0.2)]"
+            className="group mx-auto flex items-center gap-2.5 rounded-lg border border-white/[0.12] bg-white/[0.04] px-6 py-3 text-sm font-medium text-white transition-all hover:border-white/25 hover:bg-white/[0.08]"
           >
             <span>
               {showCoursework ? "Hide" : "Show"} Coursework
             </span>
-            <span className="rounded-full bg-accent/20 px-2 py-0.5 font-mono text-xs text-accent-glow">
+            <span className="rounded-full bg-white/10 px-2 py-0.5 font-mono text-xs text-neutral-300">
               {coursework.length}
             </span>
             <svg
-              className={`h-4 w-4 text-accent-glow transition-transform duration-200 ${showCoursework ? "rotate-180" : ""}`}
+              className={`h-4 w-4 text-neutral-300 transition-transform duration-200 ${showCoursework ? "rotate-180" : ""}`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

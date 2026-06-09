@@ -93,14 +93,11 @@ export default function Skills() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, delay: catIdx * 0.1 }}
-              className={`group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-surface p-6 transition-all duration-300 hover:border-accent/20 hover:shadow-[0_0_40px_rgba(99,102,241,0.06)] ${cat.colSpan} ${cat.rowSpan}`}
+              className={`group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-surface/60 p-6 transition-all duration-300 hover:border-white/15 ${cat.colSpan} ${cat.rowSpan}`}
             >
-              {/* Hover gradient */}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent/[0.03] via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
               <div className="relative">
-                <h3 className="mb-5 flex items-center gap-2.5 font-display text-sm font-semibold text-white">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent/10 text-accent-glow">
+                <h3 className="mb-6 flex items-center gap-2.5 font-display text-sm font-semibold uppercase tracking-wider text-white">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.03] text-neutral-300">
                     {cat.icon}
                   </span>
                   {cat.title}
@@ -110,7 +107,7 @@ export default function Skills() {
                   {cat.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="cursor-default rounded-md border border-white/[0.06] bg-bg px-3 py-1.5 font-body text-xs text-neutral-400 transition-all duration-200 hover:border-accent/30 hover:text-neutral-200"
+                      className="cursor-default rounded-md border border-white/[0.06] bg-bg/80 px-3 py-1.5 font-body text-xs text-neutral-400 transition-all duration-200 hover:border-white/15 hover:text-white"
                     >
                       {skill}
                     </span>

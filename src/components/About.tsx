@@ -7,7 +7,7 @@ export default function About() {
   return (
     <section id="about" className="relative px-6 py-32">
       {/* Subtle background gradient */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-accent/[0.02] to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.015] to-transparent" />
 
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading title="About" />
@@ -74,22 +74,22 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
-                className="group rounded-lg border border-white/5 bg-surface p-5 transition-all duration-300 hover:border-accent/20 hover:bg-surface-raised"
+                className="group rounded-xl border border-white/[0.06] bg-surface/60 p-5 transition-all duration-300 hover:border-white/15 hover:bg-surface"
               >
                 <div className="flex items-center gap-2">
-                  <p className="font-display text-xl font-bold text-white">
+                  <p className="font-display text-xl font-semibold text-white">
                     {stat.value}
                   </p>
                   {stat.tag && (
-                    <span className="rounded border border-white/[0.06] bg-white/[0.03] px-2 py-0.5 text-[10px] font-medium text-neutral-500">
+                    <span className="rounded border border-white/[0.08] bg-white/[0.03] px-2 py-0.5 text-[10px] font-medium text-neutral-400">
                       {stat.tag}
                     </span>
                   )}
                 </div>
-                <p className="mt-1 font-mono text-xs text-accent-glow/70">
+                <p className="mt-1.5 text-[11px] uppercase tracking-wider text-neutral-500">
                   {stat.label}
                 </p>
-                <p className="mt-0.5 text-xs text-neutral-600">
+                <p className="mt-1 text-xs text-neutral-600">
                   {stat.detail}
                 </p>
               </motion.div>

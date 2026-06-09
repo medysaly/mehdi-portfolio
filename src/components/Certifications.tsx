@@ -144,7 +144,7 @@ export default function Certifications() {
   return (
     <section id="certifications" className="relative px-6 py-32">
       {/* Background treatment */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-accent/[0.015] to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.015] to-transparent" />
 
       <div className="relative mx-auto max-w-5xl">
         <SectionHeading
@@ -158,27 +158,27 @@ export default function Certifications() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="mb-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 rounded-xl border border-white/[0.06] bg-surface/60 px-6 py-4"
+          className="mb-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-2 rounded-xl border border-white/[0.06] bg-surface/40 px-8 py-5"
         >
-          <div className="flex items-center gap-2">
-            <span className="font-display text-lg font-bold text-white">
+          <div className="flex items-baseline gap-2">
+            <span className="font-display text-2xl font-semibold text-white">
               {earned.length + inProgress.length}
             </span>
-            <span className="font-mono text-xs text-neutral-500">total</span>
+            <span className="text-[11px] uppercase tracking-wider text-neutral-500">total</span>
           </div>
-          <span className="text-neutral-700">/</span>
-          <div className="flex items-center gap-2">
-            <span className="font-display text-lg font-bold text-green-400">
+          <span className="h-4 w-px bg-white/10" />
+          <div className="flex items-baseline gap-2">
+            <span className="font-display text-2xl font-semibold text-white">
               {earned.length}
             </span>
-            <span className="font-mono text-xs text-neutral-500">earned</span>
+            <span className="text-[11px] uppercase tracking-wider text-neutral-500">earned</span>
           </div>
-          <span className="text-neutral-700">/</span>
-          <div className="flex items-center gap-2">
-            <span className="font-display text-lg font-bold text-accent-glow">
+          <span className="h-4 w-px bg-white/10" />
+          <div className="flex items-baseline gap-2">
+            <span className="font-display text-2xl font-semibold text-white">
               {inProgress.length}
             </span>
-            <span className="font-mono text-xs text-neutral-500">
+            <span className="text-[11px] uppercase tracking-wider text-neutral-500">
               in progress
             </span>
           </div>
@@ -191,24 +191,12 @@ export default function Certifications() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
-            className="relative overflow-hidden rounded-2xl border border-accent/15 bg-surface"
+            className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-surface/60"
           >
-            <div className="absolute left-0 top-0 h-full w-[2px] overflow-hidden">
-              <motion.div
-                animate={{ opacity: [0.4, 1, 0.4] }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 2,
-                  ease: "easeInOut",
-                }}
-                className="h-full w-full bg-accent"
-              />
-            </div>
-
             <div className="relative p-6">
-              <div className="mb-5 flex items-center justify-between">
+              <div className="mb-6 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent/10 text-accent-glow">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.03] text-neutral-300">
                     <svg
                       className="h-4 w-4"
                       fill="none"
@@ -254,14 +242,12 @@ export default function Certifications() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="relative overflow-hidden rounded-2xl border border-green-500/15 bg-surface"
+            className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-surface/60"
           >
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-green-500/[0.03] via-transparent to-transparent" />
-
             <div className="relative p-6">
-              <div className="mb-5 flex items-center justify-between">
+              <div className="mb-6 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-500/10 text-green-400">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.03] text-neutral-300">
                     <svg
                       className="h-4 w-4"
                       fill="none"
