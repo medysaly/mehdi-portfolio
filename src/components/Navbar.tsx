@@ -1,7 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, Fragment } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Slash } from "lucide-react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "./ui/breadcrumb";
 
 const links = [
   { label: "About", href: "#about" },
@@ -39,49 +48,54 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? "border-b border-white/5 bg-bg/90 backdrop-blur-xl"
+          ? "border-b border-white/[0.06] bg-bg/85 backdrop-blur-xl"
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+        {/* Brand + breadcrumb on desktop */}
+        <Breadcrumb className="hidden md:block">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                href="#"
+                className="font-display text-base font-semibold text-white"
+              >
+                mehdi.
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+
+            {links.map((link) => {
+              const isActive = activeSection === link.href.slice(1);
+              return (
+                <Fragment key={link.href}>
+                  <BreadcrumbSeparator>
+                    <Slash />
+                  </BreadcrumbSeparator>
+                  <BreadcrumbItem>
+                    {isActive ? (
+                      <BreadcrumbPage className="text-sm">
+                        {link.label}
+                      </BreadcrumbPage>
+                    ) : (
+                      <BreadcrumbLink href={link.href} className="text-sm">
+                        {link.label}
+                      </BreadcrumbLink>
+                    )}
+                  </BreadcrumbItem>
+                </Fragment>
+              );
+            })}
+          </BreadcrumbList>
+        </Breadcrumb>
+
+        {/* Brand on mobile */}
         <a
           href="#"
-          className="font-display text-base font-semibold tracking-tight text-white transition-colors hover:text-accent-glow"
+          className="font-display text-base font-semibold tracking-tight text-white md:hidden"
         >
           mehdi.
         </a>
-
-        {/* Desktop links */}
-        <ul className="hidden items-center gap-1 md:flex">
-          {links.map((link) => {
-            const isActive = activeSection === link.href.slice(1);
-            return (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className={`relative rounded-md px-3 py-2 text-sm transition-colors ${
-                    isActive
-                      ? "text-white"
-                      : "text-neutral-500 hover:text-neutral-300"
-                  }`}
-                >
-                  {link.label}
-                  {isActive && (
-                    <motion.span
-                      layoutId="nav-indicator"
-                      className="absolute inset-0 -z-10 rounded-md bg-white/[0.06]"
-                      transition={{
-                        type: "spring",
-                        stiffness: 350,
-                        damping: 30,
-                      }}
-                    />
-                  )}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
 
         {/* Mobile toggle */}
         <button
@@ -118,7 +132,7 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="overflow-hidden border-t border-white/5 bg-bg/95 backdrop-blur-xl md:hidden"
+            className="overflow-hidden border-t border-white/[0.06] bg-bg/95 backdrop-blur-xl md:hidden"
           >
             <ul className="flex flex-col gap-1 px-6 py-4">
               {links.map((link) => {
