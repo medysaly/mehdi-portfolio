@@ -133,7 +133,6 @@ export default function Projects() {
         <SectionHeading
           title="Projects"
           subtitle="Selected work and coursework"
-          index="04 — Work"
           align="left"
         />
 

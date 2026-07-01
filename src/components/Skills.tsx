@@ -85,7 +85,6 @@ export default function Skills() {
         <SectionHeading
           title="Skills"
           subtitle="Technologies I work with"
-          index="02 — Stack"
           align="left"
         />
 
