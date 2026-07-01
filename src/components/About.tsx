@@ -3,6 +3,9 @@
 import { motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 
+const skillsSummary =
+  "AWS (Lambda, EC2, S3, IAM, API Gateway, VPC, DynamoDB, RDS, CloudFront, Route 53, Bedrock, SageMaker) · Python · Terraform · CloudFormation · Docker · Kubernetes · CI/CD · Cloud Networking & Security (VPC, Security Groups, IAM, WAF, SSL/TLS, DNS) · LangChain · RAG · REST APIs · PostgreSQL · MongoDB · JavaScript/Next.js";
+
 export default function About() {
   return (
     <section id="about" className="relative px-6 py-32">
@@ -19,39 +22,48 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
-            className="space-y-6 font-body text-base leading-relaxed text-neutral-400 sm:text-lg md:col-span-3"
+            className="md:col-span-3"
           >
-            <p>
-              Computer Science student at Southern New Hampshire University,
-              graduating August 2026 (GPA 3.71). I build on AWS: serverless
-              apps, RAG systems, and voice agents using Lambda, Bedrock,
-              DynamoDB, API Gateway, Cognito, and AWS SAM. AWS Certified Cloud
-              Practitioner (May 2026); pursuing Solutions Architect Associate
-              (June 2026) and HashiCorp Terraform Associate (late June 2026).
-            </p>
-            <p>
-              I founded{" "}
-              <a
-                href="https://unkommon.ai"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium text-white underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent-glow"
-              >
-                Unkommon.ai
-              </a>{" "}
-              to solve a problem I kept seeing: companies spending months on AI
-              projects that never make it to production. The model works in a
-              notebook but breaks on real data. The chatbot demo impresses
-              leadership but can&apos;t handle actual customer questions.
-              Unkommon builds the systems that actually ship. On your
-              infrastructure, with your data, in weeks.
-            </p>
-            <p>
-              On the side I&apos;m wrapping up my Computer Science degree at
-              Southern New Hampshire University, graduating August 2026 with a
-              3.71 GPA. School has been good but honestly building things has
-              taught me more.
-            </p>
+            <div className="space-y-6 font-body text-base leading-relaxed text-neutral-400 sm:text-lg">
+              <p>
+                I&apos;m a Cloud Engineer and Computer Science graduate (SNHU,
+                August 2026, GPA 3.71) with AWS Certified Cloud Practitioner
+                and AWS Solutions Architect Associate certifications.
+              </p>
+              <p>
+                I build and deploy production systems on AWS: serverless
+                architectures, AI-powered backends, and automated cloud
+                infrastructure using Lambda, API Gateway, DynamoDB, Bedrock,
+                CloudFormation, and Terraform.
+              </p>
+              <p>
+                Most of my work is hands-on: designing cloud environments
+                from scratch, integrating AI services into real applications,
+                and writing the Python and IaC code that keeps it all
+                running.
+              </p>
+            </div>
+
+            {/* Skills prose */}
+            <div className="mt-10 border-t border-white/[0.06] pt-6">
+              <p className="mb-3 text-[11px] uppercase tracking-[0.15em] text-neutral-500">
+                Skills
+              </p>
+              <p className="font-body text-sm leading-relaxed text-neutral-500">
+                {skillsSummary}
+              </p>
+            </div>
+
+            {/* Availability */}
+            <div className="mt-8">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.03] px-3.5 py-1.5 text-xs text-neutral-300">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-400" />
+                </span>
+                Open to cloud engineering, DevOps, and AI infrastructure roles
+              </span>
+            </div>
           </motion.div>
 
           {/* Stats — narrower column */}
@@ -66,7 +78,7 @@ export default function About() {
               { label: "GPA", value: "3.71", detail: "Southern New Hampshire University", tag: "Dean's List" },
               { label: "Graduating", value: "Aug 2026", detail: "Computer Science, B.S.", tag: undefined },
               { label: "Location", value: "CT / NYC", detail: "Stamford, Connecticut", tag: undefined },
-              { label: "Focus", value: "AI + Cloud", detail: "AWS, LLMs, Agentic Systems", tag: undefined },
+              { label: "Focus", value: "Cloud + AI", detail: "AWS, Serverless, IaC", tag: undefined },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
