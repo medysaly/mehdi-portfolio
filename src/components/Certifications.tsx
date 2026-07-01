@@ -14,14 +14,6 @@ type Cert = {
 
 const inProgress: Cert[] = [
   {
-    name: "AWS Solutions Architect Associate",
-    shortName: "Solutions Architect",
-    issuer: "aws",
-    level: "Associate",
-    date: "Jun 2026",
-    code: "SAA-C03",
-  },
-  {
     name: "HashiCorp Terraform Associate",
     shortName: "Terraform Associate",
     issuer: "hashicorp",
@@ -40,6 +32,14 @@ const inProgress: Cert[] = [
 ];
 
 const earned: Cert[] = [
+  {
+    name: "AWS Solutions Architect Associate",
+    shortName: "Solutions Architect",
+    issuer: "aws",
+    level: "Associate",
+    date: "Jun 2026",
+    code: "SAA-C03",
+  },
   {
     name: "AWS Certified Cloud Practitioner",
     shortName: "Cloud Practitioner",
