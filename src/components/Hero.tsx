@@ -9,7 +9,16 @@ export default function Hero() {
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6">
       {/* Mesh gradient animated background */}
       <MeshGradientBackground />
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-bg/40 via-transparent to-bg/70" />
+      <div
+        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.35]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
+        }}
+        aria-hidden="true"
+      />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-bg/50 via-transparent to-bg/80" />
 
       {/* Content — left-aligned on desktop */}
       <div className="relative z-20 mx-auto w-full max-w-3xl text-center">
@@ -29,7 +38,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-4 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
+            className="mt-4 font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl"
           >
             AWS Cloud<br />Engineer
           </motion.h1>

@@ -150,6 +150,7 @@ export default function Certifications() {
         <SectionHeading
           title="Certifications"
           subtitle="Cloud and infrastructure credentials"
+          index="03 — Credentials"
         />
 
         {/* Stats strip */}

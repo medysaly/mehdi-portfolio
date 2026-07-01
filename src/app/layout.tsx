@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { spaceGrotesk, ibmPlexSans, jetbrainsMono } from "./fonts";
+import { fraunces, ibmPlexSans, jetbrainsMono } from "./fonts";
 import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
@@ -46,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${spaceGrotesk.variable} ${ibmPlexSans.variable} ${jetbrainsMono.variable}`}
+      className={`dark ${fraunces.variable} ${ibmPlexSans.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen bg-bg text-neutral-200 antialiased">
         <a href="#main-content" className="skip-to-content">

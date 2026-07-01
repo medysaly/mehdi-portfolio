@@ -13,7 +13,7 @@ export default function About() {
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.015] to-transparent" />
 
       <div className="relative mx-auto max-w-6xl">
-        <SectionHeading title="About" />
+        <SectionHeading title="About" index="01 — Profile" />
 
         <div className="grid gap-12 md:grid-cols-5">
           {/* Text — wider column */}

@@ -82,7 +82,11 @@ export default function Skills() {
   return (
     <section id="skills" className="relative px-6 py-32">
       <div className="mx-auto max-w-5xl">
-        <SectionHeading title="Skills" subtitle="Technologies I work with" />
+        <SectionHeading
+          title="Skills"
+          subtitle="Technologies I work with"
+          index="02 — Stack"
+        />
 
         {/* Bento grid — asymmetric */}
         <div className="grid gap-4 md:grid-cols-3 md:auto-rows-auto">

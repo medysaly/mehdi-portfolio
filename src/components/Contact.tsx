@@ -73,6 +73,7 @@ export default function Contact() {
         <SectionHeading
           title="Get in Touch"
           subtitle="Always open to new opportunities and conversations"
+          index="05 — Contact"
         />
 
         <div className="grid gap-3 sm:grid-cols-2">

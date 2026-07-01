@@ -13,9 +13,9 @@ const config: Config = {
         surface: "#111111",
         "surface-raised": "#161616",
         border: "#1a1a1a",
-        accent: "#6366f1",
-        "accent-glow": "#818cf8",
-        "accent-subtle": "#4f46e5",
+        accent: "#b8895a",
+        "accent-glow": "#d9b48a",
+        "accent-subtle": "#8f6844",
         warm: "#f5f0eb",
       },
       fontFamily: {
