@@ -86,6 +86,7 @@ export default function Skills() {
           title="Skills"
           subtitle="Technologies I work with"
           index="02 — Stack"
+          align="left"
         />
 
         {/* Bento grid — asymmetric */}

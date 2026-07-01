@@ -53,7 +53,6 @@ const earned: Cert[] = [
 const issuerStyles = {
   aws: {
     accent: "#FF9900",
-    accentRgba: "rgba(255, 153, 0, 0.5)",
     accentText: "text-[#FF9900]",
     pillBg: "bg-[#FF9900]/10",
     pillBorder: "border-[#FF9900]/25",
@@ -61,7 +60,6 @@ const issuerStyles = {
   },
   hashicorp: {
     accent: "#7B42BC",
-    accentRgba: "rgba(123, 66, 188, 0.5)",
     accentText: "text-[#A86EE6]",
     pillBg: "bg-[#7B42BC]/10",
     pillBorder: "border-[#7B42BC]/25",
@@ -69,18 +67,49 @@ const issuerStyles = {
   },
 };
 
-function CertRow({ cert, status }: { cert: Cert; status: "earned" | "in-progress" }) {
+function Seal({ color }: { color: string }) {
+  return (
+    <svg viewBox="0 0 40 40" className="h-9 w-9 flex-shrink-0">
+      <circle
+        cx="20"
+        cy="20"
+        r="18.5"
+        fill="none"
+        stroke={color}
+        strokeWidth="1"
+        strokeDasharray="2.2 2.6"
+        opacity="0.7"
+      />
+      <circle cx="20" cy="20" r="14" fill="none" stroke={color} strokeWidth="1" opacity="0.9" />
+      <path
+        d="M13.5 20.5l4 4 9-9"
+        fill="none"
+        stroke={color}
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function CertRow({
+  cert,
+  status,
+}: {
+  cert: Cert;
+  status: "earned" | "in-progress";
+}) {
   const style = issuerStyles[cert.issuer];
 
   return (
     <div
-      className="group relative overflow-hidden rounded-xl border border-white/[0.06] bg-bg/60 transition-all duration-300 hover:border-white/[0.12] hover:bg-bg"
-      style={{
-        boxShadow: `inset 3px 0 0 ${style.accent}`,
-      }}
+      className="group relative flex items-center gap-4 overflow-hidden rounded-xl border border-white/[0.06] bg-bg/60 p-4 pl-5 transition-all duration-300 hover:border-white/[0.12] hover:bg-bg"
+      style={{ boxShadow: `inset 3px 0 0 ${style.accent}` }}
     >
-      <div className="p-4 pl-5">
-        {/* Top row: issuer pill + status */}
+      {status === "earned" && <Seal color={style.accent} />}
+
+      <div className="min-w-0 flex-1">
         <div className="flex items-center justify-between gap-3">
           <span
             className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider ${style.pillBorder} ${style.pillBg} ${style.accentText}`}
@@ -94,11 +123,7 @@ function CertRow({ cert, status }: { cert: Cert; status: "earned" | "in-progress
 
           {status === "earned" ? (
             <span className="inline-flex items-center gap-1 rounded-md border border-green-500/25 bg-green-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-green-400">
-              <svg
-                className="h-2.5 w-2.5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg className="h-2.5 w-2.5" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fillRule="evenodd"
                   d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -118,19 +143,19 @@ function CertRow({ cert, status }: { cert: Cert; status: "earned" | "in-progress
           )}
         </div>
 
-        {/* Cert name */}
         <h4 className="mt-3 font-display text-base font-semibold leading-tight text-white">
           {cert.shortName}
         </h4>
 
-        {/* Meta row */}
         <div className="mt-2 flex items-center gap-2 font-mono text-[11px] text-neutral-500">
           <span>{cert.level}</span>
           <span className="text-neutral-700">·</span>
           <span className="text-neutral-400">{cert.code}</span>
           <span className="text-neutral-700">·</span>
           <span
-            className={status === "earned" ? "text-green-400/90" : "text-accent-glow/90"}
+            className={
+              status === "earned" ? "text-green-400/90" : "text-accent-glow/90"
+            }
           >
             {cert.date}
           </span>
@@ -151,6 +176,7 @@ export default function Certifications() {
           title="Certifications"
           subtitle="Cloud and infrastructure credentials"
           index="03 — Credentials"
+          align="left"
         />
 
         {/* Stats strip */}
@@ -159,20 +185,24 @@ export default function Certifications() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="mb-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-2 rounded-xl border border-white/[0.06] bg-surface/40 px-8 py-5"
+          className="mb-10 flex flex-wrap items-center gap-x-10 gap-y-2 rounded-xl border border-white/[0.06] bg-surface/40 px-8 py-5"
         >
           <div className="flex items-baseline gap-2">
             <span className="font-display text-2xl font-semibold text-white">
               {earned.length + inProgress.length}
             </span>
-            <span className="text-[11px] uppercase tracking-wider text-neutral-500">total</span>
+            <span className="text-[11px] uppercase tracking-wider text-neutral-500">
+              total
+            </span>
           </div>
           <span className="h-4 w-px bg-white/10" />
           <div className="flex items-baseline gap-2">
             <span className="font-display text-2xl font-semibold text-white">
               {earned.length}
             </span>
-            <span className="text-[11px] uppercase tracking-wider text-neutral-500">earned</span>
+            <span className="text-[11px] uppercase tracking-wider text-neutral-500">
+              earned
+            </span>
           </div>
           <span className="h-4 w-px bg-white/10" />
           <div className="flex items-baseline gap-2">
@@ -185,65 +215,14 @@ export default function Certifications() {
           </div>
         </motion.div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {/* In Progress — left */}
+        {/* Asymmetric split — Earned leads, wider; In Progress trails, narrower */}
+        <div className="grid gap-6 md:grid-cols-5">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
-            className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-surface/60"
-          >
-            <div className="relative p-6">
-              <div className="mb-6 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.03] text-neutral-300">
-                    <svg
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </span>
-                  <h3 className="font-display text-sm font-semibold text-white">
-                    In Progress
-                  </h3>
-                </div>
-                <span className="font-mono text-[10px] text-neutral-500">
-                  {inProgress.length} active
-                </span>
-              </div>
-
-              <div className="space-y-3">
-                {inProgress.map((cert, i) => (
-                  <motion.div
-                    key={cert.name}
-                    initial={{ opacity: 0, y: 8 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
-                  >
-                    <CertRow cert={cert} status="in-progress" />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Earned — right */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-surface/60"
+            className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-surface/60 md:col-span-3"
           >
             <div className="relative p-6">
               <div className="mb-6 flex items-center justify-between">
@@ -279,7 +258,7 @@ export default function Certifications() {
                     initial={{ opacity: 0, y: 8 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
+                    transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
                   >
                     <CertRow cert={cert} status="earned" />
                   </motion.div>
@@ -292,6 +271,56 @@ export default function Certifications() {
                     </p>
                   </div>
                 )}
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-surface/60 md:col-span-2"
+          >
+            <div className="relative p-6">
+              <div className="mb-6 flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.03] text-neutral-300">
+                    <svg
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </span>
+                  <h3 className="font-display text-sm font-semibold text-white">
+                    In Progress
+                  </h3>
+                </div>
+                <span className="font-mono text-[10px] text-neutral-500">
+                  {inProgress.length} active
+                </span>
+              </div>
+
+              <div className="space-y-3">
+                {inProgress.map((cert, i) => (
+                  <motion.div
+                    key={cert.name}
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
+                  >
+                    <CertRow cert={cert} status="in-progress" />
+                  </motion.div>
+                ))}
               </div>
             </div>
           </motion.div>

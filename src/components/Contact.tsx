@@ -67,6 +67,8 @@ const socials = [
 ];
 
 export default function Contact() {
+  const [primary, ...rest] = socials;
+
   return (
     <section id="contact" className="px-6 py-32">
       <div className="mx-auto max-w-5xl">
@@ -74,47 +76,69 @@ export default function Contact() {
           title="Get in Touch"
           subtitle="Always open to new opportunities and conversations"
           index="05 — Contact"
+          align="left"
         />
 
-        <div className="grid gap-3 sm:grid-cols-2">
-          {socials.map((social, i) => (
+        {/* Primary channel — email leads */}
+        <motion.a
+          href={primary.href}
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          className="group flex items-center gap-5 rounded-2xl border border-accent/20 bg-gradient-to-r from-accent/[0.08] to-surface/60 p-6 transition-all duration-300 hover:border-accent/35 sm:p-8"
+        >
+          <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border border-accent/25 bg-accent/10 text-accent-glow">
+            {primary.icon}
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-neutral-500">
+              Preferred
+            </p>
+            <p className="mt-1 truncate font-display text-xl font-semibold text-white sm:text-2xl">
+              {primary.display}
+            </p>
+          </div>
+          <svg
+            className="h-5 w-5 flex-shrink-0 text-neutral-500 transition-all group-hover:translate-x-1 group-hover:text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
+          </svg>
+        </motion.a>
+
+        {/* Secondary channels */}
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {rest.map((social, i) => (
             <motion.a
               key={social.label}
               href={social.href}
-              target={social.label === "Email" ? undefined : "_blank"}
-              rel={
-                social.label === "Email" ? undefined : "noopener noreferrer"
-              }
+              target="_blank"
+              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="group flex items-center gap-4 rounded-xl border border-white/[0.06] bg-surface/60 p-5 transition-all duration-300 hover:border-white/15 hover:bg-surface"
+              transition={{ duration: 0.4, delay: 0.1 + i * 0.06 }}
+              className="group flex items-center gap-3 rounded-xl border border-white/[0.06] bg-surface/60 p-4 transition-all duration-300 hover:border-white/15 hover:bg-surface"
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/[0.08] bg-bg/60 text-neutral-400 transition-colors group-hover:text-white">
+              <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-bg/60 text-neutral-400 transition-colors group-hover:text-white">
                 {social.icon}
               </span>
               <div className="min-w-0 flex-1">
                 <p className="font-display text-sm font-semibold text-white">
                   {social.label}
                 </p>
-                <p className="truncate font-body text-sm text-neutral-500">
+                <p className="truncate font-body text-xs text-neutral-500">
                   {social.display}
                 </p>
               </div>
-              <svg
-                className="h-4 w-4 flex-shrink-0 text-neutral-700 transition-all group-hover:translate-x-0.5 group-hover:text-neutral-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                />
-              </svg>
             </motion.a>
           ))}
         </div>

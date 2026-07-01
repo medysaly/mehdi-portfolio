@@ -3,10 +3,15 @@
 import { motion } from "framer-motion";
 import { MeshGradientBackground } from "./ui/mesh-gradient-background";
 
-export default function Hero() {
+const stats = [
+  { value: "Unkommon.ai", label: "Built" },
+  { value: "AWS", label: "Cloud Platform" },
+  { value: "3.71", label: "GPA @ SNHU" },
+];
 
+export default function Hero() {
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6">
+    <section className="relative flex min-h-screen items-center overflow-hidden px-6 py-32">
       {/* Mesh gradient animated background */}
       <MeshGradientBackground />
       <div
@@ -20,35 +25,36 @@ export default function Hero() {
       />
       <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-bg/50 via-transparent to-bg/80" />
 
-      {/* Content — left-aligned on desktop */}
-      <div className="relative z-20 mx-auto w-full max-w-3xl text-center">
+      {/* Asymmetric split — content left, status panel right */}
+      <div className="relative z-20 mx-auto grid w-full max-w-6xl gap-16 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+        {/* Left — identity */}
         <div>
-          {/* Name */}
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-xs tracking-[0.3em] text-neutral-400 uppercase"
+            className="flex items-center gap-3 text-xs tracking-[0.3em] text-neutral-400 uppercase"
           >
+            <span className="h-px w-8 bg-accent-glow/50" />
             Mehdi Salhi
           </motion.h2>
 
-          {/* Title */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-4 font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl"
+            className="mt-5 font-display text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl"
           >
-            AWS Cloud<br />Engineer
+            AWS Cloud
+            <br />
+            Engineer
           </motion.h1>
 
-          {/* Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mx-auto mt-6 max-w-lg font-body text-lg leading-relaxed text-neutral-400"
+            className="mt-7 max-w-lg font-body text-lg leading-relaxed text-neutral-400"
           >
             Computer Science student graduating August 2026 (SNHU). Building
             serverless apps and AI agents on AWS.{" "}
@@ -57,12 +63,11 @@ export default function Hero() {
             </span>
           </motion.p>
 
-          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="mt-10 flex flex-wrap items-center justify-center gap-4"
+            className="mt-10 flex flex-wrap items-center gap-4"
           >
             <a
               href="#projects"
@@ -103,30 +108,53 @@ export default function Hero() {
               </svg>
             </a>
           </motion.div>
-
-          {/* Quick stats row */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="mt-16 flex flex-wrap justify-center gap-8 border-t border-white/5 pt-8"
-          >
-            {[
-              { value: "Unkommon.ai", label: "Built" },
-              { value: "AWS", label: "Cloud Platform" },
-              { value: "3.71", label: "GPA @ SNHU" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <p className="font-display text-sm font-semibold text-white">
-                  {stat.value}
-                </p>
-                <p className="mt-0.5 font-mono text-xs text-neutral-600">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </motion.div>
         </div>
+
+        {/* Right — console-style status panel */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.5 }}
+          className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-surface/50 backdrop-blur-sm"
+        >
+          <div className="flex items-center justify-between border-b border-white/[0.06] px-6 py-4">
+            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-neutral-500">
+              Profile
+            </span>
+            <span className="inline-flex items-center gap-2 font-mono text-[11px] text-neutral-400">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-400" />
+              </span>
+              Open to work
+            </span>
+          </div>
+
+          <div className="divide-y divide-white/[0.06]">
+            {stats.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, x: 12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: 0.7 + i * 0.1 }}
+                className="flex items-center justify-between px-6 py-5"
+              >
+                <span className="font-mono text-xs text-neutral-500">
+                  {stat.label}
+                </span>
+                <span className="font-display text-lg font-medium text-white">
+                  {stat.value}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="border-t border-white/[0.06] bg-bg/40 px-6 py-4">
+            <p className="font-mono text-[11px] text-neutral-600">
+              Stamford, CT — NYC metro
+            </p>
+          </div>
+        </motion.div>
       </div>
 
       {/* Scroll indicator */}

@@ -134,6 +134,7 @@ export default function Projects() {
           title="Projects"
           subtitle="Selected work and coursework"
           index="04 — Work"
+          align="left"
         />
 
         {/* Featured projects */}
@@ -145,18 +146,40 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-surface/60 transition-all hover:border-white/15"
+              className={`group relative overflow-hidden rounded-2xl border transition-all ${
+                idx === 0
+                  ? "border-accent/20 bg-gradient-to-br from-accent/[0.07] via-surface/60 to-surface/60 hover:border-accent/35"
+                  : "border-white/[0.08] bg-surface/60 hover:border-white/15"
+              }`}
             >
-              <div className="relative flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-10">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-2 -top-6 font-display text-[8rem] font-medium italic leading-none text-white/[0.03] select-none"
+              >
+                {String(idx + 1).padStart(2, "0")}
+              </span>
+
+              <div
+                className={`relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between ${
+                  idx === 0 ? "p-8 md:p-12" : "p-8 md:p-10"
+                }`}
+              >
                 <div className="max-w-xl">
                   <div className="mb-4 flex items-center gap-3">
+                    <span className="font-mono text-xs text-neutral-600">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
                     <span className="flex items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.04] px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-neutral-300">
                       <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white/60" />
                       {project.badge}
                     </span>
                   </div>
 
-                  <h3 className="font-display text-2xl font-semibold text-white">
+                  <h3
+                    className={`font-display font-semibold text-white ${
+                      idx === 0 ? "text-3xl lg:text-4xl" : "text-2xl"
+                    }`}
+                  >
                     {project.title}
                   </h3>
                   <p className="mt-3 font-body leading-relaxed text-neutral-400">
