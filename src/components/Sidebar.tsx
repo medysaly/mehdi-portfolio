@@ -75,6 +75,15 @@ export default function Sidebar() {
 
   useEffect(() => {
     const handleScroll = () => {
+      // At the bottom of the page, force the last section to be active.
+      // Short trailing sections may never span the detection line otherwise.
+      const scrollBottom = window.scrollY + window.innerHeight;
+      const nearBottom = scrollBottom >= document.documentElement.scrollHeight - 80;
+      if (nearBottom) {
+        setActive(nav[nav.length - 1].href.slice(1));
+        return;
+      }
+
       const sections = nav.map((n) => n.href.slice(1));
       const current = sections.find((id) => {
         const el = document.getElementById(id);
