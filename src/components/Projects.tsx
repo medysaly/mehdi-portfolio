@@ -63,12 +63,6 @@ const featured: Project[] = [
     github: "https://github.com/medysaly/company-policy-rag",
     badge: "Live Demo",
   },
-  {
-    title: "MuscleMeal AI",
-    description:
-      "iOS app that generates personalized meal recipes using Gemini AI, tailored to fitness goals and dietary preferences.",
-    stack: ["Swift", "SwiftUI", "Core Data", "Gemini API"],
-  },
 ];
 
 function LinkIcon() {
