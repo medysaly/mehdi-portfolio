@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { fraunces, ibmPlexSans, jetbrainsMono } from "./fonts";
-import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "Mehdi Salhi | AI/ML Engineer & Cloud Architect",
@@ -49,10 +48,6 @@ export default function RootLayout({
       className={`dark ${fraunces.variable} ${ibmPlexSans.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen bg-bg text-neutral-200 antialiased">
-        <a href="#main-content" className="skip-to-content">
-          Skip to content
-        </a>
-        <Navbar />
         {children}
       </body>
     </html>
