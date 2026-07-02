@@ -3,6 +3,7 @@ import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Certifications from "@/components/Certifications";
 import Projects from "@/components/Projects";
+import Coursework from "@/components/Coursework";
 import Contact from "@/components/Contact";
 
 export default function Home() {
@@ -23,6 +24,7 @@ export default function Home() {
           <Skills />
           <Certifications />
           <Projects />
+          <Coursework />
           <Contact />
 
           <footer className="mt-24 border-t border-white/[0.06] py-8">

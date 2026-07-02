@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
 import SectionHeading from "./SectionHeading";
 
 type Project = {
@@ -69,65 +68,6 @@ const featured: Project[] = [
     description:
       "iOS app that generates personalized meal recipes using Gemini AI, tailored to fitness goals and dietary preferences.",
     stack: ["Swift", "SwiftUI", "Core Data", "Gemini API"],
-  },
-];
-
-const coursework: Project[] = [
-  {
-    title: "CS-465 Full Stack Development",
-    description:
-      "End-to-end web application development. Frontend, backend, database, and deployment.",
-    stack: ["JavaScript", "Node.js", "MongoDB", "REST APIs"],
-    github: "https://github.com/medysaly/cs465-fullstack",
-  },
-  {
-    title: "CS-499 Capstone ePortfolio",
-    description:
-      "Final capstone project integrating software engineering, data structures, and algorithms.",
-    stack: ["Python", "Software Engineering"],
-    github: "https://github.com/medysaly/cs499-eportfolio",
-  },
-  {
-    title: "CS-370 Pirate Agent",
-    description:
-      "Reinforcement learning agent using deep Q-learning. Implemented epsilon-greedy exploration, experience replay, and a target network for stable Bellman updates. Reached 100% win rate at epoch 278.",
-    stack: ["Python", "TensorFlow", "Keras", "NumPy"],
-    github: "https://github.com/medysaly/CS-370-Pirate-Intelligent-Agent",
-  },
-  {
-    title: "CS-300 Data Structures & Algorithms",
-    description:
-      "Academic advising system using hash table and binary search tree data structures.",
-    stack: ["C++"],
-    github:
-      "https://github.com/medysaly/cs300-data-structures-algorithms-portfolio",
-  },
-  {
-    title: "CS-320 Software Testing",
-    description:
-      "Contact management system built with JUnit test-driven development and full test coverage.",
-    stack: ["Java", "JUnit"],
-    github: "https://github.com/medysaly/cs-320-portfolio",
-  },
-  {
-    title: "CS-340 Full-Stack Dashboard",
-    description:
-      "Full-stack CRUD dashboard for Grazioso Salvare. Real client project with data visualization and MongoDB backend.",
-    stack: ["Python", "MongoDB", "Jupyter", "Dash"],
-    github: "https://github.com/medysaly/CS-340-Client-server-Development",
-  },
-  {
-    title: "Introduction to Scripting",
-    description:
-      "Python fundamentals. Scripting, automation, and data manipulation.",
-    stack: ["Python"],
-  },
-  {
-    title: "CS-255 System Design",
-    description:
-      "Cloud-based driver education platform (DriverPass) with UML diagrams and system architecture.",
-    stack: ["UML", "System Design"],
-    github: "https://github.com/medysaly/medysaly-system-analysis-and-design",
   },
 ];
 
@@ -212,8 +152,6 @@ function ProjectItem({ project }: { project: Project }) {
 }
 
 export default function Projects() {
-  const [showCoursework, setShowCoursework] = useState(false);
-
   return (
     <section id="projects" className="mt-24 scroll-mt-24">
       <SectionHeading title="Projects" />
@@ -230,43 +168,6 @@ export default function Projects() {
             <ProjectItem project={project} />
           </motion.div>
         ))}
-      </div>
-
-      <div className="mt-10">
-        <button
-          onClick={() => setShowCoursework(!showCoursework)}
-          className="group flex items-center gap-2 text-[11px] uppercase tracking-widest text-neutral-400 transition-colors hover:text-white"
-          aria-expanded={showCoursework}
-        >
-          <span>{showCoursework ? "Hide" : "Show"} Coursework</span>
-          <span className="text-neutral-600">({coursework.length})</span>
-          <svg
-            className={`h-3 w-3 transition-transform ${showCoursework ? "rotate-180" : ""}`}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </button>
-
-        {showCoursework && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            transition={{ duration: 0.3 }}
-            className="mt-4 space-y-3 overflow-hidden"
-          >
-            {coursework.map((project) => (
-              <ProjectItem key={project.title} project={project} />
-            ))}
-          </motion.div>
-        )}
       </div>
     </section>
   );
