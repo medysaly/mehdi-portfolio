@@ -12,18 +12,18 @@ type Course = {
 
 const coursework: Course[] = [
   {
-    title: "CS-465 Full Stack Development",
-    description:
-      "End-to-end web application development. Frontend, backend, database, and deployment.",
-    stack: ["JavaScript", "Node.js", "MongoDB", "REST APIs"],
-    github: "https://github.com/medysaly/cs465-fullstack",
-  },
-  {
     title: "CS-499 Capstone ePortfolio",
     description:
       "Final capstone project integrating software engineering, data structures, and algorithms.",
     stack: ["Python", "Software Engineering"],
     github: "https://github.com/medysaly/cs499-eportfolio",
+  },
+  {
+    title: "CS-465 Full Stack Development",
+    description:
+      "End-to-end web application development. Frontend, backend, database, and deployment.",
+    stack: ["JavaScript", "Node.js", "MongoDB", "REST APIs"],
+    github: "https://github.com/medysaly/cs465-fullstack",
   },
   {
     title: "CS-370 Pirate Agent",
