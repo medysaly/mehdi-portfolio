@@ -33,16 +33,8 @@ const certs: Cert[] = [
     name: "HashiCorp Terraform Associate",
     issuer: "HashiCorp",
     level: "Associate",
-    date: "Late Jun 2026",
+    date: "Late Aug 2026",
     code: "TA-003",
-    status: "in-progress",
-  },
-  {
-    name: "AWS AI Practitioner",
-    issuer: "Amazon Web Services",
-    level: "Foundational",
-    date: "Jul 2026",
-    code: "AIF-C01",
     status: "in-progress",
   },
 ];
