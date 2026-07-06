@@ -113,10 +113,6 @@ export default function Sidebar() {
           <p className="mt-3 font-display text-lg text-neutral-300">
             AWS Cloud Engineer
           </p>
-          <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-neutral-500">
-            Computer Science student graduating August 2026 (SNHU). Building
-            serverless apps and AI agents on AWS.
-          </p>
 
           <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.02] px-3 py-1 text-xs text-neutral-400">
             <span className="relative flex h-1.5 w-1.5">
