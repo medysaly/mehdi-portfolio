@@ -28,6 +28,7 @@ const featured: Project[] = [
       "Vapi",
     ],
     link: "https://unkommon.ai",
+    github: "https://github.com/medysaly/unkommon",
     badge: "Featured",
   },
   {
@@ -92,27 +93,12 @@ function GithubIcon() {
 }
 
 function ProjectItem({ project }: { project: Project }) {
-  const primaryHref = project.link ?? project.github ?? "#";
-  const isExternal = primaryHref !== "#";
-
   return (
-    <a
-      href={primaryHref}
-      target={isExternal ? "_blank" : undefined}
-      rel={isExternal ? "noopener noreferrer" : undefined}
-      className="group block rounded-lg border border-white/[0.04] p-5 transition-colors hover:border-white/[0.12] hover:bg-white/[0.02]"
-    >
+    <div className="rounded-lg border border-white/[0.04] p-5 transition-colors hover:border-white/[0.12] hover:bg-white/[0.02]">
       <div className="flex items-start justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <h3 className="font-display text-base font-medium text-white transition-colors group-hover:text-accent-glow">
-            {project.title}
-          </h3>
-          {isExternal && (
-            <span className="text-neutral-600 transition-colors group-hover:text-accent-glow">
-              <LinkIcon />
-            </span>
-          )}
-        </div>
+        <h3 className="font-display text-base font-medium text-white">
+          {project.title}
+        </h3>
         {project.badge && (
           <span className="flex-shrink-0 rounded border border-accent/25 bg-accent/[0.06] px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-accent-glow">
             {project.badge}
@@ -135,13 +121,33 @@ function ProjectItem({ project }: { project: Project }) {
         ))}
       </div>
 
-      {project.github && project.link && (
-        <div className="mt-3 flex items-center gap-1.5 font-mono text-[11px] text-neutral-500">
-          <GithubIcon />
-          <span>Source available</span>
+      {(project.link || project.github) && (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {project.link && (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/btn inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-neutral-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+            >
+              <LinkIcon />
+              View Live
+            </a>
+          )}
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/btn inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-neutral-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+            >
+              <GithubIcon />
+              Source
+            </a>
+          )}
         </div>
       )}
-    </a>
+    </div>
   );
 }
 
