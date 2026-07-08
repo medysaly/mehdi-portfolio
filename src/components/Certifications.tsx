@@ -30,6 +30,14 @@ const certs: Cert[] = [
     status: "earned",
   },
   {
+    name: "Google IT Support Professional Certificate",
+    issuer: "Google",
+    level: "Professional",
+    date: "2024",
+    code: "v.3",
+    status: "earned",
+  },
+  {
     name: "HashiCorp Terraform Associate",
     issuer: "HashiCorp",
     level: "Associate",
