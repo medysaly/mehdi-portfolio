@@ -33,7 +33,7 @@ const certs: Cert[] = [
     name: "Google IT Support Professional Certificate",
     issuer: "Google",
     level: "Professional",
-    date: "2024",
+    date: "Jul 2026",
     code: "v.3",
     status: "earned",
   },
