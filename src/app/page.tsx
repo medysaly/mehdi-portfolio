@@ -5,6 +5,7 @@ import Certifications from "@/components/Certifications";
 import Projects from "@/components/Projects";
 import Coursework from "@/components/Coursework";
 import Contact from "@/components/Contact";
+import ChatWidget from "@/components/ChatWidget";
 
 export default function Home() {
   return (
@@ -35,6 +36,8 @@ export default function Home() {
           </footer>
         </main>
       </div>
+
+      <ChatWidget />
     </div>
   );
 }
