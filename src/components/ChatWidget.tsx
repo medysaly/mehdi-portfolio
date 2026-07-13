@@ -35,20 +35,10 @@ const introMessage: Message = {
     "Hi. I'm a chat version of Mehdi, trained on his portfolio, projects, and background. Ask me anything about his work.",
 };
 
-async function sendMessage(input: string): Promise<string> {
-  const res = await fetch("/api/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ question: input }),
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}) as { error?: string });
-    throw new Error(err.error ?? "Something went wrong");
-  }
-
-  const data = (await res.json()) as { answer?: string };
-  return data.answer ?? "No response";
+// Placeholder response — swap this for the API Gateway call when backend is ready
+async function sendMessage(_input: string): Promise<string> {
+  await new Promise((r) => setTimeout(r, 900));
+  return "Backend is coming soon. Once the API Gateway is wired up, this will hit Mehdi's chatbot running on AWS Lambda + Bedrock.";
 }
 
 function ChatIcon({ className = "" }: { className?: string }) {
