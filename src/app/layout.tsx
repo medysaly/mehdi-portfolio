@@ -3,15 +3,18 @@ import "./globals.css";
 import { fraunces, ibmPlexSans, jetbrainsMono } from "./fonts";
 
 export const metadata: Metadata = {
-  title: "Mehdi Salhi | AI/ML Engineer & Cloud Architect",
+  title: "Mehdi Salhi | Cloud & DevOps Engineer",
   description:
-    "AI/ML Engineer and Cloud Architect building intelligent systems on AWS. Built Unkommon.ai. Based in Stamford, CT.",
+    "Cloud & DevOps engineer building on AWS. AWS Certified Solutions Architect Associate & Cloud Practitioner. Built Unkommon.ai. Based in Stamford, CT.",
   keywords: [
-    "AI Engineer",
-    "ML Engineer",
-    "Cloud Architect",
-    "AWS",
-    "Next.js",
+    "Cloud Engineer",
+    "DevOps Engineer",
+    "AWS Certified",
+    "AWS Solutions Architect",
+    "Terraform",
+    "Kubernetes",
+    "Infrastructure as Code",
+    "CI/CD",
     "Unkommon",
     "Stamford CT",
   ],
@@ -21,18 +24,18 @@ export const metadata: Metadata = {
     apple: "/mehdi.png",
   },
   openGraph: {
-    title: "Mehdi Salhi | AI/ML Engineer & Cloud Architect",
+    title: "Mehdi Salhi | Cloud & DevOps Engineer",
     description:
-      "Building intelligent systems, AI agents, and agentic workflows on AWS. Built Unkommon.ai.",
+      "Cloud & DevOps engineer building on AWS. AWS Certified Solutions Architect Associate & Cloud Practitioner. Built Unkommon.ai.",
     url: "https://mehdisalhi.com",
     siteName: "Mehdi Salhi",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mehdi Salhi | AI/ML Engineer & Cloud Architect",
+    title: "Mehdi Salhi | Cloud & DevOps Engineer",
     description:
-      "Building intelligent systems, AI agents, and agentic workflows on AWS. Built Unkommon.ai.",
+      "Cloud & DevOps engineer building on AWS. AWS Certified Solutions Architect Associate & Cloud Practitioner. Built Unkommon.ai.",
     creator: "@medysaly",
   },
 };

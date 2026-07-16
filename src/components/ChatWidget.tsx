@@ -252,7 +252,7 @@ export default function ChatWidget() {
                       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-60" />
                       <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-400" />
                     </span>
-                    <span className="text-neutral-400">AWS Cloud Engineer</span>
+                    <span className="text-neutral-400">Cloud &amp; DevOps Engineer</span>
                     <span className="text-neutral-700">·</span>
                     <span>Available</span>
                   </p>
