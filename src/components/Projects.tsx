@@ -1,8 +1,19 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import {
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import { ArrowUpRightIcon, GithubIcon } from "./icons";
 
@@ -349,12 +360,54 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   );
 }
 
-export default function Projects() {
+function ProgressCue({
+  active,
+  onSelect,
+  hint,
+}: {
+  active: number;
+  onSelect: (i: number) => void;
+  hint: string;
+}) {
+  return (
+    <div className="mx-auto mt-8 flex max-w-6xl items-center justify-center gap-4 px-6 lg:px-8">
+      <span className="font-mono text-[13px] text-muted">
+        {String(active + 1).padStart(2, "0")}
+        <span className="text-muted-light">
+          {" "}
+          / {String(featured.length).padStart(2, "0")}
+        </span>
+      </span>
+
+      <div className="flex items-center gap-1.5">
+        {featured.map((project, i) => (
+          <button
+            key={project.title}
+            type="button"
+            onClick={() => onSelect(i)}
+            aria-label={`Go to ${project.title}`}
+            aria-current={i === active}
+            className={`h-1 rounded-full transition-all duration-300 ${
+              i === active ? "w-8 bg-ink" : "w-4 bg-line hover:bg-muted-light"
+            }`}
+          />
+        ))}
+      </div>
+
+      <span className="hidden font-mono text-[13px] text-muted-light sm:inline">
+        {hint}
+      </span>
+    </div>
+  );
+}
+
+/** Plain swipeable rail — touch, narrow screens, and anyone who has asked for
+ *  reduced motion. */
+function Rail() {
   const railRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
 
-  // Track which card sits nearest the rail's left edge — cards snap to start,
-  // so the leading card is the one the counter and segmented bar should show.
+  // Cards snap to start, so the leading card is the one the counter shows.
   const syncActive = useCallback(() => {
     const rail = railRef.current;
     if (!rail) return;
@@ -363,9 +416,9 @@ export default function Projects() {
     let nearest = 0;
     let best = Infinity;
     cards.forEach((card, i) => {
-      const distance = Math.abs(card.offsetLeft - lead);
-      if (distance < best) {
-        best = distance;
+      const gap = Math.abs(card.offsetLeft - lead);
+      if (gap < best) {
+        best = gap;
         nearest = i;
       }
     });
@@ -384,14 +437,134 @@ export default function Projects() {
     };
   }, [syncActive]);
 
-  const scrollTo = (i: number) => {
-    const rail = railRef.current;
-    const card = rail?.children[i] as HTMLElement | undefined;
-    if (!rail || !card) return;
-    // Let the browser honour the rail's scroll-padding rather than computing
-    // an offset that would have to duplicate it.
-    card.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="mt-12"
+    >
+      <div
+        ref={railRef}
+        // Padding lines the first card up with the section heading's content
+        // edge. scroll-padding has to match it: snap-start aligns to the
+        // padding edge, so without it the browser scrolls the padding straight
+        // back off and the card sits at x=0.
+        className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-2 scroll-pl-6 lg:px-[max(2rem,calc((100vw-72rem)/2+2rem))] lg:scroll-pl-[max(2rem,calc((100vw-72rem)/2+2rem))]"
+      >
+        {featured.map((project, i) => (
+          <ProjectCard key={project.title} project={project} index={i} />
+        ))}
+      </div>
+
+      <ProgressCue
+        active={active}
+        onSelect={(i) => {
+          const card = railRef.current?.children[i] as HTMLElement | undefined;
+          card?.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "start",
+          });
+        }}
+        hint="keep scrolling →"
+      />
+    </motion.div>
+  );
+}
+
+/** Pinned mode: the section holds the viewport while downward scroll is spent
+ *  travelling sideways across the cards, then releases the page. The wrapper is
+ *  one viewport tall plus exactly the horizontal distance, so no scroll is
+ *  invented or swallowed — it is the same scroll, redirected. */
+function PinnedTrack() {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [distance, setDistance] = useState(0);
+  const [active, setActive] = useState(0);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const track = trackRef.current;
+      if (!track) return;
+      // scrollWidth counts the leading padding but drops the trailing one on an
+      // overflowing flex row, so add it back — otherwise the travel stops short
+      // and the last card ends flush against the right edge.
+      const padRight = parseFloat(getComputedStyle(track).paddingRight) || 0;
+      setDistance(
+        Math.max(0, track.scrollWidth + padRight - window.innerWidth),
+      );
+    };
+
+    measure();
+    window.addEventListener("resize", measure);
+
+    // Screenshots that decode late change the track width.
+    const images = Array.from(trackRef.current?.querySelectorAll("img") ?? []);
+    images.forEach((img) => img.addEventListener("load", measure));
+
+    return () => {
+      window.removeEventListener("resize", measure);
+      images.forEach((img) => img.removeEventListener("load", measure));
+    };
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: wrapperRef,
+    offset: ["start start", "end end"],
+  });
+
+  const x = useTransform(scrollYProgress, [0, 1], [0, -distance]);
+
+  useMotionValueEvent(scrollYProgress, "change", (p) => {
+    setActive(Math.round(p * (featured.length - 1)));
+  });
+
+  const goTo = (i: number) => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    const ratio = featured.length > 1 ? i / (featured.length - 1) : 0;
+    window.scrollTo({
+      top: wrapper.offsetTop + ratio * distance,
+      behavior: "smooth",
+    });
   };
+
+  return (
+    <div ref={wrapperRef} style={{ height: `calc(100vh + ${distance}px)` }}>
+      <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
+        <motion.div
+          ref={trackRef}
+          style={{ x }}
+          className="flex gap-5 px-[max(2rem,calc((100vw-72rem)/2+2rem))] will-change-transform"
+        >
+          {featured.map((project, i) => (
+            <ProjectCard key={project.title} project={project} index={i} />
+          ))}
+        </motion.div>
+
+        <ProgressCue active={active} onSelect={goTo} hint="scroll to advance →" />
+      </div>
+    </div>
+  );
+}
+
+export default function Projects() {
+  // Pinning takes over the wheel, so it is opt-in: pointer-precise devices with
+  // room to show a card, and never when reduced motion is requested. Everyone
+  // else keeps the plain rail. Resolved after mount so SSR markup stays stable.
+  const [pinned, setPinned] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia(
+      "(min-width: 1024px) and (min-height: 700px) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+    );
+    const apply = () => setPinned(query.matches);
+    apply();
+    query.addEventListener("change", apply);
+    return () => query.removeEventListener("change", apply);
+  }, []);
 
   return (
     <section id="projects" className="scroll-mt-20 py-24 lg:py-28">
@@ -403,58 +576,7 @@ export default function Projects() {
         />
       </div>
 
-      {/* Full-bleed rail: cards run past the container so the neighbours peek,
-          exactly as on the reference. Padding centres the first and last card. */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="mt-12"
-      >
-        <div
-          ref={railRef}
-          // Padding lines the first card up with the section heading's content
-          // edge (container inset + px-8). scroll-padding has to match it:
-          // snap-start aligns to the padding edge, so without it the browser
-          // scrolls the padding straight back off and the card sits at x=0.
-          className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-2 scroll-pl-6 lg:px-[max(2rem,calc((100vw-72rem)/2+2rem))] lg:scroll-pl-[max(2rem,calc((100vw-72rem)/2+2rem))]"
-        >
-          {featured.map((project, i) => (
-            <ProjectCard key={project.title} project={project} index={i} />
-          ))}
-        </div>
-
-        {/* Progress cue */}
-        <div className="mx-auto mt-8 flex max-w-6xl items-center justify-center gap-4 px-6 lg:px-8">
-          <span className="font-mono text-[13px] text-muted">
-            {String(active + 1).padStart(2, "0")}
-            <span className="text-muted-light">
-              {" "}
-              / {String(featured.length).padStart(2, "0")}
-            </span>
-          </span>
-
-          <div className="flex items-center gap-1.5">
-            {featured.map((project, i) => (
-              <button
-                key={project.title}
-                type="button"
-                onClick={() => scrollTo(i)}
-                aria-label={`Go to ${project.title}`}
-                aria-current={i === active}
-                className={`h-1 rounded-full transition-all duration-300 ${
-                  i === active ? "w-8 bg-ink" : "w-4 bg-line hover:bg-muted-light"
-                }`}
-              />
-            ))}
-          </div>
-
-          <span className="hidden font-mono text-[13px] text-muted-light sm:inline">
-            keep scrolling &rarr;
-          </span>
-        </div>
-      </motion.div>
+      {pinned ? <PinnedTrack /> : <Rail />}
     </section>
   );
 }
