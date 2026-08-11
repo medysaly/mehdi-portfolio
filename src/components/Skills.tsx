@@ -82,33 +82,48 @@ const categories = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="mt-24 scroll-mt-24">
-      <SectionHeading title="Skills" />
+    <section id="skills" className="scroll-mt-20 px-6 py-24 lg:px-8 lg:py-28">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          eyebrow="skills"
+          title="Things I can do"
+          lead="the tools I use to take an idea from a blank AWS account to production"
+        />
 
-      <div className="space-y-8">
-        {categories.map((cat, i) => (
-          <motion.div
-            key={cat.title}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.4, delay: i * 0.05 }}
-          >
-            <h3 className="mb-3 text-[11px] uppercase tracking-widest text-neutral-500">
-              {cat.title}
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {cat.skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-md border border-white/[0.08] bg-white/[0.02] px-2.5 py-1 font-body text-xs text-neutral-300"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        ))}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-70px" }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-12 grid overflow-hidden rounded-xl border border-line sm:grid-cols-2"
+        >
+          {categories.map((cat, i) => {
+            const isLast = i === categories.length - 1;
+            return (
+              <div
+                key={cat.title}
+                className={`border-line-soft p-6 sm:p-7 ${
+                  !isLast && i % 2 === 0 ? "sm:border-r" : ""
+                } ${!isLast ? "border-b" : ""} ${isLast ? "sm:col-span-2" : ""}`}
+              >
+                <h3 className="font-display text-[18px] font-semibold tracking-[-0.03em] text-ink">
+                  {cat.title}
+                </h3>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {cat.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="rounded-md bg-paper-soft px-2.5 py-1.5 font-mono text-[13px] text-muted"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </motion.div>
       </div>
     </section>
   );

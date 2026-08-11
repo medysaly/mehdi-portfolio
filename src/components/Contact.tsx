@@ -1,46 +1,74 @@
 "use client";
 
 import { motion } from "framer-motion";
-import SectionHeading from "./SectionHeading";
+import { EMAIL, socials } from "./icons";
 
 export default function Contact() {
   return (
-    <section id="contact" className="mt-24 scroll-mt-24">
-      <SectionHeading title="Contact" />
+    <section
+      id="contact"
+      className="relative scroll-mt-20 overflow-hidden px-6 pt-28 lg:px-8"
+    >
+      {/* Dot grid, same texture as the hero. The colour wash behind this
+          section is owned by the page-level gradient in page.tsx. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-dot-grid bg-dot [-webkit-mask-image:linear-gradient(180deg,#000,transparent_70%)] [mask-image:linear-gradient(180deg,#000,transparent_70%)]"
+      />
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.5 }}
-        className="space-y-6 font-body text-base leading-relaxed text-neutral-400"
-      >
-        <p>
-          I&apos;m open to cloud engineering, DevOps, and AI infrastructure
-          roles. The best way to reach me is by email — I&apos;ll get back to
-          you within a day.
-        </p>
-
-        <a
-          href="mailto:mehdisalhi.dev@gmail.com"
-          className="inline-flex items-center gap-2 font-display text-lg text-white transition-colors hover:text-accent-glow"
+      <div className="relative mx-auto max-w-6xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mx-auto max-w-2xl text-center"
         >
-          mehdisalhi.dev@gmail.com
-          <svg
-            className="h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
+          <p className="font-mono text-[14px] text-accent">
+            <span className="opacity-60">##</span> say-hi
+          </p>
+
+          <h2 className="mt-5 font-display text-[2.5rem] font-extrabold leading-[1.05] tracking-[-0.03em] text-ink sm:text-[3.5rem]">
+            Thanks for visiting!
+          </h2>
+
+          <p className="mx-auto mt-6 max-w-xl font-body text-lead text-ink-soft">
+            My inbox is always open. Looking for cloud, DevOps, or platform
+            engineers? Or just want to talk about AWS? Send me an email and
+            I&apos;ll get back to you within a day.
+          </p>
+
+          <a
+            href={`mailto:${EMAIL}`}
+            className="group mt-10 inline-flex items-center gap-3 rounded-full bg-ink px-7 py-4 font-display text-[16px] font-semibold text-white transition-opacity duration-300 hover:opacity-80"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-            />
-          </svg>
-        </a>
-      </motion.div>
+            <span className="transition-transform duration-300 group-hover:translate-x-1">
+              &#10230;
+            </span>
+            {EMAIL}
+          </a>
+
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+            {socials.map(({ label, href }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-[14px] text-muted transition-colors hover:text-ink"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Footer sits inside the gradient, split off by a hairline */}
+        <div className="mt-24 flex flex-col items-center justify-between gap-3 border-t border-line py-7 font-mono text-[13px] text-muted sm:flex-row">
+          <p>&copy; {new Date().getFullYear()} Mehdi Salhi</p>
+          <p>designed &amp; built by Mehdi Salhi</p>
+        </div>
+      </div>
     </section>
   );
 }

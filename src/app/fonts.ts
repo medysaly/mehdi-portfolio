@@ -1,24 +1,15 @@
-import { Fraunces, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
+import { Bricolage_Grotesque } from "next/font/google";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 
-export const fraunces = Fraunces({
+// Display face — heavy, tight, slightly quirky grotesque used for all headings.
+export const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
-  weight: "variable",
-  style: ["normal", "italic"],
-  axes: ["opsz", "SOFT", "WONK"],
+  weight: ["600", "700", "800"],
 });
 
-export const ibmPlexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  variable: "--font-body",
-  display: "swap",
-  weight: ["300", "400", "500", "600"],
-});
-
-export const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-  weight: ["400", "500"],
-});
+// Geist ships as its own package (not in next/font/google's manifest).
+export const geistSans = GeistSans;
+export const geistMono = GeistMono;

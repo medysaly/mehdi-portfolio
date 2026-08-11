@@ -10,62 +10,65 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: #ffffff;
 }
 
 body {
-  background-color: #0a0a0a;
-  color: #e5e5e5;
-  font-family: var(--font-body), system-ui, sans-serif;
+  background-color: #ffffff;
+  color: #333333;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background-color: rgba(184, 137, 90, 0.3);
-  color: #fff;
+  background-color: rgba(0, 102, 255, 0.15);
+  color: #000000;
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #f6f6f7;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 3px;
+  background: #d4d4d8;
+  border: 3px solid #f6f6f7;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #a1a1aa;
 }
 
 /* Firefox scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #333 #0a0a0a;
+  scrollbar-color: #d4d4d8 #f6f6f7;
 }
 
-/* Skip to content link */
-.skip-to-content {
-  position: absolute;
-  top: -100%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  padding: 0.75rem 1.5rem;
-  background: #b8895a;
-  color: white;
-  border-radius: 0 0 0.5rem 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: top 0.2s ease;
+/* Horizontal rails (projects carousel, side-quest marquee) hide their bar but
+   stay scrollable — the reference does the same and cues it with a label. */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.skip-to-content:focus {
-  top: 0;
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Consistent focus ring across interactive elements */
+a:focus-visible,
+button:focus-visible,
+textarea:focus-visible,
+input:focus-visible {
+  outline: 2px solid #0066ff;
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 /* Respect reduced motion */

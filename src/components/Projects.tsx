@@ -1,22 +1,35 @@
 "use client";
 
+import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
+import { ArrowUpRightIcon, GithubIcon } from "./icons";
 
 type Project = {
   title: string;
+  tagline: string;
   description: string;
+  highlights: string[];
   stack: string[];
   link?: string;
   github?: string;
   badge?: string;
+  /** Live screenshot. Absent projects fall back to the spec panel below. */
+  image?: string;
 };
 
 const featured: Project[] = [
   {
     title: "Unkommon.ai",
+    tagline: "An AI receptionist that answers the phone and books the meeting",
     description:
-      "Solo-built AI services platform on AWS. Voice receptionist (Vapi + Bedrock + Lambda) and website chatbot that qualify leads and book appointments via Google Calendar. Fully serverless. Lambda, Bedrock (Claude Sonnet 4.5 / Haiku 4.5), DynamoDB, API Gateway, Cognito, Amplify. React + TypeScript frontend, deployed via AWS SAM.",
+      "A solo-built AI services platform on AWS. A voice receptionist (Vapi + Bedrock + Lambda) and a website chatbot qualify inbound leads and book appointments straight into Google Calendar. Fully serverless, from auth to inference.",
+    highlights: [
+      "Serverless end to end — Lambda, API Gateway, DynamoDB, Cognito, Amplify",
+      "Claude Sonnet 4.5 and Haiku 4.5 on Amazon Bedrock for voice and chat",
+      "Infrastructure defined and deployed with AWS SAM",
+    ],
     stack: [
       "React",
       "TypeScript",
@@ -29,12 +42,19 @@ const featured: Project[] = [
     ],
     link: "https://unkommon.ai",
     github: "https://github.com/medysaly/unkommon",
-    badge: "Featured",
+    badge: "Flagship",
+    image: "/projects/unkommon.jpg",
   },
   {
     title: "Bees Knees AI",
+    tagline: "A marketing site with a chatbot that costs 90% less to run",
     description:
-      "Live marketing site for an AI agency with an embedded chatbot (Buzz) built on Claude Sonnet 4. Streaming SSE, prompt caching for ~90% cost reduction, per-IP rate limiting, and full security headers (HSTS, CSP, Permissions-Policy). Cal.com booking integration and a custom WebGL shader hero.",
+      "Live marketing site for an AI agency with an embedded chatbot (Buzz) built on Claude Sonnet 4. Streaming responses over SSE, prompt caching, per-IP rate limiting, and a full security header policy.",
+    highlights: [
+      "Prompt caching cut inference cost roughly 90%",
+      "Hardened with HSTS, CSP, and Permissions-Policy headers",
+      "Cal.com booking flow and a custom WebGL shader hero",
+    ],
     stack: [
       "Next.js 16",
       "React 19",
@@ -46,12 +66,19 @@ const featured: Project[] = [
     ],
     link: "https://beesknees.ai",
     github: "https://github.com/medysaly/beesknees-website",
-    badge: "Live Site",
+    badge: "Live site",
+    image: "/projects/beesknees.jpg",
   },
   {
     title: "Company Policy RAG System",
+    tagline: "Ask your documents anything — and measure whether it answered well",
     description:
-      "Production-grade RAG system with hybrid search, cross-encoder reranking, and RAGAS evaluation metrics. Upload any document and ask questions in natural language. Built with Python, LangChain, FastAPI, deployed on Hugging Face.",
+      "A production-grade retrieval system with hybrid search, cross-encoder reranking, and RAGAS evaluation metrics. Upload any document set and query it in natural language.",
+    highlights: [
+      "Hybrid BM25 + dense retrieval with cross-encoder reranking",
+      "RAGAS metrics to score faithfulness and answer relevance",
+      "Python and FastAPI backend, deployed on Hugging Face Spaces",
+    ],
     stack: [
       "Python",
       "LangChain",
@@ -62,76 +89,126 @@ const featured: Project[] = [
     ],
     link: "https://huggingface.co/spaces/medysaly/company-policy-rag",
     github: "https://github.com/medysaly/company-policy-rag",
-    badge: "Live Demo",
+    badge: "Live demo",
   },
 ];
 
-function LinkIcon() {
-  return (
-    <svg
-      className="h-3.5 w-3.5"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-      />
-    </svg>
-  );
-}
+/** Stand-in for projects with no screenshot — a pipeline diagram, not a mock UI. */
+function SpecPanel({ project }: { project: Project }) {
+  const steps = ["query", "hybrid retrieve", "rerank", "generate", "score"];
 
-function GithubIcon() {
   return (
-    <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-    </svg>
-  );
-}
-
-function ProjectItem({ project }: { project: Project }) {
-  return (
-    <div className="rounded-lg border border-white/[0.04] p-5 transition-colors hover:border-white/[0.12] hover:bg-white/[0.02]">
-      <div className="flex items-start justify-between gap-4">
-        <h3 className="font-display text-base font-medium text-white">
-          {project.title}
-        </h3>
-        {project.badge && (
-          <span className="flex-shrink-0 rounded border border-accent/25 bg-accent/[0.06] px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-accent-glow">
-            {project.badge}
-          </span>
-        )}
-      </div>
-
-      <p className="mt-2 font-body text-sm leading-relaxed text-neutral-400">
-        {project.description}
+    <div className="flex h-full w-full flex-col justify-center gap-6 bg-[linear-gradient(150deg,#f7f9fc_0%,#eef2fb_100%)] px-8 py-10 sm:px-12">
+      <p className="font-mono text-[12px] uppercase tracking-widest text-muted-light">
+        retrieval pipeline
       </p>
 
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        {project.stack.map((tech) => (
+      <ul className="space-y-2.5">
+        {steps.map((step, i) => (
+          <li key={step} className="flex items-center gap-3">
+            <span className="font-mono text-[12px] text-muted-light">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span className="h-px flex-shrink-0 bg-line" style={{ width: 18 + i * 14 }} />
+            <span className="font-display text-[15px] font-semibold tracking-[-0.02em] text-ink sm:text-[17px]">
+              {step}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <div className="flex flex-wrap gap-2">
+        {["BM25", "dense", "cross-encoder", "RAGAS"].map((tag) => (
           <span
-            key={tech}
-            className="rounded bg-white/[0.03] px-2 py-0.5 font-mono text-[10px] text-neutral-500"
+            key={tag}
+            className="rounded-md border border-line bg-white/70 px-2.5 py-1 font-mono text-[12px] text-muted"
           >
-            {tech}
+            {tag}
           </span>
         ))}
       </div>
+    </div>
+  );
+}
 
-      {(project.link || project.github) && (
-        <div className="mt-4 flex flex-wrap gap-2">
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  return (
+    <article className="w-[86vw] max-w-[820px] flex-shrink-0 snap-center overflow-hidden rounded-2xl border border-line bg-white transition-colors duration-300 hover:border-muted-light">
+      {/* Visual */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line-soft bg-paper-soft">
+        {project.image ? (
+          <Image
+            src={project.image}
+            alt={`${project.title} screenshot`}
+            fill
+            sizes="(max-width: 900px) 86vw, 820px"
+            className="object-cover object-top"
+          />
+        ) : (
+          <SpecPanel project={project} />
+        )}
+      </div>
+
+      {/* Caption */}
+      <div className="p-7 sm:p-9">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="font-mono text-[13px] text-muted-light">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <h3 className="font-display text-[24px] font-bold tracking-[-0.03em] text-ink sm:text-[26px]">
+            {project.title}
+          </h3>
+          {project.badge && (
+            <span className="rounded-md bg-accent-soft px-2.5 py-1 font-mono text-[12px] text-accent">
+              {project.badge}
+            </span>
+          )}
+        </div>
+
+        <p className="mt-2 font-body text-[16px] text-accent sm:text-[17px]">
+          {project.tagline}
+        </p>
+
+        <p className="mt-4 font-body text-[15.5px] leading-[1.65] text-ink-soft sm:text-[16px]">
+          {project.description}
+        </p>
+
+        <ul className="mt-5 space-y-2.5">
+          {project.highlights.map((point) => (
+            <li
+              key={point}
+              className="flex gap-3 font-body text-[14.5px] leading-relaxed text-muted"
+            >
+              <span
+                aria-hidden
+                className="mt-2 h-1 w-1 flex-shrink-0 rounded-full bg-accent"
+              />
+              {point}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-6 flex flex-wrap gap-2">
+          {project.stack.map((tech) => (
+            <span
+              key={tech}
+              className="rounded-md bg-paper-soft px-2.5 py-1.5 font-mono text-[13px] text-muted"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-7 flex flex-wrap gap-3">
           {project.link && (
             <a
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group/btn inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-neutral-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 font-display text-[14px] font-semibold text-white transition-opacity duration-300 hover:opacity-80"
             >
-              <LinkIcon />
-              View Live
+              View live
+              <ArrowUpRightIcon className="h-3.5 w-3.5" />
             </a>
           )}
           {project.github && (
@@ -139,36 +216,119 @@ function ProjectItem({ project }: { project: Project }) {
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="group/btn inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-neutral-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-5 py-2.5 font-display text-[14px] font-semibold text-ink transition-colors duration-300 hover:border-ink"
             >
-              <GithubIcon />
+              <GithubIcon className="h-3.5 w-3.5" />
               Source
             </a>
           )}
         </div>
-      )}
-    </div>
+      </div>
+    </article>
   );
 }
 
 export default function Projects() {
-  return (
-    <section id="projects" className="mt-24 scroll-mt-24">
-      <SectionHeading title="Projects" />
+  const railRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
 
-      <div className="space-y-3">
-        {featured.map((project, i) => (
-          <motion.div
-            key={project.title}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.4, delay: i * 0.05 }}
-          >
-            <ProjectItem project={project} />
-          </motion.div>
-        ))}
+  // Track which card sits nearest the rail's centre so the counter and the
+  // segmented bar below stay in sync with a free (non-paged) scroll.
+  const syncActive = useCallback(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const centre = rail.scrollLeft + rail.clientWidth / 2;
+    const cards = Array.from(rail.children) as HTMLElement[];
+    let nearest = 0;
+    let best = Infinity;
+    cards.forEach((card, i) => {
+      const cardCentre = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(cardCentre - centre);
+      if (distance < best) {
+        best = distance;
+        nearest = i;
+      }
+    });
+    setActive(nearest);
+  }, []);
+
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+    syncActive();
+    rail.addEventListener("scroll", syncActive, { passive: true });
+    window.addEventListener("resize", syncActive);
+    return () => {
+      rail.removeEventListener("scroll", syncActive);
+      window.removeEventListener("resize", syncActive);
+    };
+  }, [syncActive]);
+
+  const scrollTo = (i: number) => {
+    const rail = railRef.current;
+    const card = rail?.children[i] as HTMLElement | undefined;
+    if (!rail || !card) return;
+    rail.scrollTo({
+      left: card.offsetLeft - (rail.clientWidth - card.offsetWidth) / 2,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <section id="projects" className="scroll-mt-20 py-24 lg:py-28">
+      <div className="mx-auto max-w-6xl px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="projects"
+          title="Some things I've built"
+          lead="three projects I shipped end to end — architecture, code, deployment, and the bill"
+        />
       </div>
+
+      {/* Full-bleed rail: cards run past the container so the neighbours peek,
+          exactly as on the reference. Padding centres the first and last card. */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="mt-12"
+      >
+        <div
+          ref={railRef}
+          className="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto px-[max(1.5rem,calc((100vw-820px)/2))] pb-2"
+        >
+          {featured.map((project, i) => (
+            <ProjectCard key={project.title} project={project} index={i} />
+          ))}
+        </div>
+
+        {/* Progress cue */}
+        <div className="mx-auto mt-8 flex max-w-6xl items-center justify-center gap-4 px-6 lg:px-8">
+          <span className="font-mono text-[13px] text-muted">
+            {String(active + 1).padStart(2, "0")}
+            <span className="text-muted-light"> / {String(featured.length).padStart(2, "0")}</span>
+          </span>
+
+          <div className="flex items-center gap-1.5">
+            {featured.map((project, i) => (
+              <button
+                key={project.title}
+                type="button"
+                onClick={() => scrollTo(i)}
+                aria-label={`Go to ${project.title}`}
+                aria-current={i === active}
+                className={`h-1 rounded-full transition-all duration-300 ${
+                  i === active ? "w-8 bg-ink" : "w-4 bg-line hover:bg-muted-light"
+                }`}
+              />
+            ))}
+          </div>
+
+          <span className="hidden font-mono text-[13px] text-muted-light sm:inline">
+            keep scrolling &rarr;
+          </span>
+        </div>
+      </motion.div>
     </section>
   );
 }
