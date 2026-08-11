@@ -189,34 +189,34 @@ const featured: Project[] = [
 /** Stand-in for projects with no live site — a real pipeline, not a mock UI. */
 function SpecPanel({ panel }: { panel: Panel }) {
   return (
-    <div className="flex h-full w-full flex-col justify-center gap-6 bg-[linear-gradient(150deg,#f7f9fc_0%,#eef2fb_100%)] px-8 py-10 sm:px-12">
-      <p className="font-mono text-[12px] uppercase tracking-widest text-muted-light">
+    <div className="flex h-full w-full flex-col justify-center gap-5 bg-[linear-gradient(150deg,#f7f9fc_0%,#eef2fb_100%)] px-7 py-8 sm:px-9">
+      <p className="font-mono text-[11px] uppercase tracking-widest text-muted-light">
         {panel.label}
       </p>
 
-      <ul className="space-y-2.5">
+      <ul className="space-y-2">
         {panel.steps.map((step, i) => (
-          <li key={step} className="flex items-center gap-3">
-            <span className="font-mono text-[12px] text-muted-light">
+          <li key={step} className="flex items-center gap-2.5">
+            <span className="font-mono text-[11px] text-muted-light">
               {String(i + 1).padStart(2, "0")}
             </span>
             <span
               aria-hidden
               className="h-px flex-shrink-0 bg-line"
-              style={{ width: 16 + i * 12 }}
+              style={{ width: 14 + i * 10 }}
             />
-            <span className="font-display text-[14px] font-semibold tracking-[-0.02em] text-ink sm:text-[16px]">
+            <span className="font-display text-[13px] font-semibold tracking-[-0.02em] text-ink sm:text-[14px]">
               {step}
             </span>
           </li>
         ))}
       </ul>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-1.5">
         {panel.tags.map((tag) => (
           <span
             key={tag}
-            className="rounded-md border border-line bg-white/70 px-2.5 py-1 font-mono text-[12px] text-muted"
+            className="rounded-md border border-line bg-white/70 px-2 py-0.5 font-mono text-[11px] text-muted"
           >
             {tag}
           </span>
@@ -228,7 +228,9 @@ function SpecPanel({ panel }: { panel: Panel }) {
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
-    <article className="w-[86vw] max-w-[820px] flex-shrink-0 snap-center overflow-hidden rounded-2xl border border-line bg-white transition-colors duration-300 hover:border-muted-light">
+    // Card width is duplicated in the rail's padding calc below — keep the two
+    // in step or the first and last card stop centring.
+    <article className="w-[84vw] max-w-[680px] flex-shrink-0 snap-center overflow-hidden rounded-2xl border border-line bg-white transition-colors duration-300 hover:border-muted-light">
       {/* Visual */}
       <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line-soft bg-paper-soft">
         {project.image ? (
@@ -236,7 +238,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             src={project.image}
             alt={`${project.title} screenshot`}
             fill
-            sizes="(max-width: 900px) 86vw, 820px"
+            sizes="(max-width: 760px) 84vw, 680px"
             className="object-cover object-top"
           />
         ) : (
@@ -245,65 +247,65 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       </div>
 
       {/* Caption */}
-      <div className="p-7 sm:p-9">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="font-mono text-[13px] text-muted-light">
+      <div className="p-6 sm:p-7">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <span className="font-mono text-[12px] text-muted-light">
             {String(index + 1).padStart(2, "0")}
           </span>
-          <h3 className="font-display text-[24px] font-bold tracking-[-0.03em] text-ink sm:text-[26px]">
+          <h3 className="font-display text-[20px] font-bold tracking-[-0.03em] text-ink sm:text-[22px]">
             {project.title}
           </h3>
           {project.badge && (
-            <span className="rounded-md bg-accent-soft px-2.5 py-1 font-mono text-[12px] text-accent">
+            <span className="rounded-md bg-accent-soft px-2 py-0.5 font-mono text-[11.5px] text-accent">
               {project.badge}
             </span>
           )}
         </div>
 
-        <p className="mt-2 font-body text-[16px] text-accent sm:text-[17px]">
+        <p className="mt-1.5 font-body text-[14.5px] text-accent sm:text-[15px]">
           {project.tagline}
         </p>
 
-        <p className="mt-4 font-body text-[15.5px] leading-[1.65] text-ink-soft sm:text-[16px]">
+        <p className="mt-3 font-body text-[14px] leading-[1.6] text-ink-soft sm:text-[14.5px]">
           {project.description}
         </p>
 
-        <ul className="mt-5 space-y-2.5">
+        <ul className="mt-4 space-y-2">
           {project.highlights.map((point) => (
             <li
               key={point}
-              className="flex gap-3 font-body text-[14.5px] leading-relaxed text-muted"
+              className="flex gap-2.5 font-body text-[13px] leading-relaxed text-muted"
             >
               <span
                 aria-hidden
-                className="mt-2 h-1 w-1 flex-shrink-0 rounded-full bg-accent"
+                className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-accent"
               />
               {point}
             </li>
           ))}
         </ul>
 
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div className="mt-4 flex flex-wrap gap-1.5">
           {project.stack.map((tech) => (
             <span
               key={tech}
-              className="rounded-md bg-paper-soft px-2.5 py-1.5 font-mono text-[13px] text-muted"
+              className="rounded-md bg-paper-soft px-2 py-1 font-mono text-[11.5px] text-muted"
             >
               {tech}
             </span>
           ))}
         </div>
 
-        <div className="mt-7 flex flex-wrap gap-3">
+        <div className="mt-5 flex flex-wrap gap-2.5">
           {project.link && (
             <a
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 font-display text-[14px] font-semibold text-white transition-opacity duration-300 hover:opacity-80"
+              className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 font-display text-[13px] font-semibold text-white transition-opacity duration-300 hover:opacity-80"
             >
               View live
-              <ArrowUpRightIcon className="h-3.5 w-3.5" />
+              <ArrowUpRightIcon className="h-3 w-3" />
             </a>
           )}
           {project.github && (
@@ -311,13 +313,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-display text-[14px] font-semibold transition-colors duration-300 ${
+              className={`inline-flex items-center gap-2 rounded-full px-4 py-2 font-display text-[13px] font-semibold transition-colors duration-300 ${
                 project.link
                   ? "border border-line bg-white text-ink hover:border-ink"
                   : "bg-ink text-white transition-opacity hover:opacity-80"
               }`}
             >
-              <GithubIcon className="h-3.5 w-3.5" />
+              <GithubIcon className="h-3 w-3" />
               {project.link ? "Source" : "View source"}
             </a>
           )}
@@ -394,7 +396,7 @@ export default function Projects() {
       >
         <div
           ref={railRef}
-          className="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto px-[max(1.5rem,calc((100vw-820px)/2))] pb-2"
+          className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-[max(1.5rem,calc((100vw-680px)/2))] pb-2"
         >
           {featured.map((project, i) => (
             <ProjectCard key={project.title} project={project} index={i} />
