@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 const fadeUp = {
@@ -9,14 +8,6 @@ const fadeUp = {
 };
 
 const ease = [0.16, 1, 0.3, 1] as const;
-
-const stack = [
-  { layer: "Application", tools: "React · TypeScript · Python" },
-  { layer: "Delivery", tools: "GitHub Actions · ArgoCD · GitOps" },
-  { layer: "Runtime", tools: "Docker · Kubernetes · Lambda" },
-  { layer: "Provisioning", tools: "Terraform · AWS CDK" },
-  { layer: "Cloud", tools: "Amazon Web Services" },
-];
 
 export default function Hero() {
   return (
@@ -31,8 +22,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0 bg-dot-grid bg-dot [-webkit-mask-image:radial-gradient(75%_65%_at_50%_45%,#000,transparent)] [mask-image:radial-gradient(75%_65%_at_50%_45%,#000,transparent)]"
       />
 
-      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-14 md:grid-cols-[1.05fr_0.95fr]">
-        {/* Copy */}
+      <div className="relative mx-auto w-full max-w-6xl">
         <motion.div
           initial="hidden"
           animate="show"
@@ -63,7 +53,7 @@ export default function Hero() {
           <motion.p
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
-            className="mt-6 max-w-xl font-body text-lead text-ink-soft"
+            className="mt-6 max-w-2xl font-body text-lead text-ink-soft"
           >
             A Cloud &amp; DevOps engineer who builds on AWS.
             <br className="hidden sm:inline" /> I design infrastructure and
@@ -101,60 +91,17 @@ export default function Hero() {
               Say hi
             </a>
           </motion.div>
-        </motion.div>
 
-        {/* Stack card */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.25, ease }}
-          className="relative mx-auto w-full max-w-[380px] md:max-w-none"
-        >
-          <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-card">
-            <div className="flex items-center gap-2.5 border-b border-line-soft px-5 py-3.5">
-              <Image
-                src="/mehdi.png"
-                alt=""
-                width={64}
-                height={64}
-                priority
-                className="h-6 w-6 rounded-md object-contain"
-              />
-              <span className="font-mono text-[13px] text-muted">
-                the stack I work in
-              </span>
-            </div>
-
-            <ul className="divide-y divide-line-soft">
-              {stack.map((layer) => (
-                <li key={layer.layer} className="px-5 py-3.5">
-                  <p className="font-mono text-[11px] uppercase tracking-widest text-muted-light">
-                    {layer.layer}
-                  </p>
-                  <p className="mt-1 font-display text-[15px] font-semibold tracking-[-0.02em] text-ink">
-                    {layer.tools}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Floating status bubble — the reference hangs one off its hero
-              visual. Three layers on purpose: the outer div owns the centring
-              transform, the motion layer only fades (a `y` here would blow away
-              the -translate-x-1/2), and the span owns the drift animation. */}
-          <div className="pointer-events-none absolute -bottom-6 left-1/2 -translate-x-1/2">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.75, ease }}
-            >
-              <span className="flex animate-float items-center gap-2 whitespace-nowrap rounded-full border border-line bg-white px-3.5 py-2 font-mono text-[12.5px] text-muted shadow-pill">
-                <span aria-hidden>&#9729;</span>
-                probably deploying something right now
-              </span>
-            </motion.div>
-          </div>
+          {/* Status line — carries the personality the floating bubble used to,
+              now that there is no hero visual to hang it off. */}
+          <motion.p
+            variants={fadeUp}
+            transition={{ duration: 0.6, ease }}
+            className="mt-10 flex items-center gap-2 font-mono text-[12.5px] text-muted-light"
+          >
+            <span aria-hidden>&#9729;</span>
+            probably deploying something right now
+          </motion.p>
         </motion.div>
       </div>
 
