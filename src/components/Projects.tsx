@@ -189,7 +189,8 @@ const featured: Project[] = [
 /** Stand-in for projects with no live site — a real pipeline, not a mock UI. */
 function SpecPanel({ panel }: { panel: Panel }) {
   return (
-    <div className="flex h-full w-full flex-col justify-center gap-5 bg-[linear-gradient(150deg,#f7f9fc_0%,#eef2fb_100%)] px-7 py-8 sm:px-9">
+    // Wash lives on the parent column so screenshot and panel cards match.
+    <div className="flex h-full w-full flex-col justify-center gap-5 px-7 py-8 sm:px-9">
       <p className="font-mono text-[11px] uppercase tracking-widest text-muted-light">
         {panel.label}
       </p>
@@ -231,16 +232,35 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     // Visual beside the text rather than above it, so the whole card fits on
     // screen without vertical scrolling. Stacks back to vertical on mobile.
     <article className="flex w-[88vw] max-w-[940px] flex-shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-line bg-white transition-colors duration-300 hover:border-muted-light sm:flex-row">
-      {/* Visual — stretches to the content column's height on desktop */}
-      <div className="relative aspect-[16/10] w-full flex-shrink-0 overflow-hidden border-b border-line-soft bg-paper-soft sm:aspect-auto sm:w-[42%] sm:border-b-0 sm:border-r">
+      {/* Visual. The screenshots are 16:10, but this column is tall and narrow —
+          cropping them to fill it slices the page mid-word. So the shot sits
+          whole inside a browser frame, centred on the same wash the
+          architecture panels use, and the two card types stay consistent. */}
+      <div className="relative flex w-full flex-shrink-0 items-center justify-center overflow-hidden border-b border-line-soft bg-[linear-gradient(150deg,#f7f9fc_0%,#eef2fb_100%)] sm:w-[42%] sm:border-b-0 sm:border-r">
         {project.image ? (
-          <Image
-            src={project.image}
-            alt={`${project.title} screenshot`}
-            fill
-            sizes="(max-width: 640px) 88vw, 400px"
-            className="object-cover object-top"
-          />
+          <div className="w-full p-6 sm:p-7">
+            <div className="overflow-hidden rounded-lg border border-line bg-white shadow-card">
+              <div className="flex items-center gap-1.5 border-b border-line-soft bg-paper-soft px-3 py-2">
+                <span className="h-2 w-2 rounded-full bg-line" />
+                <span className="h-2 w-2 rounded-full bg-line" />
+                <span className="h-2 w-2 rounded-full bg-line" />
+                {project.link && (
+                  <span className="ml-1.5 truncate font-mono text-[10px] text-muted-light">
+                    {new URL(project.link).hostname.replace(/^www\./, "")}
+                  </span>
+                )}
+              </div>
+              <div className="relative aspect-[16/10] w-full">
+                <Image
+                  src={project.image}
+                  alt={`${project.title} screenshot`}
+                  fill
+                  sizes="(max-width: 640px) 80vw, 340px"
+                  className="object-cover object-top"
+                />
+              </div>
+            </div>
+          </div>
         ) : (
           project.panel && <SpecPanel panel={project.panel} />
         )}
