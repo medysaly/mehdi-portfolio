@@ -90,10 +90,10 @@ const featured: Project[] = [
       label: "daily brief pipeline",
       steps: [
         "EventBridge (daily)",
-        "Lambda container (arm64)",
-        "yfinance → price + news",
+        "Lambda (arm64)",
+        "yfinance → data",
         "Claude → summary",
-        "CloudWatch structured logs",
+        "CloudWatch logs",
       ],
       tags: ["ECR", "Secrets Manager", "Terraform", "OIDC"],
     },
@@ -152,12 +152,12 @@ const featured: Project[] = [
       label: "retrieval pipeline",
       steps: [
         "query",
-        "hybrid retrieve (BM25 + dense)",
+        "hybrid retrieve",
         "cross-encoder rerank",
         "generate",
         "RAGAS score",
       ],
-      tags: ["FastAPI", "Streamlit", "Docker", "1.00 faithfulness"],
+      tags: ["FastAPI", "Streamlit", "Docker", "1.00 faith."],
     },
   },
   {
@@ -228,17 +228,17 @@ function SpecPanel({ panel }: { panel: Panel }) {
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
-    // Card width is duplicated in the rail's padding calc below — keep the two
-    // in step or the first and last card stop centring.
-    <article className="w-[84vw] max-w-[680px] flex-shrink-0 snap-center overflow-hidden rounded-2xl border border-line bg-white transition-colors duration-300 hover:border-muted-light">
-      {/* Visual */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line-soft bg-paper-soft">
+    // Visual beside the text rather than above it, so the whole card fits on
+    // screen without vertical scrolling. Stacks back to vertical on mobile.
+    <article className="flex w-[88vw] max-w-[940px] flex-shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-line bg-white transition-colors duration-300 hover:border-muted-light sm:flex-row">
+      {/* Visual — stretches to the content column's height on desktop */}
+      <div className="relative aspect-[16/10] w-full flex-shrink-0 overflow-hidden border-b border-line-soft bg-paper-soft sm:aspect-auto sm:w-[42%] sm:border-b-0 sm:border-r">
         {project.image ? (
           <Image
             src={project.image}
             alt={`${project.title} screenshot`}
             fill
-            sizes="(max-width: 760px) 84vw, 680px"
+            sizes="(max-width: 640px) 88vw, 400px"
             className="object-cover object-top"
           />
         ) : (
@@ -247,7 +247,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       </div>
 
       {/* Caption */}
-      <div className="p-6 sm:p-7">
+      <div className="min-w-0 flex-1 p-6 sm:p-7">
         <div className="flex flex-wrap items-center gap-2.5">
           <span className="font-mono text-[12px] text-muted-light">
             {String(index + 1).padStart(2, "0")}
@@ -333,18 +333,17 @@ export default function Projects() {
   const railRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
 
-  // Track which card sits nearest the rail's centre so the counter and the
-  // segmented bar below stay in sync with a free (non-paged) scroll.
+  // Track which card sits nearest the rail's left edge — cards snap to start,
+  // so the leading card is the one the counter and segmented bar should show.
   const syncActive = useCallback(() => {
     const rail = railRef.current;
     if (!rail) return;
-    const centre = rail.scrollLeft + rail.clientWidth / 2;
+    const lead = rail.scrollLeft + rail.offsetLeft;
     const cards = Array.from(rail.children) as HTMLElement[];
     let nearest = 0;
     let best = Infinity;
     cards.forEach((card, i) => {
-      const cardCentre = card.offsetLeft + card.offsetWidth / 2;
-      const distance = Math.abs(cardCentre - centre);
+      const distance = Math.abs(card.offsetLeft - lead);
       if (distance < best) {
         best = distance;
         nearest = i;
@@ -369,10 +368,9 @@ export default function Projects() {
     const rail = railRef.current;
     const card = rail?.children[i] as HTMLElement | undefined;
     if (!rail || !card) return;
-    rail.scrollTo({
-      left: card.offsetLeft - (rail.clientWidth - card.offsetWidth) / 2,
-      behavior: "smooth",
-    });
+    // Let the browser honour the rail's scroll-padding rather than computing
+    // an offset that would have to duplicate it.
+    card.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
   };
 
   return (
@@ -396,7 +394,11 @@ export default function Projects() {
       >
         <div
           ref={railRef}
-          className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-[max(1.5rem,calc((100vw-680px)/2))] pb-2"
+          // Padding lines the first card up with the section heading's content
+          // edge (container inset + px-8). scroll-padding has to match it:
+          // snap-start aligns to the padding edge, so without it the browser
+          // scrolls the padding straight back off and the card sits at x=0.
+          className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-2 scroll-pl-6 lg:px-[max(2rem,calc((100vw-72rem)/2+2rem))] lg:scroll-pl-[max(2rem,calc((100vw-72rem)/2+2rem))]"
         >
           {featured.map((project, i) => (
             <ProjectCard key={project.title} project={project} index={i} />

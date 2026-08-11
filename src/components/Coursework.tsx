@@ -159,7 +159,7 @@ export default function Coursework() {
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading
             eyebrow="coursework"
-            title="More from the shelf"
+            title="Coursework"
             lead="a few projects from my CS degree at SNHU · tap any to open"
           />
 
