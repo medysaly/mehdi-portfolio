@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const nav = [
   { label: "about", href: "#about" },
   { label: "skills", href: "#skills" },
+  { label: "experience", href: "#experience" },
   { label: "projects", href: "#projects" },
   { label: "certs", href: "#certifications" },
   { label: "coursework", href: "#coursework" },
@@ -68,7 +69,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-8">
           {/* Desktop links */}
-          <ul className="hidden items-center gap-8 lg:flex">
+          <ul className="hidden items-center gap-6 lg:flex xl:gap-7">
             {nav.map((item) => {
               const isActive = active === item.href.slice(1);
               return (

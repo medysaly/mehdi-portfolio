@@ -6,6 +6,13 @@ import { motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import { ArrowUpRightIcon, GithubIcon } from "./icons";
 
+/** Architecture panel shown for projects with no live site to screenshot. */
+type Panel = {
+  label: string;
+  steps: string[];
+  tags: string[];
+};
+
 type Project = {
   title: string;
   tagline: string;
@@ -15,29 +22,101 @@ type Project = {
   link?: string;
   github?: string;
   badge?: string;
-  /** Live screenshot. Absent projects fall back to the spec panel below. */
+  /** Live screenshot. Projects without one fall back to `panel`. */
   image?: string;
+  panel?: Panel;
 };
 
+// Copy follows the resume (Mehdi_Salhi_Cloud_Engineer.pdf), with architecture
+// detail filled in from each repo's README.
 const featured: Project[] = [
+  {
+    title: "AWS Cost Watchdog",
+    tagline: "A FinOps watchdog that found a $21/month zombie subscription on day one",
+    description:
+      "Serverless FinOps monitoring for AWS: daily cost digests, idle-resource detection, tag enforcement, and anomaly alerts, all running for under $2/month.",
+    highlights: [
+      "Automated daily cost and waste monitoring — spend digests, idle-resource detection, tag-compliance checks via AWS Config, and cost-anomaly detection — across four event-driven Python Lambdas on EventBridge Scheduler and SNS, pushing findings to Slack and Telegram in real time",
+      "Persisted findings to DynamoDB and surfaced them in a React dashboard served through an API Gateway HTTP API and S3/CloudFront",
+      "Provisioned the whole stack as code with Terraform (remote S3 state, DynamoDB locking) and shipped it via GitHub Actions CI/CD using OIDC federation, with zero static AWS credentials",
+    ],
+    stack: [
+      "Terraform",
+      "Lambda",
+      "EventBridge Scheduler",
+      "SNS",
+      "DynamoDB",
+      "API Gateway",
+      "Python",
+      "React",
+    ],
+    github: "https://github.com/medysaly/aws-cost-watchdog",
+    badge: "FinOps",
+    panel: {
+      label: "event-driven finops stack",
+      steps: [
+        "EventBridge cron",
+        "4 × Python Lambda",
+        "DynamoDB findings",
+        "Slack + Telegram",
+        "React dashboard",
+      ],
+      tags: ["Terraform", "OIDC", "AWS Config", "< $2/mo"],
+    },
+  },
+  {
+    title: "StockWatch",
+    tagline: "A daily market brief that writes itself, for a few dollars a month",
+    description:
+      "A serverless AI market brief on AWS. Pulls real price and news data, summarizes it with Claude, and runs hands-free on a daily schedule — every piece of it provisioned as code.",
+    highlights: [
+      "Automated a daily AI market brief that pulls price and news data via yfinance and summarizes it with Claude, running hands-free on an EventBridge daily schedule",
+      "Guarded the LLM output with automated pytest checks (non-empty, no refusals) enforced in a GitHub Actions pipeline alongside ruff linting and a terraform plan gate",
+      "Deployed as an ARM64 container image on ECR with zero static AWS credentials via GitHub OIDC, with API keys in a single Secrets Manager secret behind a least-privilege IAM policy",
+    ],
+    stack: [
+      "Python",
+      "Lambda (ARM64)",
+      "ECR",
+      "EventBridge",
+      "Terraform",
+      "GitHub Actions",
+      "Claude API",
+      "Docker",
+    ],
+    github: "https://github.com/medysaly/stockwatch",
+    badge: "Serverless AI",
+    panel: {
+      label: "daily brief pipeline",
+      steps: [
+        "EventBridge (daily)",
+        "Lambda container (arm64)",
+        "yfinance → price + news",
+        "Claude → summary",
+        "CloudWatch structured logs",
+      ],
+      tags: ["ECR", "Secrets Manager", "Terraform", "OIDC"],
+    },
+  },
   {
     title: "Unkommon.ai",
     tagline: "An AI receptionist that answers the phone and books the meeting",
     description:
-      "A solo-built AI services platform on AWS. A voice receptionist (Vapi + Bedrock + Lambda) and a website chatbot qualify inbound leads and book appointments straight into Google Calendar. Fully serverless, from auth to inference.",
+      "A full-stack AI website on a serverless AWS backend — a React site with an AI chatbot and a Vapi voice receptionist that answer questions, book appointments, and capture leads.",
     highlights: [
-      "Serverless end to end — Lambda, API Gateway, DynamoDB, Cognito, Amplify",
-      "Claude Sonnet 4.5 and Haiku 4.5 on Amazon Bedrock for voice and chat",
-      "Infrastructure defined and deployed with AWS SAM",
+      "Built and deployed the site and serverless backend end to end, across three Lambdas behind API Gateway, with infrastructure as code in AWS SAM",
+      "Cut chatbot latency and Bedrock spend by front-running a Trie-based intent classifier ahead of Claude Haiku 4.5 streaming responses, so common questions never reach the model",
+      "Hardened it with a WAFv2 web ACL, HMAC-verified webhooks, least-privilege IAM, and Secrets Manager, over a DynamoDB data layer with Global Secondary Indexes, tested through a GitHub Actions pytest pipeline",
     ],
     stack: [
       "React",
       "TypeScript",
       "AWS Lambda",
-      "Bedrock",
+      "API Gateway",
       "DynamoDB",
-      "Cognito",
+      "Bedrock",
       "AWS SAM",
+      "WAF",
       "Vapi",
     ],
     link: "https://unkommon.ai",
@@ -46,10 +125,46 @@ const featured: Project[] = [
     image: "/projects/unkommon.jpg",
   },
   {
+    title: "Company Policy RAG",
+    tagline: "Ask your documents anything — and measure whether it answered well",
+    description:
+      "Retrieval-augmented generation over policy documents, with hybrid retrieval and cross-encoder reranking, scored against a real evaluation set rather than vibes.",
+    highlights: [
+      "Built a RAG pipeline with hybrid retrieval (dense embeddings and BM25) and cross-encoder reranking, measured with RAGAS at 1.00 faithfulness and 1.00 context precision on a 10-question evaluation set",
+      "Engineered the ingestion and chunking pipeline with unit tests and a GitHub Actions CI pipeline, documenting the key retrieval design tradeoffs",
+      "Served it through a FastAPI backend with a Streamlit UI, containerized with Docker and deployed on Hugging Face Spaces",
+    ],
+    stack: [
+      "Python",
+      "FastAPI",
+      "Streamlit",
+      "BM25",
+      "Cross-encoder",
+      "RAGAS",
+      "Docker",
+    ],
+    link: "https://huggingface.co/spaces/medysaly/company-policy-rag",
+    github: "https://github.com/medysaly/company-policy-rag",
+    // Not "Live demo" — the Hugging Face Space is currently returning a
+    // capacity error, so the badge points at the measured result instead.
+    badge: "RAGAS 1.00",
+    panel: {
+      label: "retrieval pipeline",
+      steps: [
+        "query",
+        "hybrid retrieve (BM25 + dense)",
+        "cross-encoder rerank",
+        "generate",
+        "RAGAS score",
+      ],
+      tags: ["FastAPI", "Streamlit", "Docker", "1.00 faithfulness"],
+    },
+  },
+  {
     title: "Bees Knees AI",
     tagline: "A marketing site with a chatbot that costs 90% less to run",
     description:
-      "Live marketing site for an AI agency with an embedded chatbot (Buzz) built on Claude Sonnet 4. Streaming responses over SSE, prompt caching, per-IP rate limiting, and a full security header policy.",
+      "Live marketing site for an AI agency with an embedded chatbot (Buzz) built on Claude. Streaming responses over SSE, prompt caching, per-IP rate limiting, and a full security header policy.",
     highlights: [
       "Prompt caching cut inference cost roughly 90%",
       "Hardened with HSTS, CSP, and Permissions-Policy headers",
@@ -69,48 +184,28 @@ const featured: Project[] = [
     badge: "Live site",
     image: "/projects/beesknees.jpg",
   },
-  {
-    title: "Company Policy RAG System",
-    tagline: "Ask your documents anything — and measure whether it answered well",
-    description:
-      "A production-grade retrieval system with hybrid search, cross-encoder reranking, and RAGAS evaluation metrics. Upload any document set and query it in natural language.",
-    highlights: [
-      "Hybrid BM25 + dense retrieval with cross-encoder reranking",
-      "RAGAS metrics to score faithfulness and answer relevance",
-      "Python and FastAPI backend, deployed on Hugging Face Spaces",
-    ],
-    stack: [
-      "Python",
-      "LangChain",
-      "FastAPI",
-      "BM25",
-      "Sentence Transformers",
-      "RAGAS",
-    ],
-    link: "https://huggingface.co/spaces/medysaly/company-policy-rag",
-    github: "https://github.com/medysaly/company-policy-rag",
-    badge: "Live demo",
-  },
 ];
 
-/** Stand-in for projects with no screenshot — a pipeline diagram, not a mock UI. */
-function SpecPanel({ project }: { project: Project }) {
-  const steps = ["query", "hybrid retrieve", "rerank", "generate", "score"];
-
+/** Stand-in for projects with no live site — a real pipeline, not a mock UI. */
+function SpecPanel({ panel }: { panel: Panel }) {
   return (
     <div className="flex h-full w-full flex-col justify-center gap-6 bg-[linear-gradient(150deg,#f7f9fc_0%,#eef2fb_100%)] px-8 py-10 sm:px-12">
       <p className="font-mono text-[12px] uppercase tracking-widest text-muted-light">
-        retrieval pipeline
+        {panel.label}
       </p>
 
       <ul className="space-y-2.5">
-        {steps.map((step, i) => (
+        {panel.steps.map((step, i) => (
           <li key={step} className="flex items-center gap-3">
             <span className="font-mono text-[12px] text-muted-light">
               {String(i + 1).padStart(2, "0")}
             </span>
-            <span className="h-px flex-shrink-0 bg-line" style={{ width: 18 + i * 14 }} />
-            <span className="font-display text-[15px] font-semibold tracking-[-0.02em] text-ink sm:text-[17px]">
+            <span
+              aria-hidden
+              className="h-px flex-shrink-0 bg-line"
+              style={{ width: 16 + i * 12 }}
+            />
+            <span className="font-display text-[14px] font-semibold tracking-[-0.02em] text-ink sm:text-[16px]">
               {step}
             </span>
           </li>
@@ -118,7 +213,7 @@ function SpecPanel({ project }: { project: Project }) {
       </ul>
 
       <div className="flex flex-wrap gap-2">
-        {["BM25", "dense", "cross-encoder", "RAGAS"].map((tag) => (
+        {panel.tags.map((tag) => (
           <span
             key={tag}
             className="rounded-md border border-line bg-white/70 px-2.5 py-1 font-mono text-[12px] text-muted"
@@ -145,7 +240,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             className="object-cover object-top"
           />
         ) : (
-          <SpecPanel project={project} />
+          project.panel && <SpecPanel panel={project.panel} />
         )}
       </div>
 
@@ -216,10 +311,14 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-5 py-2.5 font-display text-[14px] font-semibold text-ink transition-colors duration-300 hover:border-ink"
+              className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-display text-[14px] font-semibold transition-colors duration-300 ${
+                project.link
+                  ? "border border-line bg-white text-ink hover:border-ink"
+                  : "bg-ink text-white transition-opacity hover:opacity-80"
+              }`}
             >
               <GithubIcon className="h-3.5 w-3.5" />
-              Source
+              {project.link ? "Source" : "View source"}
             </a>
           )}
         </div>
@@ -280,7 +379,7 @@ export default function Projects() {
         <SectionHeading
           eyebrow="projects"
           title="Some things I've built"
-          lead="three projects I shipped end to end — architecture, code, deployment, and the bill"
+          lead="five projects I shipped end to end — architecture, code, deployment, and the bill"
         />
       </div>
 
@@ -306,7 +405,10 @@ export default function Projects() {
         <div className="mx-auto mt-8 flex max-w-6xl items-center justify-center gap-4 px-6 lg:px-8">
           <span className="font-mono text-[13px] text-muted">
             {String(active + 1).padStart(2, "0")}
-            <span className="text-muted-light"> / {String(featured.length).padStart(2, "0")}</span>
+            <span className="text-muted-light">
+              {" "}
+              / {String(featured.length).padStart(2, "0")}
+            </span>
           </span>
 
           <div className="flex items-center gap-1.5">

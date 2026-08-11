@@ -8,7 +8,7 @@ const facts = [
   { label: "Degree", value: "B.S. Computer Science" },
   { label: "School", value: "SNHU" },
   { label: "GPA", value: "3.71" },
-  { label: "Graduating", value: "Aug 2026" },
+  { label: "Graduating", value: "Nov 2026" },
   { label: "Location", value: "Stamford, CT / NYC" },
   { label: "Open to", value: "Cloud · DevOps · Platform" },
 ];
