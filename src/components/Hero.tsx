@@ -24,10 +24,14 @@ export default function Hero() {
       />
 
       <div className="relative mx-auto w-full max-w-6xl">
+        {/* Centred column. Every child is laid out by the column rather than
+            by its own width, so the badge, the buttons and the status line
+            all share one axis with the headline. */}
         <motion.div
           initial="hidden"
           animate="show"
           transition={{ staggerChildren: 0.09, delayChildren: 0.05 }}
+          className="flex flex-col items-center text-center"
         >
           <motion.div
             variants={fadeUp}
@@ -61,20 +65,10 @@ export default function Hero() {
             automate it, and build the AI that runs on top.
           </motion.p>
 
-          <motion.p
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="mt-6 flex flex-wrap items-center gap-2.5 font-mono text-[14px] text-ink-soft"
-          >
-            <span className="text-accent">currently</span>
-            <span className="text-muted-light">&#10230;</span>
-            <span>building Unkommon.ai, solo, on AWS</span>
-          </motion.p>
-
           <motion.div
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
-            className="mt-9 flex flex-wrap items-center gap-3"
+            className="mt-9 flex flex-wrap items-center justify-center gap-3"
           >
             <a
               href="#projects"
