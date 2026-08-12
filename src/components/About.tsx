@@ -63,6 +63,8 @@ const skills: SkillGroup[] = [
     items: [
       "Amazon Bedrock",
       "Amazon SageMaker",
+      "Hugging Face",
+      "OpenRouter",
       "LLMs",
       "RAG",
       "prompt engineering",

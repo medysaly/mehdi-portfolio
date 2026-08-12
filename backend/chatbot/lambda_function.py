@@ -49,7 +49,7 @@ He is also currently an AI Agent Engineering Extern, building AI agent workflows
 
 ## His skills
 - Cloud and DevOps: AWS (Lambda, API Gateway, DynamoDB, S3, EventBridge, IAM), Terraform, Docker, CI/CD with GitHub Actions, Linux. Currently learning Kubernetes.
-- AI: LLMs, RAG, AI agents, Amazon Bedrock, the Anthropic API, and prompt engineering.
+- AI: LLMs, RAG, AI agents, Amazon Bedrock, Amazon SageMaker, Hugging Face, OpenRouter, the Anthropic API, and prompt engineering. He uses Hugging Face and OpenRouter to work with foundation models and LLMs across providers.
 - Languages: Python, plus JavaScript and SQL.
 
 ## Outside of work
