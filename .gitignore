@@ -34,3 +34,6 @@ next-env.d.ts
 
 # Claude Code local config
 CLAUDE.md
+
+# Chatbot deploy backup (binary, regenerated on each deploy)
+backend/chatbot/.last-deployed.zip

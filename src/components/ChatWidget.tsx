@@ -12,7 +12,7 @@ type Message = {
 const suggestions = [
   {
     label: "AWS Experience",
-    prompt: "What AWS services do you have hands-on experience with?",
+    prompt: "What AWS services has Mehdi worked with?",
   },
   {
     label: "Flagship Project",
@@ -20,11 +20,11 @@ const suggestions = [
   },
   {
     label: "Certifications",
-    prompt: "Walk me through your certifications",
+    prompt: "Walk me through his certifications",
   },
   {
     label: "Career Goals",
-    prompt: "What kind of roles are you looking for?",
+    prompt: "What kind of roles is he looking for?",
   },
 ];
 
@@ -32,7 +32,7 @@ const introMessage: Message = {
   id: "intro",
   role: "assistant",
   content:
-    "Hi! I'm a chat version of Mehdi, trained on his portfolio, projects, and background. Ask me anything about his work.",
+    "Hi! I'm Mehdi's assistant. Ask me anything about his work, his projects, or how to get in touch with him.",
 };
 
 async function sendMessage(input: string): Promise<string> {

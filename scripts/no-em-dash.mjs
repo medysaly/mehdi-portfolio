@@ -7,9 +7,13 @@ import { readFileSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import { join, extname, basename } from "node:path";
 
-const ROOTS = ["src", "scripts"];
+// backend is included because the chatbot's system prompt is visitor-facing
+// copy, even though it ships as Python rather than to the browser.
+const ROOTS = ["src", "scripts", "backend"];
 const SELF = basename(import.meta.url); // this file spells the characters out
-const EXTS = new Set([".ts", ".tsx", ".js", ".jsx", ".mjs", ".css", ".md", ".json"]);
+const EXTS = new Set([
+  ".ts", ".tsx", ".js", ".jsx", ".mjs", ".css", ".md", ".json", ".py", ".sh",
+]);
 const BANNED = [
   ["—", "em dash"],
   ["&mdash;", "&mdash; entity"],
