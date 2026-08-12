@@ -65,8 +65,6 @@ const skills: SkillGroup[] = [
       "Amazon SageMaker",
       "LLMs",
       "RAG",
-      "embeddings + cross-encoder reranking",
-      "RAGAS evaluation",
       "prompt engineering",
     ],
   },
