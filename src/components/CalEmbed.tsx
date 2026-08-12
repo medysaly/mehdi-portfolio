@@ -42,7 +42,7 @@ export default function CalEmbed() {
         Cal("ui", {
           hideEventTypeDetails: false,
           layout: "month_view",
-          styles: { branding: { brandColor: "#0066FF" } },
+          cssVarsPerTheme: { light: { "cal-brand": "#0066FF" } },
         });
       `}
     </Script>

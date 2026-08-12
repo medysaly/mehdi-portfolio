@@ -25,11 +25,7 @@ export default function Contact() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto max-w-2xl text-center"
         >
-          <p className="font-mono text-[14px] text-accent">
-            <span className="opacity-60">##</span> say-hi
-          </p>
-
-          <h2 className="mt-5 font-display text-[2.5rem] font-extrabold leading-[1.05] tracking-[-0.03em] text-ink sm:text-[3.5rem]">
+          <h2 className="font-display text-[2.5rem] font-extrabold leading-[1.05] tracking-[-0.03em] text-ink sm:text-[3.5rem]">
             Thanks for visiting!
           </h2>
 

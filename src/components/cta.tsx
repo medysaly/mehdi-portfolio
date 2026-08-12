@@ -1,3 +1,6 @@
+"use client";
+
+import type { MouseEvent } from "react";
 import {
   calAttrs,
   CalendarIcon,
@@ -45,13 +48,25 @@ export function ResumeButton({ size = "md" }: { size?: Size }) {
  * Recruiter path two: book time. A real anchor first, upgraded into the
  * cal.com popup by the embed in CalEmbed, so a blocked script degrades to a
  * normal link rather than a dead button.
+ *
+ * The embed opens its popup but never cancels the click, so the browser would
+ * follow the href straight through the modal. Cancelling it here is safe:
+ * cal.com's own handler still runs and opens the popup. The guard means a
+ * visitor whose embed never loaded keeps a link that actually goes somewhere.
  */
+function openInPopup(e: MouseEvent<HTMLAnchorElement>) {
+  // Defined only once embed.js has executed, which is exactly when cal.com is
+  // able to take the click off our hands.
+  if (typeof customElements !== "undefined" && customElements.get("cal-modal-box")) {
+    e.preventDefault();
+  }
+}
+
 export function BookCallButton({ size = "md" }: { size?: Size }) {
   return (
     <a
       href={CAL_URL}
-      target="_blank"
-      rel="noopener noreferrer"
+      onClick={openInPopup}
       {...calAttrs}
       className={`${base} ${sizes[size]} border border-line bg-white text-ink hover:border-ink`}
     >

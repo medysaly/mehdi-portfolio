@@ -570,7 +570,6 @@ export default function Projects() {
     <section id="projects" className="scroll-mt-20 py-24 lg:py-28">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         <SectionHeading
-          eyebrow="projects"
           title="Some things I've built"
           lead="five projects I shipped end to end: architecture, code, deployment, and the bill"
         />

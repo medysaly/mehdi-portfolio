@@ -112,7 +112,7 @@ export const RESUME_FILENAME = "Mehdi-Salhi-Cloud-DevOps-Engineer.pdf";
  * cal.com booking handle, "<username>/<event-slug>". Change it here and both
  * the popup embed and its plain-link fallback follow.
  */
-export const CAL_LINK = "mehdisalhi/30min";
+export const CAL_LINK = "mehdi-salhi-dev/15min";
 export const CAL_URL = `https://cal.com/${CAL_LINK}`;
 
 /** Marks an element for the cal.com embed loaded in CalEmbed. */

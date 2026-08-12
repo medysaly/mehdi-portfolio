@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { EMAIL } from "./icons";
 
 const nav = [
   { label: "about", href: "#about" },
@@ -87,9 +88,9 @@ export default function Navbar() {
           </ul>
 
           {/* Booking lives in the hero and the contact block. The bar's own
-              CTA points at the contact section, where the email is. */}
+              CTA opens a mail client straight away rather than scrolling. */}
           <a
-            href="#contact"
+            href={`mailto:${EMAIL}`}
             className="rounded-full bg-ink px-4 py-2 font-display text-[14px] font-semibold text-white transition-opacity hover:opacity-80"
           >
             Get in touch

@@ -3,12 +3,10 @@
 import { motion } from "framer-motion";
 
 export default function SectionHeading({
-  eyebrow,
   title,
   lead,
   align = "left",
 }: {
-  eyebrow: string;
   title: string;
   lead?: string;
   align?: "left" | "center";
@@ -21,11 +19,7 @@ export default function SectionHeading({
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className={align === "center" ? "text-center" : ""}
     >
-      <p className="font-mono text-[14px] text-accent">
-        <span className="opacity-60">##</span> {eyebrow}
-      </p>
-
-      <h2 className="mt-3 font-display text-[2.25rem] font-bold leading-[1.1] tracking-[-0.03em] text-ink sm:text-display-2">
+      <h2 className="font-display text-[2.25rem] font-bold leading-[1.1] tracking-[-0.03em] text-ink sm:text-display-2">
         {title}
       </h2>
 
