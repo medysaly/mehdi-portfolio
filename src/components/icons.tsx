@@ -64,7 +64,62 @@ export function CheckIcon(props: IconProps) {
   );
 }
 
+export function DownloadIcon(props: IconProps) {
+  return (
+    <svg
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={1.9}
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 3.75v11m0 0l-4-4m4 4l4-4M4.5 16.5v1.75a2 2 0 002 2h11a2 2 0 002-2V16.5"
+      />
+    </svg>
+  );
+}
+
+export function CalendarIcon(props: IconProps) {
+  return (
+    <svg
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={1.9}
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M8 3v3m8-3v3M4 9.5h16M5.5 5.5h13a1.5 1.5 0 011.5 1.5v11a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 18V7a1.5 1.5 0 011.5-1.5z"
+      />
+    </svg>
+  );
+}
+
 export const EMAIL = "mehdisalhi.dev@gmail.com";
+
+/** Lives in /public, so the browser can stream it instead of round-tripping. */
+export const RESUME_URL = "/Mehdi_Salhi_Cloud_DevOps_Engineer.pdf";
+export const RESUME_FILENAME = "Mehdi-Salhi-Cloud-DevOps-Engineer.pdf";
+
+/**
+ * cal.com booking handle, "<username>/<event-slug>". Change it here and both
+ * the popup embed and its plain-link fallback follow.
+ */
+export const CAL_LINK = "mehdisalhi/30min";
+export const CAL_URL = `https://cal.com/${CAL_LINK}`;
+
+/** Marks an element for the cal.com embed loaded in CalEmbed. */
+export const calAttrs = {
+  "data-cal-link": CAL_LINK,
+  "data-cal-config": '{"layout":"month_view"}',
+};
 
 export const socials = [
   {

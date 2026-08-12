@@ -47,7 +47,7 @@ const featured: Project[] = [
     description:
       "Serverless FinOps monitoring for AWS: daily cost digests, idle-resource detection, tag enforcement, and anomaly alerts, all running for under $2/month.",
     highlights: [
-      "Automated daily cost and waste monitoring — spend digests, idle-resource detection, tag-compliance checks via AWS Config, and cost-anomaly detection — across four event-driven Python Lambdas on EventBridge Scheduler and SNS, pushing findings to Slack and Telegram in real time",
+      "Automated daily cost and waste monitoring (spend digests, idle-resource detection, tag-compliance checks via AWS Config, and cost-anomaly detection) across four event-driven Python Lambdas on EventBridge Scheduler and SNS, pushing findings to Slack and Telegram in real time",
       "Persisted findings to DynamoDB and surfaced them in a React dashboard served through an API Gateway HTTP API and S3/CloudFront",
       "Provisioned the whole stack as code with Terraform (remote S3 state, DynamoDB locking) and shipped it via GitHub Actions CI/CD using OIDC federation, with zero static AWS credentials",
     ],
@@ -79,7 +79,7 @@ const featured: Project[] = [
     title: "StockWatch",
     tagline: "A daily market brief that writes itself, for a few dollars a month",
     description:
-      "A serverless AI market brief on AWS. Pulls real price and news data, summarizes it with Claude, and runs hands-free on a daily schedule — every piece of it provisioned as code.",
+      "A serverless AI market brief on AWS. Pulls real price and news data, summarizes it with Claude, and runs hands-free on a daily schedule, every piece of it provisioned as code.",
     highlights: [
       "Automated a daily AI market brief that pulls price and news data via yfinance and summarizes it with Claude, running hands-free on an EventBridge daily schedule",
       "Guarded the LLM output with automated pytest checks (non-empty, no refusals) enforced in a GitHub Actions pipeline alongside ruff linting and a terraform plan gate",
@@ -113,7 +113,7 @@ const featured: Project[] = [
     title: "Unkommon.ai",
     tagline: "An AI receptionist that answers the phone and books the meeting",
     description:
-      "A full-stack AI website on a serverless AWS backend — a React site with an AI chatbot and a Vapi voice receptionist that answer questions, book appointments, and capture leads.",
+      "A full-stack AI website on a serverless AWS backend: a React site with an AI chatbot and a Vapi voice receptionist that answer questions, book appointments, and capture leads.",
     highlights: [
       "Built and deployed the site and serverless backend end to end, across three Lambdas behind API Gateway, with infrastructure as code in AWS SAM",
       "Cut chatbot latency and Bedrock spend by front-running a Trie-based intent classifier ahead of Claude Haiku 4.5 streaming responses, so common questions never reach the model",
@@ -137,7 +137,7 @@ const featured: Project[] = [
   },
   {
     title: "Company Policy RAG",
-    tagline: "Ask your documents anything — and measure whether it answered well",
+    tagline: "Ask your documents anything, then measure whether it answered well",
     description:
       "Retrieval-augmented generation over policy documents, with hybrid retrieval and cross-encoder reranking, scored against a real evaluation set rather than vibes.",
     highlights: [
@@ -156,7 +156,7 @@ const featured: Project[] = [
     ],
     link: "https://huggingface.co/spaces/medysaly/company-policy-rag",
     github: "https://github.com/medysaly/company-policy-rag",
-    // Not "Live demo" — the Hugging Face Space is currently returning a
+    // Not "Live demo". The Hugging Face Space is currently returning a
     // capacity error, so the badge points at the measured result instead.
     badge: "RAGAS 1.00",
     panel: {
@@ -197,7 +197,7 @@ const featured: Project[] = [
   },
 ];
 
-/** Stand-in for projects with no live site — a real pipeline, not a mock UI. */
+/** Stand-in for projects with no live site: a real pipeline, not a mock UI. */
 function SpecPanel({ panel }: { panel: Panel }) {
   return (
     // Wash lives on the parent column so screenshot and panel cards match.
@@ -243,8 +243,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     // Visual beside the text rather than above it, so the whole card fits on
     // screen without vertical scrolling. Stacks back to vertical on mobile.
     <article className="flex w-[88vw] max-w-[940px] flex-shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-line bg-white transition-colors duration-300 hover:border-muted-light sm:flex-row">
-      {/* Visual. The screenshots are 16:10, but this column is tall and narrow —
-          cropping them to fill it slices the page mid-word. So the shot sits
+      {/* Visual. The screenshots are 16:10, but this column is tall and narrow,
+          so cropping them to fill it slices the page mid-word. So the shot sits
           whole inside a browser frame, centred on the same wash the
           architecture panels use, and the two card types stay consistent. */}
       <div className="relative flex w-full flex-shrink-0 items-center justify-center overflow-hidden border-b border-line-soft bg-[linear-gradient(150deg,#f7f9fc_0%,#eef2fb_100%)] sm:w-[42%] sm:border-b-0 sm:border-r">
@@ -401,8 +401,8 @@ function ProgressCue({
   );
 }
 
-/** Plain swipeable rail — touch, narrow screens, and anyone who has asked for
- *  reduced motion. */
+/** Plain swipeable rail for touch, narrow screens, and anyone who has asked
+ *  for reduced motion. */
 function Rail() {
   const railRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -477,7 +477,7 @@ function Rail() {
 /** Pinned mode: the section holds the viewport while downward scroll is spent
  *  travelling sideways across the cards, then releases the page. The wrapper is
  *  one viewport tall plus exactly the horizontal distance, so no scroll is
- *  invented or swallowed — it is the same scroll, redirected. */
+ *  invented or swallowed. It is the same scroll, redirected. */
 function PinnedTrack() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -489,7 +489,7 @@ function PinnedTrack() {
       const track = trackRef.current;
       if (!track) return;
       // scrollWidth counts the leading padding but drops the trailing one on an
-      // overflowing flex row, so add it back — otherwise the travel stops short
+      // overflowing flex row, so add it back, or the travel stops short
       // and the last card ends flush against the right edge.
       const padRight = parseFloat(getComputedStyle(track).paddingRight) || 0;
       setDistance(
@@ -572,7 +572,7 @@ export default function Projects() {
         <SectionHeading
           eyebrow="projects"
           title="Some things I've built"
-          lead="five projects I shipped end to end — architecture, code, deployment, and the bill"
+          lead="five projects I shipped end to end: architecture, code, deployment, and the bill"
         />
       </div>
 

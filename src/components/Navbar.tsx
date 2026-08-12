@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { calAttrs, CAL_URL, RESUME_FILENAME, RESUME_URL } from "./icons";
 
 const nav = [
   { label: "about", href: "#about" },
@@ -21,8 +22,8 @@ export default function Navbar() {
       setScrolled(window.scrollY > 12);
 
       const ids = [...nav.map((n) => n.href.slice(1)), "contact"];
-      // Walk top-down so the last section past the detection line wins —
-      // short trailing sections still register.
+      // Walk top-down so the last section past the detection line wins, which
+      // keeps short trailing sections registering.
       let current = "";
       for (const id of ids) {
         const el = document.getElementById(id);
@@ -84,13 +85,28 @@ export default function Navbar() {
                 </li>
               );
             })}
+
+            {/* Not a section, so it sits outside `nav` and never takes part in
+                the scroll-spy above. */}
+            <li>
+              <a
+                href={RESUME_URL}
+                download={RESUME_FILENAME}
+                className="font-mono text-[14px] text-ink-soft transition-colors hover:text-ink"
+              >
+                resume
+              </a>
+            </li>
           </ul>
 
           <a
-            href="#contact"
+            href={CAL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            {...calAttrs}
             className="rounded-full bg-ink px-4 py-2 font-display text-[14px] font-semibold text-white transition-opacity hover:opacity-80"
           >
-            Say hi
+            Book a call
           </a>
 
           {/* Mobile toggle */}
@@ -141,6 +157,31 @@ export default function Navbar() {
                   </a>
                 </li>
               ))}
+
+              <li>
+                <a
+                  href={RESUME_URL}
+                  download={RESUME_FILENAME}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center justify-between border-b border-line-soft py-3.5 font-mono text-[14px] text-ink-soft transition-colors last:border-b-0 hover:text-accent"
+                >
+                  resume
+                  <span className="text-muted-light">&darr;</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href={CAL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  {...calAttrs}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center justify-between border-b border-line-soft py-3.5 font-mono text-[14px] text-ink-soft transition-colors last:border-b-0 hover:text-accent"
+                >
+                  book a call
+                  <span className="text-muted-light">&rarr;</span>
+                </a>
+              </li>
             </ul>
           </motion.div>
         )}

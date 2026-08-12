@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { BookCallButton, ResumeButton } from "./cta";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
@@ -15,7 +16,7 @@ export default function Hero() {
       id="top"
       className="relative flex min-h-screen flex-col justify-center overflow-hidden px-6 pb-20 pt-28 lg:px-8"
     >
-      {/* Dot grid — the reference's signature hero texture. Masked so it
+      {/* Dot grid: the reference's signature hero texture. Masked so it
           fades out toward the edges instead of stopping hard. */}
       <div
         aria-hidden
@@ -56,8 +57,8 @@ export default function Hero() {
             className="mt-6 max-w-2xl font-body text-lead text-ink-soft"
           >
             A Cloud &amp; DevOps engineer who builds on AWS.
-            <br className="hidden sm:inline" /> I design infrastructure and
-            automate it end to end.
+            <br className="hidden sm:inline" /> I design the infrastructure,
+            automate it, and build the AI that runs on top.
           </motion.p>
 
           <motion.p
@@ -84,15 +85,11 @@ export default function Hero() {
                 &darr;
               </span>
             </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center rounded-full border border-line bg-white px-6 py-3.5 font-display text-[15px] font-semibold text-ink transition-colors duration-300 hover:border-ink"
-            >
-              Say hi
-            </a>
+            <ResumeButton />
+            <BookCallButton />
           </motion.div>
 
-          {/* Status line — carries the personality the floating bubble used to,
+          {/* Status line. Carries the personality the floating bubble used to,
               now that there is no hero visual to hang it off. */}
           <motion.p
             variants={fadeUp}

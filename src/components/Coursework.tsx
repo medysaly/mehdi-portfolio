@@ -43,7 +43,7 @@ const coursework: Course[] = [
   {
     title: "CS-340 Full-Stack Dashboard",
     description:
-      "CRUD dashboard for Grazioso Salvare — a real client project with data visualization over a MongoDB backend.",
+      "CRUD dashboard for Grazioso Salvare, a real client project with data visualization over a MongoDB backend.",
     stack: ["Python", "MongoDB", "Jupyter", "Dash"],
     category: "AI & Data",
     github: "https://github.com/medysaly/CS-340-Client-server-Development",
@@ -76,7 +76,7 @@ const coursework: Course[] = [
   {
     title: "Introduction to Scripting",
     description:
-      "Python fundamentals — scripting, automation, and data manipulation.",
+      "Python fundamentals: scripting, automation, and data manipulation.",
     stack: ["Python"],
     category: "Systems",
   },
@@ -85,7 +85,7 @@ const coursework: Course[] = [
 const filters = ["All", "Systems", "Web", "AI & Data"] as const;
 
 // Fixed per-index tilts keep the shelf looking hand-placed but stable across
-// re-renders — a random rotation would jitter on every filter change.
+// re-renders, because a random rotation would jitter on every filter change.
 const tilts = [-1.6, 1.2, -0.8, 1.7, -1.2, 0.9, -1.9, 1.4];
 
 function CourseCard({ course, index }: { course: Course; index: number }) {
@@ -189,7 +189,7 @@ export default function Coursework() {
           </motion.div>
         </div>
 
-        {/* The shelf itself — one soft panel holding the taped cards */}
+        {/* The shelf itself: one soft panel holding the taped cards */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

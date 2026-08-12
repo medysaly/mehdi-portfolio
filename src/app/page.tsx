@@ -28,7 +28,7 @@ export default function Home() {
         <Certifications />
 
         {/* The reference washes its final stretch blue-to-peach rather than
-            tinting one section. Gradient goes first in DOM order — a negative
+            tinting one section. Gradient goes first in DOM order, because a negative
             z-index would drop it behind the page background and vanish. */}
         <div className="relative">
           <div

@@ -51,7 +51,7 @@ body {
 }
 
 /* Horizontal rails (projects carousel, side-quest marquee) hide their bar but
-   stay scrollable — the reference does the same and cues it with a label. */
+   stay scrollable, and the reference does the same, cued with a label. */
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;

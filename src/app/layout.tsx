@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { bricolage, geistMono, geistSans } from "./fonts";
 import Navbar from "@/components/Navbar";
+import CalEmbed from "@/components/CalEmbed";
 
 export const metadata: Metadata = {
   title: "Mehdi Salhi | Cloud & DevOps Engineer",
@@ -54,6 +55,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-paper font-body text-ink-soft antialiased">
         <Navbar />
         {children}
+        <CalEmbed />
       </body>
     </html>
   );

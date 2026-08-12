@@ -348,7 +348,7 @@ export default function ChatWidget() {
                 </button>
               </div>
               <p className="mt-2.5 text-center font-mono text-[10px] text-muted-light">
-                Responses may not always be perfect — email me for anything
+                Responses may not always be perfect, so email me for anything
                 urgent.
               </p>
             </form>

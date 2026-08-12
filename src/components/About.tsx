@@ -71,7 +71,7 @@ const skills: SkillGroup[] = [
 ];
 
 // One bordered container subdivided by hairlines, not a grid of separate
-// cards — the defining trait of the reference's grouped lists.
+// cards. That is the defining trait of the reference's grouped lists.
 const cellBorders = [
   "sm:col-span-2 border-b",
   "border-b sm:border-r",
@@ -99,28 +99,30 @@ export default function About() {
               <Image
                 src="/mehdi-portrait.jpg"
                 alt="Mehdi Salhi"
-                width={800}
+                width={1000}
                 height={1000}
                 sizes="300px"
-                className="h-full w-full object-cover object-top"
+                className="h-full w-full object-cover"
               />
             </div>
 
             <div className="mt-8 space-y-6 font-body text-lead text-ink-soft">
               <p>
                 I&apos;m Mehdi, a Cloud &amp; DevOps engineer finishing a B.S. in
-                Computer Science at SNHU. I&apos;m AWS Certified as a Solutions
-                Architect Associate and Cloud Practitioner.
+                Computer Science at SNHU (November 2026). I&apos;m AWS Certified
+                as a Solutions Architect Associate and Cloud Practitioner.
               </p>
               <p>
-                My focus is infrastructure that runs itself — provisioned with
-                Terraform and AWS CDK, containerized with Docker and Kubernetes,
-                and wired through CI/CD so a merge is the only manual step.
+                My focus is infrastructure that runs itself: provisioned with
+                Terraform, containerized with Docker, and wired through CI/CD so
+                a merge is the only manual step. I&apos;m currently going deeper
+                on Kubernetes.
               </p>
               <p>
-                I also build the applications on top, which is what makes me
-                useful on an infrastructure team: I know what the workload
-                actually needs.
+                I also build the applications that run on top: AI agents, LLM
+                apps, and RAG systems. That&apos;s what makes me useful on an
+                infrastructure team. I know what the workload actually needs,
+                because I&apos;ve built the workload.
               </p>
             </div>
           </motion.div>

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { EMAIL, socials } from "./icons";
+import { BookCallButton, ResumeButton } from "./cta";
 
 export default function Contact() {
   return (
@@ -47,6 +48,13 @@ export default function Contact() {
             </span>
             {EMAIL}
           </a>
+
+          {/* Two lighter paths for anyone who would rather not open a mail
+              client: take the PDF, or put time on the calendar. */}
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+            <ResumeButton size="lg" />
+            <BookCallButton size="lg" />
+          </div>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
             {socials.map(({ label, href }) => (
