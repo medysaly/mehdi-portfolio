@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { calAttrs, CAL_URL, RESUME_FILENAME, RESUME_URL } from "./icons";
 
 const nav = [
   { label: "about", href: "#about" },
@@ -85,28 +84,15 @@ export default function Navbar() {
                 </li>
               );
             })}
-
-            {/* Not a section, so it sits outside `nav` and never takes part in
-                the scroll-spy above. */}
-            <li>
-              <a
-                href={RESUME_URL}
-                download={RESUME_FILENAME}
-                className="font-mono text-[14px] text-ink-soft transition-colors hover:text-ink"
-              >
-                resume
-              </a>
-            </li>
           </ul>
 
+          {/* Booking lives in the hero and the contact block. The bar's own
+              CTA points at the contact section, where the email is. */}
           <a
-            href={CAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            {...calAttrs}
+            href="#contact"
             className="rounded-full bg-ink px-4 py-2 font-display text-[14px] font-semibold text-white transition-opacity hover:opacity-80"
           >
-            Book a call
+            Get in touch
           </a>
 
           {/* Mobile toggle */}
@@ -157,31 +143,6 @@ export default function Navbar() {
                   </a>
                 </li>
               ))}
-
-              <li>
-                <a
-                  href={RESUME_URL}
-                  download={RESUME_FILENAME}
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-between border-b border-line-soft py-3.5 font-mono text-[14px] text-ink-soft transition-colors last:border-b-0 hover:text-accent"
-                >
-                  resume
-                  <span className="text-muted-light">&darr;</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={CAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  {...calAttrs}
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-between border-b border-line-soft py-3.5 font-mono text-[14px] text-ink-soft transition-colors last:border-b-0 hover:text-accent"
-                >
-                  book a call
-                  <span className="text-muted-light">&rarr;</span>
-                </a>
-              </li>
             </ul>
           </motion.div>
         )}
