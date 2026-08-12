@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 
@@ -10,8 +11,8 @@ type Role = {
   meta: string;
   dates: string;
   current?: boolean;
-  mark: string;
-  markClass: string;
+  /** Org logo, trimmed and squared in /public/badges. */
+  badge: string;
   detail: string[];
 };
 
@@ -19,11 +20,10 @@ const roles: Role[] = [
   {
     org: "Extern",
     title: "AI Agent Engineering Extern",
-    meta: "Wayfair n8n AI Agent Engineering Externship · Remote",
+    meta: "Wayfair AI Agent Engineering Externship · Remote",
     dates: "Jul 2026 – Present",
     current: true,
-    mark: "EX",
-    markClass: "bg-[#eef4ff] text-accent",
+    badge: "/badges/extern.png",
     detail: [
       "Building AI-agent workflows in n8n that research product trends across Amazon, Instagram, and Pinterest and surface top-selling products to a data dashboard",
       "Automating multi-source data collection and trend analysis with AI agents, LLMs, and API integrations",
@@ -50,11 +50,14 @@ function Row({
         aria-expanded={open}
         className="flex w-full items-center gap-4 px-5 py-5 text-left transition-colors hover:bg-paper-soft/60 sm:px-6"
       >
-        <span
-          className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl font-display text-[13px] font-bold tracking-tight ${role.markClass}`}
-        >
-          {role.mark}
-        </span>
+        <Image
+          src={role.badge}
+          alt=""
+          width={176}
+          height={176}
+          sizes="56px"
+          className="h-14 w-14 flex-shrink-0 object-contain"
+        />
 
         <span className="min-w-0 flex-1">
           <span className="flex flex-wrap items-center gap-2">

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 
@@ -7,9 +8,8 @@ type Cert = {
   name: string;
   issuer: string;
   date: string;
-  /** Short issuer mark, standing in for the reference's company logos. */
-  mark: string;
-  markClass: string;
+  /** The real issued badge, trimmed and squared in /public/badges. */
+  badge: string;
 };
 
 const certs: Cert[] = [
@@ -17,22 +17,19 @@ const certs: Cert[] = [
     name: "AWS Certified Solutions Architect – Associate",
     issuer: "Amazon Web Services",
     date: "2026",
-    mark: "AWS",
-    markClass: "bg-[#fff1e3] text-[#c2570a]",
+    badge: "/badges/aws-solutions-architect-associate.png",
   },
   {
     name: "AWS Certified Cloud Practitioner",
     issuer: "Amazon Web Services",
     date: "2026",
-    mark: "AWS",
-    markClass: "bg-[#fff1e3] text-[#c2570a]",
+    badge: "/badges/aws-cloud-practitioner.png",
   },
   {
     name: "Google IT Support Professional Certificate",
     issuer: "Google",
     date: "2026",
-    mark: "G",
-    markClass: "bg-[#e8f0fe] text-[#1a73e8]",
+    badge: "/badges/google-it-support.png",
   },
 ];
 
@@ -59,11 +56,15 @@ export default function Certifications() {
                 i < certs.length - 1 ? "border-b border-line-soft" : ""
               }`}
             >
-              <span
-                className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl font-display text-[13px] font-bold tracking-tight ${cert.markClass}`}
-              >
-                {cert.mark}
-              </span>
+              {/* The badges carry their own colour, so no tinted tile behind. */}
+              <Image
+                src={cert.badge}
+                alt=""
+                width={176}
+                height={176}
+                sizes="56px"
+                className="h-14 w-14 flex-shrink-0 object-contain"
+              />
 
               <div className="min-w-0 flex-1">
                 <h3 className="font-display text-[17px] font-semibold leading-snug tracking-[-0.03em] text-ink sm:text-[18px]">
