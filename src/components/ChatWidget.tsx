@@ -262,7 +262,9 @@ export default function ChatWidget() {
                           : "rounded-[16px] rounded-tl-md bg-paper-soft text-ink-soft"
                       }`}
                     >
-                      <p className="font-body text-[13.5px] leading-relaxed">
+                      {/* pre-line keeps the model's paragraph breaks. Without
+                          it a multi-paragraph answer collapses into one block. */}
+                      <p className="whitespace-pre-line font-body text-[13.5px] leading-relaxed">
                         {msg.content}
                       </p>
                     </div>
@@ -331,7 +333,7 @@ export default function ChatWidget() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Ask about my work…"
+                  placeholder="Ask about Mehdi's work…"
                   rows={1}
                   disabled={pending}
                   // Wrapper renders the focus treatment, so opt out of the global ring
@@ -348,8 +350,8 @@ export default function ChatWidget() {
                 </button>
               </div>
               <p className="mt-2.5 text-center font-mono text-[10px] text-muted-light">
-                Responses may not always be perfect, so email me for anything
-                urgent.
+                Responses may not always be perfect, so email Mehdi directly for
+                anything urgent.
               </p>
             </form>
           </motion.div>
