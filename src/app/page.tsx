@@ -7,6 +7,7 @@ import Coursework from "@/components/Coursework";
 import Contact from "@/components/Contact";
 import SocialRail from "@/components/SocialRail";
 import ChatWidget from "@/components/ChatWidget";
+import MarineWash from "@/components/MarineWash";
 
 export default function Home() {
   return (
@@ -36,14 +37,13 @@ export default function Home() {
         <Certifications />
         <Coursework />
 
-        {/* The reference washes its final stretch blue-to-peach rather than
-            tinting one section. Gradient goes first in DOM order, because a negative
-            z-index would drop it behind the page background and vanish. */}
+        {/* Closes on the same blue the hero opens with, mirrored so the
+            colour rises from the bottom. This used to run blue into peach,
+            which meant the page ended on a hue that appeared nowhere else.
+            The wash goes first in DOM order, because a negative z-index would
+            drop it behind the page background and vanish. */}
         <div className="relative">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#f5f8fd_22%,#eef2fb_44%,#fdeadb_72%,#fdf5ee_88%,#ffffff_100%)]"
-          />
+          <MarineWash anchor="bottom" />
           <div className="relative">
             <Contact />
           </div>

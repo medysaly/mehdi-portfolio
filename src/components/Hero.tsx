@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { BookCallButton, glassPill, GlassLabel, ResumeButton } from "./cta";
-import { GradientBackground } from "./ui/marine-horizon";
+import MarineWash from "./MarineWash";
 import { LiquidButton } from "./ui/liquid-glass-button";
 
 const fadeUp = {
@@ -18,20 +18,8 @@ export default function Hero() {
       id="top"
       className="relative flex min-h-screen flex-col justify-center overflow-hidden px-6 pb-20 pt-28 lg:px-8"
     >
-      {/* Marine Horizon sits furthest back. The raw conic gradient runs to a
-          near-black navy, which black type cannot survive, so it is blurred
-          into a wash and then veiled: white through the middle to hold the
-          headline's contrast, and white at the bottom so the section hands
-          off cleanly to the page background. The wrapper does the
-          positioning because the component sets position inline, which no
-          utility class can override. */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -inset-[30%] opacity-[0.45] blur-[100px]">
-          <GradientBackground />
-        </div>
-        <div className="absolute inset-0 bg-[radial-gradient(58%_52%_at_50%_44%,rgba(255,255,255,0.94)_0%,rgba(255,255,255,0.66)_46%,rgba(255,255,255,0)_100%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-paper" />
-      </div>
+      {/* Marine Horizon sits furthest back. Same wash closes the page. */}
+      <MarineWash />
 
       {/* Dot grid: the reference's signature hero texture. Masked so it
           fades out toward the edges instead of stopping hard. */}
