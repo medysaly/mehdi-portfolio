@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 
 type Message = {
@@ -97,9 +98,16 @@ function Key({ children }: { children: React.ReactNode }) {
 function Identity() {
   return (
     <div className="flex min-w-0 items-center gap-2.5">
-      <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[11px] bg-accent-soft font-display text-[11.5px] font-bold tracking-tight text-accent">
-        MS
-      </span>
+      {/* Round, because the source is a circular portrait vignetted into
+          black: clipping to a circle drops the corners instead of showing
+          them against a panel that is nearly, but not exactly, black. */}
+      <Image
+        src="/chat-avatar.jpg"
+        alt=""
+        width={256}
+        height={256}
+        className="h-9 w-9 flex-shrink-0 rounded-full object-cover ring-1 ring-white/15"
+      />
       <span className="flex min-w-0 flex-col leading-tight">
         <span className="truncate font-display text-[13.5px] font-semibold tracking-[-0.02em] text-white">
           Mehdi&apos;s assistant
