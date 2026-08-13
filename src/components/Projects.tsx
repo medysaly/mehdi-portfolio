@@ -262,10 +262,15 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 )}
               </div>
               <div className="relative aspect-[16/10] w-full">
+                {/* Eager on purpose. These cards live in a horizontally
+                    translated track, so the browser reads the far ones as
+                    off-screen and defers them: the last screenshot then
+                    arrives blank and pops in mid-scroll. Two images. */}
                 <Image
                   src={project.image}
                   alt={`${project.title} screenshot`}
                   fill
+                  loading="eager"
                   sizes="(max-width: 640px) 80vw, 340px"
                   className="object-cover object-top"
                 />
