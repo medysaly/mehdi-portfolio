@@ -23,9 +23,18 @@ export default function Home() {
       <main id="main-content">
         <Hero />
         <About />
-        <Experience />
+
+        {/* Work before employment history. The shipped projects are the
+            strongest evidence here, and a single externship read first
+            undersells what follows it. */}
         <Projects />
+        <Experience />
+
+        {/* Credentials and the coursework that belongs to the same degree
+            stay adjacent and on the same white, so they read as one block
+            about education rather than two unrelated lists. */}
         <Certifications />
+        <Coursework />
 
         {/* The reference washes its final stretch blue-to-peach rather than
             tinting one section. Gradient goes first in DOM order, because a negative
@@ -33,10 +42,9 @@ export default function Home() {
         <div className="relative">
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#f5f8fd_18%,#eef2fb_40%,#fdeadb_70%,#fdf5ee_86%,#ffffff_100%)]"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#f5f8fd_22%,#eef2fb_44%,#fdeadb_72%,#fdf5ee_88%,#ffffff_100%)]"
           />
           <div className="relative">
-            <Coursework />
             <Contact />
           </div>
         </div>

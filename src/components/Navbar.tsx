@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { EMAIL } from "./icons";
 
+// Order mirrors the page. "credentials" rather than "certs": the section
+// holds the degree now, and "certs" told a recruiter scanning for education
+// that there was none to find here.
 const nav = [
   { label: "about", href: "#about" },
-  { label: "experience", href: "#experience" },
   { label: "projects", href: "#projects" },
-  { label: "certs", href: "#certifications" },
+  { label: "experience", href: "#experience" },
+  { label: "credentials", href: "#certifications" },
   { label: "coursework", href: "#coursework" },
 ];
 

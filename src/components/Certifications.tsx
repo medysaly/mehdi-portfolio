@@ -9,10 +9,21 @@ type Cert = {
   issuer: string;
   date: string;
   /** The real issued badge, trimmed and squared in /public/badges. */
-  badge: string;
+  badge?: string;
+  /** Fallback tile for anything with no badge art to show. */
+  mark?: string;
 };
 
 const certs: Cert[] = [
+  {
+    // First, because a degree is the credential recruiters filter on. Dated
+    // "Expected" rather than a bare year: the others are earned, this one is
+    // three months out, and a matching year would read as already conferred.
+    name: "B.S. Computer Science",
+    issuer: "Southern New Hampshire University",
+    date: "Expected Nov 2026",
+    mark: "SNHU",
+  },
   {
     name: "AWS Certified Solutions Architect – Associate",
     issuer: "Amazon Web Services",
@@ -56,15 +67,23 @@ export default function Certifications() {
                 i < certs.length - 1 ? "border-b border-line-soft" : ""
               }`}
             >
-              {/* The badges carry their own colour, so no tinted tile behind. */}
-              <Image
-                src={cert.badge}
-                alt=""
-                width={176}
-                height={176}
-                sizes="56px"
-                className="h-14 w-14 flex-shrink-0 object-contain"
-              />
+              {/* The badges carry their own colour, so no tinted tile behind.
+                  A row with no badge art gets a monogram at the same size, so
+                  the column of names still lines up. */}
+              {cert.badge ? (
+                <Image
+                  src={cert.badge}
+                  alt=""
+                  width={176}
+                  height={176}
+                  sizes="56px"
+                  className="h-14 w-14 flex-shrink-0 object-contain"
+                />
+              ) : (
+                <span className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-[#eef2fb] font-display text-[13px] font-bold tracking-tight text-[#274a78]">
+                  {cert.mark}
+                </span>
+              )}
 
               <div className="min-w-0 flex-1">
                 <h3 className="font-display text-[17px] font-semibold leading-snug tracking-[-0.03em] text-ink sm:text-[18px]">
