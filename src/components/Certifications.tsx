@@ -22,7 +22,9 @@ const certs: Cert[] = [
     name: "B.S. Computer Science",
     issuer: "Southern New Hampshire University",
     date: "Expected Nov 2026",
-    mark: "SNHU",
+    // The shield alone. The full lockup is a wide shield-plus-wordmark, and
+    // its wordmark would be a few pixels tall in a 56px slot.
+    badge: "/badges/snhu.png",
   },
   {
     name: "AWS Certified Solutions Architect – Associate",
@@ -77,7 +79,10 @@ export default function Certifications() {
                   width={176}
                   height={176}
                   sizes="56px"
-                  className="h-14 w-14 flex-shrink-0 object-contain"
+                  // Rounding only shows on badges that fill their box, like
+                  // the SNHU shield's navy field. The cut-out marks never
+                  // reach their corners, so it costs them nothing.
+                  className="h-14 w-14 flex-shrink-0 rounded-xl object-contain"
                 />
               ) : (
                 <span className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-[#eef2fb] font-display text-[13px] font-bold tracking-tight text-[#274a78]">

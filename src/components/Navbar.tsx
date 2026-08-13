@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { EMAIL } from "./icons";
 
@@ -62,9 +63,15 @@ export default function Navbar() {
       >
         {/* Wordmark */}
         <a href="#top" className="group flex items-center gap-3" aria-label="Back to top">
-          <span className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-ink font-display text-[12px] font-bold tracking-tight text-white">
-            MS
-          </span>
+          {/* The mark is already white on black, so the tile keeps the ink
+              background and the artwork simply sits on it. */}
+          <Image
+            src="/badges/ms-monogram.png"
+            alt=""
+            width={160}
+            height={160}
+            className="h-8 w-8 flex-shrink-0 rounded-[10px] bg-ink object-cover"
+          />
           <span className="font-mono text-[14px] text-ink transition-opacity group-hover:opacity-60">
             mehdisalhi.com
           </span>
