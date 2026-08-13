@@ -71,10 +71,25 @@ section past the detection line, so that array has to stay in the page's
 order. Reordering sections without reordering it breaks the highlight
 silently.
 
-## Chatbot (not on the site)
+## Security headers
 
-The site had a chat widget answering questions about Mehdi. It was taken off
-for being more complication than a portfolio needs. Its backend still exists:
+`next.config.js` sends `X-Frame-Options`, `X-Content-Type-Options`,
+`Referrer-Policy` and a `Permissions-Policy` that denies camera, microphone
+and location.
+
+There is no Content-Security-Policy. The cal.com booking embed injects a
+script and an iframe from `app.cal.com`, so a policy strict enough to be worth
+having has to be written against that and tested by actually opening the
+booking popup. Adding one blind would break booking silently.
+
+## Chatbot (retired)
+
+The site had a chat widget answering questions about Mehdi. It came off for
+being more complication than a portfolio needs, and its AWS side was then
+deleted: the API Gateway, the Lambda, its IAM role, and the DynamoDB table
+that logged conversations. Nothing of it runs or costs anything now.
+
+The source is still here:
 
 ```
 backend/chatbot/
@@ -82,25 +97,30 @@ backend/chatbot/
 └── deploy.sh            # package, back up, upload, smoke test
 ```
 
-`chatbot-handler` is a Python Lambda behind API Gateway in `us-east-1` that
-calls Claude through Bedrock and logs each exchange to DynamoDB. The source is
-kept here deliberately: it once existed nowhere but inside the deployed
-function, and finding out what the bot was told took downloading the running
-code.
+Kept on purpose. This code once existed nowhere but inside the deployed
+function, so finding out what the bot had been told meant downloading
+production to read it. It is worth more in the repo than the few kilobytes it
+costs.
 
-**The endpoint is still live and open to the internet.** Removing the widget
-removed the only thing that used it, not the thing itself. It takes
-unauthenticated POSTs, caps neither input length nor total spend, and its CORS
-rule stops browsers on other origins but not `curl`. Until the API is deleted
-or throttled to zero, anyone who knows the URL can spend Bedrock credit on
-this account.
+`deploy.sh` will not run as written. It updates a function that no longer
+exists, so bringing the bot back means recreating the infrastructure first: a
+Lambda on Python 3.14 with `bedrock:InvokeModel` and `dynamodb:PutItem`, an
+HTTP API with one `POST /chat` route, and the table. Build it with Terraform
+this time. It was all click-ops, which is why retiring it was a sequence of
+console-shaped commands rather than one `terraform destroy`.
 
-If it comes back, three things to fix first: cap the question length in the
-handler, reject a non-string `question` (it currently 500s), and drop the
-stage throttle well below 2 requests per second. Also keep the timeout at 15s
-with 512MB, since the Lambda default of 3s does not fit a cold start plus a
-Bedrock call, which fails only a visitor's first message and looks fine on a
-retry.
+Four things the old version got wrong, worth fixing before it ships again:
+
+- **No input cap.** It accepted a 9,000 character question and paid Bedrock to
+  read it.
+- **No authentication**, on an endpoint that spends money per call. CORS is not
+  a substitute: it stops browsers on other origins, not `curl`.
+- **A non-string `question` returned a 500**, because the handler calls
+  `.strip()` on whatever it is given.
+- **The Lambda default 3s timeout does not fit a cold start plus a Bedrock
+  call.** It ran that way in production for a month. Only the first message a
+  visitor sent failed, and a retry looked fine, which is exactly why nobody
+  noticed. 15s with 512MB was the fix.
 
 ## License
 
