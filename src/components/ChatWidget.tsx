@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 type Message = {
@@ -10,22 +10,10 @@ type Message = {
 };
 
 const suggestions = [
-  {
-    label: "AWS Experience",
-    prompt: "What AWS services has Mehdi worked with?",
-  },
-  {
-    label: "Flagship Project",
-    prompt: "Tell me about Unkommon.ai",
-  },
-  {
-    label: "Certifications",
-    prompt: "Walk me through his certifications",
-  },
-  {
-    label: "Career Goals",
-    prompt: "What kind of roles is he looking for?",
-  },
+  "What AWS services has Mehdi worked with?",
+  "Tell me about Unkommon.ai",
+  "Walk me through his certifications",
+  "What kind of roles is he looking for?",
 ];
 
 const introMessage: Message = {
@@ -49,9 +37,7 @@ async function sendMessage(input: string): Promise<string> {
   });
 
   if (!res.ok) {
-    const errData = (await res
-      .json()
-      .catch(() => ({}))) as { error?: string };
+    const errData = (await res.json().catch(() => ({}))) as { error?: string };
     throw new Error(errData.error ?? `Request failed (${res.status})`);
   }
 
@@ -59,14 +45,36 @@ async function sendMessage(input: string): Promise<string> {
   return data.answer ?? "No response received.";
 }
 
-function SendIcon() {
+const ease = [0.16, 1, 0.3, 1] as const;
+
+function ChatIcon() {
   return (
     <svg
-      className="h-4 w-4"
+      className="h-[17px] w-[17px]"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
-      strokeWidth={2}
+      strokeWidth={1.8}
+      aria-hidden
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M4 5.5h16a1 1 0 011 1v9a1 1 0 01-1 1H9l-4 3.5v-3.5H4a1 1 0 01-1-1v-9a1 1 0 011-1z"
+      />
+    </svg>
+  );
+}
+
+function SendIcon() {
+  return (
+    <svg
+      className="h-[17px] w-[17px]"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      aria-hidden
     >
       <path
         strokeLinecap="round"
@@ -77,31 +85,29 @@ function SendIcon() {
   );
 }
 
-function CloseIcon() {
+/** The keycap hints in the reference. Pointer devices only: a phone has no C key. */
+function Key({ children }: { children: React.ReactNode }) {
   return (
-    <svg
-      className="h-4 w-4"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M6 18L18 6M6 6l12 12"
-      />
-    </svg>
+    <kbd className="hidden rounded-[7px] bg-white/[0.14] px-2 py-1 font-mono text-[11px] font-medium leading-none text-white/75 sm:block">
+      {children}
+    </kbd>
   );
 }
 
-function Avatar({ size = "md" }: { size?: "sm" | "md" }) {
-  const dim = size === "sm" ? "h-6 w-6 text-[9px]" : "h-9 w-9 text-[11px]";
+function Identity() {
   return (
-    <div
-      className={`flex ${dim} flex-shrink-0 items-center justify-center rounded-[10px] bg-ink font-display font-bold tracking-tight text-white`}
-    >
-      MS
+    <div className="flex min-w-0 items-center gap-3">
+      <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-[14px] bg-accent-soft font-display text-[13px] font-bold tracking-tight text-accent">
+        MS
+      </span>
+      <span className="flex min-w-0 flex-col leading-tight">
+        <span className="truncate font-display text-[15px] font-semibold tracking-[-0.02em] text-white">
+          Mehdi&apos;s assistant
+        </span>
+        <span className="truncate font-body text-[13px] text-white/45">
+          Ask about his work
+        </span>
+      </span>
     </div>
   );
 }
@@ -118,245 +124,233 @@ export default function ChatWidget() {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages, pending]);
+  }, [messages, pending, open]);
 
   useEffect(() => {
-    if (open && inputRef.current) {
-      setTimeout(() => inputRef.current?.focus(), 250);
-    }
+    if (open) setTimeout(() => inputRef.current?.focus(), 220);
   }, [open]);
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.style.height = "auto";
-      const scrollHeight = inputRef.current.scrollHeight;
-      inputRef.current.style.height = Math.min(scrollHeight, 120) + "px";
-    }
+    const el = inputRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 120) + "px";
   }, [input]);
 
-  const submit = async (text: string) => {
-    const value = text.trim();
-    if (!value || pending) return;
+  /**
+   * The point of the dock: reachable from anywhere on the page without
+   * hunting for a button. C opens it, Escape closes it. Guarded so it never
+   * swallows a keystroke meant for a field, and so browser and OS shortcuts
+   * carrying a modifier still pass straight through.
+   */
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const el = e.target as HTMLElement | null;
+      const typing =
+        el instanceof HTMLElement &&
+        (el.tagName === "INPUT" ||
+          el.tagName === "TEXTAREA" ||
+          el.isContentEditable);
 
-    const userMsg: Message = {
-      id: `u-${Date.now()}`,
-      role: "user",
-      content: value,
+      if (e.key === "Escape" && open) {
+        setOpen(false);
+        return;
+      }
+      if (typing || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.key.toLowerCase() === "c" && !open) {
+        e.preventDefault();
+        setOpen(true);
+      }
     };
-    setMessages((prev) => [...prev, userMsg]);
-    setInput("");
-    setPending(true);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
-    try {
-      const reply = await sendMessage(value);
+  const submit = useCallback(
+    async (text: string) => {
+      const value = text.trim();
+      if (!value || pending) return;
+
       setMessages((prev) => [
         ...prev,
-        { id: `a-${Date.now()}`, role: "assistant", content: reply },
+        { id: `u-${Date.now()}`, role: "user", content: value },
       ]);
-    } catch {
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: `a-${Date.now()}`,
-          role: "assistant",
-          content:
-            "Something went wrong. Please try again or email mehdisalhi.dev@gmail.com.",
-        },
-      ]);
-    } finally {
-      setPending(false);
-    }
-  };
+      setInput("");
+      setPending(true);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      submit(input);
-    }
-  };
+      try {
+        const reply = await sendMessage(value);
+        setMessages((prev) => [
+          ...prev,
+          { id: `a-${Date.now()}`, role: "assistant", content: reply },
+        ]);
+      } catch {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `a-${Date.now()}`,
+            role: "assistant",
+            content:
+              "Something went wrong. Please try again or email mehdisalhi.dev@gmail.com.",
+          },
+        ]);
+      } finally {
+        setPending(false);
+      }
+    },
+    [pending],
+  );
 
   return (
-    <>
-      {/* Floating trigger */}
-      <AnimatePresence>
-        {!open && (
-          <motion.button
-            key="trigger"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 24 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            onClick={() => setOpen(true)}
-            className="group fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-full border border-line bg-white py-2 pl-2 pr-5 shadow-pill transition-all duration-300 hover:-translate-y-0.5 hover:border-ink"
-            aria-label="Open chat"
-          >
-            <Avatar size="sm" />
-            <span className="flex flex-col items-start leading-tight">
-              <span className="font-display text-[13px] font-bold tracking-tight text-ink">
-                Ask Mehdi
-              </span>
-              <span className="flex items-center gap-1.5 font-mono text-[10px] text-muted">
-                <span className="relative flex h-1 w-1">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-                  <span className="relative inline-flex h-1 w-1 rounded-full bg-emerald-500" />
-                </span>
-                online
-              </span>
-            </span>
-          </motion.button>
-        )}
-      </AnimatePresence>
-
-      {/* Chat panel */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            key="panel"
-            initial={{ opacity: 0, y: 24, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 24, scale: 0.97 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-6 right-6 z-50 flex h-[min(640px,calc(100vh-3rem))] w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-[24px] border border-line bg-white shadow-[0_40px_90px_-24px_rgba(12,12,14,0.28)] sm:w-[420px]"
-          >
-            {/* Header */}
-            <header className="flex items-center justify-between border-b border-line-soft px-5 py-4">
-              <div className="flex items-center gap-3">
-                <Avatar />
-                <div>
-                  <p className="font-display text-[15px] font-bold tracking-tight text-ink">
-                    Mehdi Salhi
-                  </p>
-                  <p className="mt-0.5 flex items-center gap-1.5 font-mono text-[11px] text-muted">
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                    </span>
-                    cloud &amp; devops engineer
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => setOpen(false)}
-                className="rounded-full p-2 text-muted transition-colors hover:bg-paper-soft hover:text-ink"
-                aria-label="Close chat"
-              >
-                <CloseIcon />
-              </button>
-            </header>
-
-            {/* Messages */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-5">
-              <div className="space-y-4">
-                {messages.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={`flex items-start gap-2.5 ${
-                      msg.role === "user" ? "justify-end" : "justify-start"
-                    }`}
+    // The dock owns the centring. Framer Motion writes an inline transform,
+    // which would overwrite a Tailwind -translate-x-1/2 on the same element.
+    <div className="pointer-events-none fixed inset-x-0 bottom-5 z-50 flex justify-center px-4 sm:bottom-6">
+      <motion.div
+        layout
+        transition={{ duration: 0.42, ease }}
+        className="pointer-events-auto w-full max-w-[580px] overflow-hidden rounded-[26px] bg-[#0b0b0c] shadow-[0_2px_8px_rgba(0,0,0,0.12),0_18px_50px_-12px_rgba(0,0,0,0.45)] ring-1 ring-white/10"
+      >
+        <AnimatePresence initial={false} mode="wait">
+          {open ? (
+            <motion.div
+              key="panel"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="flex flex-col"
+            >
+              {/* Composer on top, as in the reference */}
+              <div className="flex items-start gap-3 px-6 pt-6">
+                <textarea
+                  ref={inputRef}
+                  rows={1}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      submit(input);
+                    }
+                  }}
+                  placeholder="Type something here..."
+                  disabled={pending}
+                  // The global focus ring is right everywhere else, but this
+                  // field takes focus the moment the panel opens, so the ring
+                  // would be permanent decoration. The caret carries it here.
+                  className="flex-1 resize-none border-0 bg-transparent font-body text-[19px] leading-snug text-white outline-none focus-visible:outline-none placeholder:text-white/35 disabled:opacity-60"
+                />
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  aria-label="Close chat"
+                  className="-mr-1 mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-white/50 transition-colors hover:bg-white/10 hover:text-white"
+                >
+                  <svg
+                    className="h-[18px] w-[18px]"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.8}
                   >
-                    {msg.role === "assistant" && <Avatar size="sm" />}
-                    <div
-                      className={`max-w-[80%] px-4 py-2.5 ${
-                        msg.role === "user"
-                          ? "rounded-[16px] rounded-tr-md bg-ink text-white"
-                          : "rounded-[16px] rounded-tl-md bg-paper-soft text-ink-soft"
+                    <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Conversation */}
+              <div
+                ref={scrollRef}
+                className="no-scrollbar min-h-[132px] max-h-[42vh] space-y-3 overflow-y-auto px-6 py-5"
+              >
+                {messages.map((m) => (
+                  <div
+                    key={m.id}
+                    className={m.role === "user" ? "flex justify-end" : ""}
+                  >
+                    <p
+                      className={`max-w-[85%] whitespace-pre-line rounded-2xl px-3.5 py-2.5 font-body text-[14px] leading-relaxed ${
+                        m.role === "user"
+                          ? "bg-white text-ink"
+                          : "bg-white/[0.07] text-white/85"
                       }`}
                     >
-                      {/* pre-line keeps the model's paragraph breaks. Without
-                          it a multi-paragraph answer collapses into one block. */}
-                      <p className="whitespace-pre-line font-body text-[13.5px] leading-relaxed">
-                        {msg.content}
-                      </p>
-                    </div>
+                      {m.content}
+                    </p>
                   </div>
                 ))}
 
                 {pending && (
-                  <div className="flex items-start gap-2.5">
-                    <Avatar size="sm" />
-                    <div className="rounded-[16px] rounded-tl-md bg-paper-soft px-4 py-3.5">
-                      <div className="flex items-center gap-1">
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-light [animation-delay:-0.3s]" />
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-light [animation-delay:-0.15s]" />
-                        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-light" />
-                      </div>
-                    </div>
+                  <div className="flex gap-1.5 px-1 py-2">
+                    {[0, 0.15, 0.3].map((d) => (
+                      <span
+                        key={d}
+                        className="h-1.5 w-1.5 animate-bounce rounded-full bg-white/40"
+                        style={{ animationDelay: `${d}s` }}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {messages.length === 1 && !pending && (
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {suggestions.map((s) => (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => submit(s)}
+                        className="rounded-full bg-white/[0.07] px-3 py-1.5 text-left font-mono text-[11.5px] text-white/60 transition-colors hover:bg-white/[0.14] hover:text-white"
+                      >
+                        {s}
+                      </button>
+                    ))}
                   </div>
                 )}
               </div>
 
-              {/* Suggestions */}
-              {messages.length === 1 && !pending && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.2 }}
-                  className="mt-7"
-                >
-                  <p className="mb-3 font-mono text-[10.5px] text-muted">
-                    try asking
-                  </p>
-                  <div className="grid grid-cols-2 gap-2">
-                    {suggestions.map((s, i) => (
-                      <motion.button
-                        key={s.label}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: 0.3 + i * 0.06 }}
-                        onClick={() => submit(s.prompt)}
-                        className="group flex flex-col items-start rounded-2xl border border-line bg-white p-3 text-left transition-all duration-300 hover:border-accent hover:bg-accent-soft"
-                      >
-                        <span className="font-display text-[12.5px] font-bold tracking-tight text-ink">
-                          {s.label}
-                        </span>
-                        <span className="mt-1 line-clamp-2 font-body text-[11px] leading-snug text-muted">
-                          {s.prompt}
-                        </span>
-                      </motion.button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </div>
-
-            {/* Input */}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                submit(input);
-              }}
-              className="border-t border-line-soft px-4 py-4"
-            >
-              <div className="flex items-end gap-2 rounded-2xl border border-line bg-paper-soft px-4 py-2.5 transition-colors focus-within:border-accent focus-within:bg-white">
-                <textarea
-                  ref={inputRef}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Ask about Mehdi's work…"
-                  rows={1}
-                  disabled={pending}
-                  // Wrapper renders the focus treatment, so opt out of the global ring
-                  className="flex-1 resize-none border-0 bg-transparent py-1 font-body text-[13.5px] leading-relaxed text-ink placeholder-muted-light outline-none focus-visible:outline-none disabled:opacity-60"
-                  style={{ maxHeight: "120px" }}
-                />
+              {/* The bar itself, still anchored at the bottom */}
+              <div className="flex items-center justify-between gap-3 px-5 pb-5">
+                <Identity />
                 <button
-                  type="submit"
-                  disabled={!input.trim() || pending}
-                  className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-ink text-white transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:bg-line disabled:text-muted-light"
-                  aria-label="Send message"
+                  type="button"
+                  onClick={() => submit(input)}
+                  disabled={pending || !input.trim()}
+                  className="flex flex-shrink-0 items-center gap-2.5 rounded-full px-2 py-1.5 text-white transition-opacity disabled:opacity-35"
                 >
                   <SendIcon />
+                  <span className="font-display text-[15px] font-semibold">
+                    Send
+                  </span>
+                  <Key>&#8629;</Key>
                 </button>
               </div>
-              <p className="mt-2.5 text-center font-mono text-[10px] text-muted-light">
-                Responses may not always be perfect, so email Mehdi directly for
-                anything urgent.
-              </p>
-            </form>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="bar"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center justify-between gap-3 px-5 py-3.5"
+            >
+              <Identity />
+              <button
+                type="button"
+                onClick={() => setOpen(true)}
+                className="group flex flex-shrink-0 items-center gap-2.5 rounded-full px-2 py-1.5 text-white transition-opacity hover:opacity-80"
+                aria-label="Open chat"
+              >
+                <ChatIcon />
+                <span className="font-display text-[15px] font-semibold">
+                  Chat
+                </span>
+                <Key>C</Key>
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </div>
   );
 }

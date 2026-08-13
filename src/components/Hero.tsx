@@ -114,18 +114,6 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll cue */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 1.1 }}
-        className="absolute inset-x-0 bottom-8 hidden flex-col items-center gap-2.5 md:flex"
-      >
-        <span className="font-mono text-[12px] text-muted">scroll</span>
-        <span className="flex h-8 w-5 items-start justify-center rounded-full border border-line pt-1.5">
-          <span className="h-1.5 w-1.5 animate-scroll-dot rounded-full bg-muted" />
-        </span>
-      </motion.div>
     </section>
   );
 }
