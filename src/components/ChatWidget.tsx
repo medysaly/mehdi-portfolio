@@ -10,11 +10,12 @@ type Message = {
   content: string;
 };
 
+// Lifted from the prompt's own first example, so the opening line and the
+// replies that follow it are written in the same voice.
 const introMessage: Message = {
   id: "intro",
   role: "assistant",
-  content:
-    "Hey, I'm Mehdi. Ask me anything about my work, the projects I've shipped, or how to get in touch.",
+  content: "Hey, welcome. What would you like to know about Mehdi?",
 };
 
 async function sendMessage(input: string): Promise<string> {
@@ -103,7 +104,7 @@ function Identity() {
       />
       <span className="flex min-w-0 flex-col leading-tight">
         <span className="truncate font-display text-[13.5px] font-semibold tracking-[-0.02em] text-white">
-          Speak to Mehdi
+          Ask about Mehdi
         </span>
         <span className="truncate font-body text-[11.5px] text-white/45">
           Ask me anything
@@ -283,10 +284,10 @@ export default function ChatWidget() {
                   // would be permanent decoration. The caret carries it here.
                   className="w-full resize-none border-0 bg-transparent font-body text-[15.5px] leading-snug text-white outline-none focus-visible:outline-none placeholder:text-white/35 disabled:opacity-60"
                 />
-                {/* It answers in the first person under Mehdi's own face, so
-                    say plainly that it is not him typing. */}
+                {/* It sits under Mehdi's own face, so say plainly that it is
+                    not him answering. */}
                 <p className="pt-1.5 font-mono text-[10.5px] leading-relaxed text-white/30">
-                  An AI trained on my work, not me typing. Email me for
+                  An AI trained on Mehdi&apos;s work. Email him directly for
                   anything urgent.
                 </p>
               </div>
