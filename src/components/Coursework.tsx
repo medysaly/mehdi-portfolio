@@ -158,7 +158,7 @@ export default function Coursework() {
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading
-            title="Coursework"
+            title="Out of the degree"
             lead="a few projects from my CS degree at SNHU · tap any to open"
           />
 

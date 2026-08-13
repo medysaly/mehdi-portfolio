@@ -87,7 +87,7 @@ export default function About() {
   return (
     <section id="about" className="scroll-mt-20 px-6 py-24 lg:px-8 lg:py-28">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading title="A little about me" />
+        <SectionHeading title="The short version" />
 
         <div className="mt-14 grid gap-12 md:grid-cols-2 md:gap-16">
           {/* Portrait + bio */}

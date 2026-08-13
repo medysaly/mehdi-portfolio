@@ -10,18 +10,11 @@ type Message = {
   content: string;
 };
 
-const suggestions = [
-  "What AWS services has Mehdi worked with?",
-  "Tell me about Unkommon.ai",
-  "Walk me through his certifications",
-  "What kind of roles is he looking for?",
-];
-
 const introMessage: Message = {
   id: "intro",
   role: "assistant",
   content:
-    "Hi! I'm Mehdi's assistant. Ask me anything about his work, his projects, or how to get in touch with him.",
+    "Hey, I'm Mehdi. Ask me anything about my work, the projects I've shipped, or how to get in touch.",
 };
 
 async function sendMessage(input: string): Promise<string> {
@@ -110,10 +103,10 @@ function Identity() {
       />
       <span className="flex min-w-0 flex-col leading-tight">
         <span className="truncate font-display text-[13.5px] font-semibold tracking-[-0.02em] text-white">
-          Mehdi&apos;s assistant
+          Speak to Mehdi
         </span>
         <span className="truncate font-body text-[11.5px] text-white/45">
-          Ask about his work
+          Ask me anything
         </span>
       </span>
     </div>
@@ -146,29 +139,15 @@ export default function ChatWidget() {
   }, [input]);
 
   /**
-   * The point of the dock: reachable from anywhere on the page without
-   * hunting for a button. C opens it, Escape closes it. Guarded so it never
-   * swallows a keystroke meant for a field, and so browser and OS shortcuts
-   * carrying a modifier still pass straight through.
+   * Escape only. Opening used to be bound to C, advertised by the keycap next
+   * to the label; with the keycap gone the shortcut would be invisible, and a
+   * bare letter key that opens a chat unannounced is a surprise, not a
+   * feature. Closing on Escape is a convention people already expect.
    */
   useEffect(() => {
+    if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      const el = e.target as HTMLElement | null;
-      const typing =
-        el instanceof HTMLElement &&
-        (el.tagName === "INPUT" ||
-          el.tagName === "TEXTAREA" ||
-          el.isContentEditable);
-
-      if (e.key === "Escape" && open) {
-        setOpen(false);
-        return;
-      }
-      if (typing || e.metaKey || e.ctrlKey || e.altKey) return;
-      if (e.key.toLowerCase() === "c" && !open) {
-        e.preventDefault();
-        setOpen(true);
-      }
+      if (e.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -281,20 +260,6 @@ export default function ChatWidget() {
                   </div>
                 )}
 
-                {messages.length === 1 && !pending && (
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {suggestions.map((s) => (
-                      <button
-                        key={s}
-                        type="button"
-                        onClick={() => submit(s)}
-                        className="rounded-full bg-white/[0.07] px-3 py-1.5 text-left font-mono text-[11.5px] text-white/60 transition-colors hover:bg-white/[0.14] hover:text-white"
-                      >
-                        {s}
-                      </button>
-                    ))}
-                  </div>
-                )}
               </div>
 
               {/* Composer, directly above the bar so typing happens at the
@@ -318,6 +283,12 @@ export default function ChatWidget() {
                   // would be permanent decoration. The caret carries it here.
                   className="w-full resize-none border-0 bg-transparent font-body text-[15.5px] leading-snug text-white outline-none focus-visible:outline-none placeholder:text-white/35 disabled:opacity-60"
                 />
+                {/* It answers in the first person under Mehdi's own face, so
+                    say plainly that it is not him typing. */}
+                <p className="pt-1.5 font-mono text-[10.5px] leading-relaxed text-white/30">
+                  An AI trained on my work, not me typing. Email me for
+                  anything urgent.
+                </p>
               </div>
 
               {/* The bar itself, still anchored at the bottom */}
@@ -357,7 +328,6 @@ export default function ChatWidget() {
                 <span className="font-display text-[13.5px] font-semibold">
                   Chat
                 </span>
-                <Key>C</Key>
               </button>
             </motion.div>
           )}

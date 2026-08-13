@@ -40,7 +40,7 @@ export default function Certifications() {
       className="scroll-mt-20 px-6 py-24 lg:px-8 lg:py-28"
     >
       <div className="mx-auto max-w-6xl">
-        <SectionHeading title="Certifications" />
+        <SectionHeading title="Credentials" />
 
         <motion.div
           initial={{ opacity: 0, y: 18 }}

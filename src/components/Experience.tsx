@@ -139,7 +139,7 @@ export default function Experience() {
     <section id="experience" className="scroll-mt-20 px-6 py-24 lg:px-8 lg:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          title="Where I've worked"
+          title="Where I've been"
           lead="building AI agent workflows while I finish the degree"
         />
 
