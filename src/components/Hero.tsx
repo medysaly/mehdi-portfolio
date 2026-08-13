@@ -50,24 +50,10 @@ export default function Hero() {
           transition={{ staggerChildren: 0.09, delayChildren: 0.05 }}
           className="flex flex-col items-center text-center"
         >
-          <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.6, ease }}
-            className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3.5 py-1.5"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
-            </span>
-            <span className="font-mono text-[13px] text-ink-soft">
-              open to cloud &amp; devops roles
-            </span>
-          </motion.div>
-
           <motion.h1
             variants={fadeUp}
             transition={{ duration: 0.6, ease }}
-            className="mt-7 font-display text-[3rem] font-extrabold leading-[1.02] tracking-[-0.03em] text-ink sm:text-[4rem] lg:text-display-1"
+            className="font-display text-[3rem] font-extrabold leading-[1.02] tracking-[-0.03em] text-ink sm:text-[4rem] lg:text-display-1"
           >
             Hi, I&apos;m Mehdi.
           </motion.h1>

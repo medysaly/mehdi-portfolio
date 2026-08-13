@@ -43,7 +43,9 @@ const config: Config = {
         "accent-foreground": "#ffffff",
       },
       fontFamily: {
-        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        // display and body are the same family on purpose. font-display stays
+        // as a name so every heading still has one place to change.
+        display: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         body: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-geist-mono)", "monospace"],
       },

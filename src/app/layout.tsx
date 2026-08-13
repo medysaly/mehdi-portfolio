@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { bricolage, geistMono, geistSans } from "./fonts";
+import { geistMono, geistSans } from "./fonts";
 import Navbar from "@/components/Navbar";
 import CalEmbed from "@/components/CalEmbed";
 
@@ -50,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bricolage.variable} ${geistSans.variable} ${geistMono.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <body className="min-h-screen bg-paper font-body text-ink-soft antialiased">
         <Navbar />
