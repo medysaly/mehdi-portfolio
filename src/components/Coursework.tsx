@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import { ArrowUpRightIcon } from "./icons";
@@ -88,7 +88,16 @@ const filters = ["All", "Systems", "Web", "AI & Data"] as const;
 // re-renders, because a random rotation would jitter on every filter change.
 const tilts = [-1.6, 1.2, -0.8, 1.7, -1.2, 0.9, -1.9, 1.4];
 
-function CourseCard({ course, index }: { course: Course; index: number }) {
+/**
+ * forwardRef because AnimatePresence runs these in popLayout mode, which wraps
+ * each child and needs a ref to the DOM node to hold its size while it leaves.
+ * A plain function component cannot take one: React logged a warning on every
+ * filter change and the ref arrived null, so the exit had nothing to measure.
+ */
+const CourseCard = forwardRef<
+  HTMLDivElement,
+  { course: Course; index: number }
+>(function CourseCard({ course, index }, ref) {
   const hasLink = Boolean(course.github);
   const Wrapper = hasLink ? "a" : "div";
   const wrapperProps = hasLink
@@ -97,6 +106,7 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
 
   return (
     <motion.div
+      ref={ref}
       layout
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
@@ -143,7 +153,7 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
       </Wrapper>
     </motion.div>
   );
-}
+});
 
 export default function Coursework() {
   const [filter, setFilter] = useState<(typeof filters)[number]>("All");
@@ -159,7 +169,10 @@ export default function Coursework() {
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading
             title="Out of the degree"
-            lead="a few projects from my CS degree at SNHU · tap any to open"
+            // "tap any to open" was a promise one of the eight cards cannot
+            // keep: Introduction to Scripting has no repo, so it renders as a
+            // div and does nothing when clicked.
+            lead="a few projects from my CS degree at SNHU · most link to the repo"
           />
 
           {/* Filter chips, right-aligned as on the reference */}
