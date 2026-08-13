@@ -537,7 +537,15 @@ function PinnedTrack() {
   };
 
   return (
-    <div ref={wrapperRef} style={{ height: `calc(100vh + ${distance}px)` }}>
+    // `relative` is load-bearing, not decoration. useScroll measures this
+    // element's offset, and against a statically positioned target Framer
+    // warns that the offset may be wrong, which is the number the whole
+    // sideways travel is derived from.
+    <div
+      ref={wrapperRef}
+      className="relative"
+      style={{ height: `calc(100vh + ${distance}px)` }}
+    >
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
         <motion.div
           ref={trackRef}
