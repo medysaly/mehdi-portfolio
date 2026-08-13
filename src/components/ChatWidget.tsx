@@ -96,15 +96,15 @@ function Key({ children }: { children: React.ReactNode }) {
 
 function Identity() {
   return (
-    <div className="flex min-w-0 items-center gap-3">
-      <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-[14px] bg-accent-soft font-display text-[13px] font-bold tracking-tight text-accent">
+    <div className="flex min-w-0 items-center gap-2.5">
+      <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[11px] bg-accent-soft font-display text-[11.5px] font-bold tracking-tight text-accent">
         MS
       </span>
       <span className="flex min-w-0 flex-col leading-tight">
-        <span className="truncate font-display text-[15px] font-semibold tracking-[-0.02em] text-white">
+        <span className="truncate font-display text-[13.5px] font-semibold tracking-[-0.02em] text-white">
           Mehdi&apos;s assistant
         </span>
-        <span className="truncate font-body text-[13px] text-white/45">
+        <span className="truncate font-body text-[11.5px] text-white/45">
           Ask about his work
         </span>
       </span>
@@ -208,7 +208,7 @@ export default function ChatWidget() {
       <motion.div
         layout
         transition={{ duration: 0.42, ease }}
-        className="pointer-events-auto w-full max-w-[580px] overflow-hidden rounded-[26px] bg-[#0b0b0c] shadow-[0_2px_8px_rgba(0,0,0,0.12),0_18px_50px_-12px_rgba(0,0,0,0.45)] ring-1 ring-white/10"
+        className="pointer-events-auto w-full max-w-[460px] overflow-hidden rounded-[22px] bg-[#0b0b0c] shadow-[0_2px_8px_rgba(0,0,0,0.12),0_18px_50px_-12px_rgba(0,0,0,0.45)] ring-1 ring-white/10"
       >
         <AnimatePresence initial={false} mode="wait">
           {open ? (
@@ -220,34 +220,15 @@ export default function ChatWidget() {
               transition={{ duration: 0.2 }}
               className="flex flex-col"
             >
-              {/* Composer on top, as in the reference */}
-              <div className="flex items-start gap-3 px-6 pt-6">
-                <textarea
-                  ref={inputRef}
-                  rows={1}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-                      submit(input);
-                    }
-                  }}
-                  placeholder="Type something here..."
-                  disabled={pending}
-                  // The global focus ring is right everywhere else, but this
-                  // field takes focus the moment the panel opens, so the ring
-                  // would be permanent decoration. The caret carries it here.
-                  className="flex-1 resize-none border-0 bg-transparent font-body text-[19px] leading-snug text-white outline-none focus-visible:outline-none placeholder:text-white/35 disabled:opacity-60"
-                />
+              <div className="flex justify-end px-3 pt-3">
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
                   aria-label="Close chat"
-                  className="-mr-1 mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-white/50 transition-colors hover:bg-white/10 hover:text-white"
+                  className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-white/45 transition-colors hover:bg-white/10 hover:text-white"
                 >
                   <svg
-                    className="h-[18px] w-[18px]"
+                    className="h-4 w-4"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -261,7 +242,7 @@ export default function ChatWidget() {
               {/* Conversation */}
               <div
                 ref={scrollRef}
-                className="no-scrollbar min-h-[132px] max-h-[42vh] space-y-3 overflow-y-auto px-6 py-5"
+                className="no-scrollbar min-h-[120px] max-h-[38vh] space-y-2.5 overflow-y-auto px-5 pb-4"
               >
                 {messages.map((m) => (
                   <div
@@ -308,17 +289,40 @@ export default function ChatWidget() {
                 )}
               </div>
 
+              {/* Composer, directly above the bar so typing happens at the
+                  bottom where the cursor already is. */}
+              <div className="px-5">
+                <textarea
+                  ref={inputRef}
+                  rows={1}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      submit(input);
+                    }
+                  }}
+                  placeholder="Type something here..."
+                  disabled={pending}
+                  // The global focus ring is right everywhere else, but this
+                  // field takes focus the moment the panel opens, so the ring
+                  // would be permanent decoration. The caret carries it here.
+                  className="w-full resize-none border-0 bg-transparent font-body text-[15.5px] leading-snug text-white outline-none focus-visible:outline-none placeholder:text-white/35 disabled:opacity-60"
+                />
+              </div>
+
               {/* The bar itself, still anchored at the bottom */}
-              <div className="flex items-center justify-between gap-3 px-5 pb-5">
+              <div className="flex items-center justify-between gap-3 px-4 pb-4 pt-2">
                 <Identity />
                 <button
                   type="button"
                   onClick={() => submit(input)}
                   disabled={pending || !input.trim()}
-                  className="flex flex-shrink-0 items-center gap-2.5 rounded-full px-2 py-1.5 text-white transition-opacity disabled:opacity-35"
+                  className="flex flex-shrink-0 items-center gap-2 rounded-full px-2 py-1.5 text-white transition-opacity disabled:opacity-35"
                 >
                   <SendIcon />
-                  <span className="font-display text-[15px] font-semibold">
+                  <span className="font-display text-[13.5px] font-semibold">
                     Send
                   </span>
                   <Key>&#8629;</Key>
@@ -332,17 +336,17 @@ export default function ChatWidget() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="flex items-center justify-between gap-3 px-5 py-3.5"
+              className="flex items-center justify-between gap-3 px-4 py-3"
             >
               <Identity />
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="group flex flex-shrink-0 items-center gap-2.5 rounded-full px-2 py-1.5 text-white transition-opacity hover:opacity-80"
+                className="group flex flex-shrink-0 items-center gap-2 rounded-full px-2 py-1.5 text-white transition-opacity hover:opacity-80"
                 aria-label="Open chat"
               >
                 <ChatIcon />
-                <span className="font-display text-[15px] font-semibold">
+                <span className="font-display text-[13.5px] font-semibold">
                   Chat
                 </span>
                 <Key>C</Key>
