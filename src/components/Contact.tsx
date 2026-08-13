@@ -26,7 +26,7 @@ export default function Contact() {
           className="mx-auto max-w-2xl text-center"
         >
           <h2 className="font-display text-[2.5rem] font-extrabold leading-[1.05] tracking-[-0.03em] text-ink sm:text-[3.5rem]">
-            Let&apos;s talk shop
+            Let&apos;s talk
           </h2>
 
           {/* Names each route in the order they appear below it: the email
