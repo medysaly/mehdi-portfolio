@@ -1,43 +1,56 @@
-import Sidebar from "@/components/Sidebar";
+import Hero from "@/components/Hero";
 import About from "@/components/About";
-import Skills from "@/components/Skills";
-import Certifications from "@/components/Certifications";
+import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
+import Certifications from "@/components/Certifications";
 import Coursework from "@/components/Coursework";
 import Contact from "@/components/Contact";
+import SocialRail from "@/components/SocialRail";
 import ChatWidget from "@/components/ChatWidget";
+import MarineWash from "@/components/MarineWash";
 
 export default function Home() {
   return (
-    <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0">
+    <>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-white"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-white"
       >
         Skip to content
       </a>
 
-      <div className="lg:grid lg:grid-cols-2 lg:gap-16">
-        <Sidebar />
+      <SocialRail />
 
-        <main id="main-content" className="pt-16 lg:py-24">
-          <About />
-          <Skills />
-          <Certifications />
-          <Projects />
-          <Coursework />
-          <Contact />
+      <main id="main-content">
+        <Hero />
+        <About />
 
-          <footer className="mt-24 border-t border-white/[0.06] py-8">
-            <p className="font-mono text-xs text-neutral-600">
-              Built with Next.js, Tailwind, and Framer Motion. Deployed on
-              Vercel. &copy; {new Date().getFullYear()} Mehdi Salhi.
-            </p>
-          </footer>
-        </main>
-      </div>
+        {/* Work before employment history. The shipped projects are the
+            strongest evidence here, and a single externship read first
+            undersells what follows it. */}
+        <Projects />
+        <Experience />
+
+        {/* Credentials and the coursework that belongs to the same degree
+            stay adjacent and on the same white, so they read as one block
+            about education rather than two unrelated lists. */}
+        <Certifications />
+        <Coursework />
+
+        {/* Closes on the same blue the hero opens with, mirrored so the
+            colour rises from the bottom. This used to run blue into peach,
+            which meant the page ended on a hue that appeared nowhere else.
+            The wash goes first in DOM order, because a negative z-index would
+            drop it behind the page background and vanish. */}
+        <div className="relative">
+          <MarineWash anchor="bottom" />
+          <div className="relative">
+            <Contact />
+          </div>
+        </div>
+      </main>
 
       <ChatWidget />
-    </div>
+    </>
   );
 }

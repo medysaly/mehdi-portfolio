@@ -9,22 +9,84 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#0a0a0a",
-        surface: "#111111",
-        "surface-raised": "#161616",
-        border: "#1a1a1a",
-        accent: "#b8895a",
-        "accent-glow": "#d9b48a",
-        "accent-subtle": "#8f6844",
-        warm: "#f5f0eb",
+        // Surfaces
+        paper: "#ffffff",
+        "paper-soft": "#f5f5f5",
+
+        // Ink: near-black headings, #333 body, #666 secondary
+        ink: "#000000",
+        "ink-soft": "#333333",
+        muted: "#666666",
+        "muted-light": "#999999",
+
+        // Structure
+        line: "#e8e8e8",
+        "line-soft": "#f0f0f0",
+
+        // Accent: pure blue used for eyebrows, links, and the status dot
+        accent: "#0066ff",
+        "accent-hover": "#0052cc",
+        "accent-soft": "#eef4ff",
+
+        // shadcn-shaped aliases, so components written against that
+        // vocabulary resolve against this palette instead of silently
+        // emitting classes Tailwind never generates. Deliberately aliases,
+        // not a second palette: there is still one source of truth above.
+        primary: "#000000",
+        "primary-foreground": "#ffffff",
+        secondary: "#f5f5f5",
+        "secondary-foreground": "#000000",
+        destructive: "#dc2626",
+        background: "#ffffff",
+        input: "#e8e8e8",
+        ring: "#0066ff",
+        "accent-foreground": "#ffffff",
       },
       fontFamily: {
-        display: ["var(--font-display)", "system-ui", "sans-serif"],
-        body: ["var(--font-body)", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono)", "monospace"],
+        // display and body are the same family on purpose. font-display stays
+        // as a name so every heading still has one place to change.
+        display: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        body: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "monospace"],
+      },
+      fontSize: {
+        // Scale lifted from the reference: tight, heavy display type
+        "display-1": ["5rem", { lineHeight: "0.98", letterSpacing: "-0.03em" }],
+        "display-2": ["3.2rem", { lineHeight: "1.1", letterSpacing: "-0.03em" }],
+        lead: ["1.25rem", { lineHeight: "1.625" }],
       },
       backgroundImage: {
-        "noise": "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E\")",
+        "dot-grid":
+          "radial-gradient(circle, rgba(0,0,0,0.10) 1px, transparent 1px)",
+      },
+      backgroundSize: {
+        dot: "24px 24px",
+      },
+      boxShadow: {
+        card: "0 1px 2px rgba(0,0,0,0.03), 0 8px 24px -14px rgba(0,0,0,0.10)",
+        "card-hover": "0 2px 4px rgba(0,0,0,0.04), 0 18px 40px -18px rgba(0,0,0,0.16)",
+        pill: "0 1px 2px rgba(0,0,0,0.04), 0 10px 28px -14px rgba(0,0,0,0.18)",
+      },
+      keyframes: {
+        "scroll-dot": {
+          "0%, 100%": { transform: "translateY(0)", opacity: "1" },
+          "50%": { transform: "translateY(6px)", opacity: "0.4" },
+        },
+        // The reference's side-quest rail slides one full copy of the track,
+        // then snaps back. The duplicated children make the seam invisible.
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-6px)" },
+        },
+      },
+      animation: {
+        "scroll-dot": "scroll-dot 1.8s ease-in-out infinite",
+        marquee: "marquee 60s linear infinite",
+        float: "float 4s ease-in-out infinite",
       },
     },
   },

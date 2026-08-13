@@ -1,40 +1,186 @@
 "use client";
 
-import { motion } from "framer-motion";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import Image from "next/image";
+import {
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import SectionHeading from "./SectionHeading";
+import { ArrowUpRightIcon, GithubIcon } from "./icons";
+
+/** Architecture panel shown for projects with no live site to screenshot. */
+type Panel = {
+  label: string;
+  steps: string[];
+  tags: string[];
+};
 
 type Project = {
   title: string;
+  tagline: string;
   description: string;
+  highlights: string[];
   stack: string[];
   link?: string;
   github?: string;
   badge?: string;
+  /** Live screenshot. Projects without one fall back to `panel`. */
+  image?: string;
+  panel?: Panel;
 };
 
+// Copy follows the resume (Mehdi_Salhi_Cloud_Engineer.pdf), with architecture
+// detail filled in from each repo's README.
 const featured: Project[] = [
   {
-    title: "Unkommon.ai",
+    title: "AWS Cost Watchdog",
+    tagline: "A FinOps watchdog that found a $21/month zombie subscription on day one",
     description:
-      "Solo-built AI services platform on AWS. Voice receptionist (Vapi + Bedrock + Lambda) and website chatbot that qualify leads and book appointments via Google Calendar. Fully serverless. Lambda, Bedrock (Claude Sonnet 4.5 / Haiku 4.5), DynamoDB, API Gateway, Cognito, Amplify. React + TypeScript frontend, deployed via AWS SAM.",
+      "Serverless FinOps monitoring for AWS: daily cost digests, idle-resource detection, tag enforcement, and anomaly alerts, all running for under $2/month.",
+    highlights: [
+      "Automated daily cost and waste monitoring (spend digests, idle-resource detection, tag-compliance checks via AWS Config, and cost-anomaly detection) across four event-driven Python Lambdas on EventBridge Scheduler and SNS, pushing findings to Slack and Telegram in real time",
+      "Persisted findings to DynamoDB and surfaced them in a React dashboard served through an API Gateway HTTP API and S3/CloudFront",
+      "Provisioned the whole stack as code with Terraform (remote S3 state, DynamoDB locking) and shipped it via GitHub Actions CI/CD using OIDC federation, with zero static AWS credentials",
+    ],
+    stack: [
+      "Terraform",
+      "Lambda",
+      "EventBridge Scheduler",
+      "SNS",
+      "DynamoDB",
+      "API Gateway",
+      "Python",
+      "React",
+    ],
+    github: "https://github.com/medysaly/aws-cost-watchdog",
+    badge: "FinOps",
+    panel: {
+      label: "event-driven finops stack",
+      steps: [
+        "EventBridge cron",
+        "4 × Python Lambda",
+        "DynamoDB findings",
+        "Slack + Telegram",
+        "React dashboard",
+      ],
+      tags: ["Terraform", "OIDC", "AWS Config", "< $2/mo"],
+    },
+  },
+  {
+    title: "StockWatch",
+    tagline: "A daily market brief that writes itself, for a few dollars a month",
+    description:
+      "A serverless AI market brief on AWS. Pulls real price and news data, summarizes it with Claude, and runs hands-free on a daily schedule, every piece of it provisioned as code.",
+    highlights: [
+      "Automated a daily AI market brief that pulls price and news data via yfinance and summarizes it with Claude, running hands-free on an EventBridge daily schedule",
+      "Guarded the LLM output with automated pytest checks (non-empty, no refusals) enforced in a GitHub Actions pipeline alongside ruff linting and a terraform plan gate",
+      "Deployed as an ARM64 container image on ECR with zero static AWS credentials via GitHub OIDC, with API keys in a single Secrets Manager secret behind a least-privilege IAM policy",
+    ],
+    stack: [
+      "Python",
+      "Lambda (ARM64)",
+      "ECR",
+      "EventBridge",
+      "Terraform",
+      "GitHub Actions",
+      "Claude API",
+      "Docker",
+    ],
+    github: "https://github.com/medysaly/stockwatch",
+    badge: "Serverless AI",
+    panel: {
+      label: "daily brief pipeline",
+      steps: [
+        "EventBridge (daily)",
+        "Lambda (arm64)",
+        "yfinance → data",
+        "Claude → summary",
+        "CloudWatch logs",
+      ],
+      tags: ["ECR", "Secrets Manager", "Terraform", "OIDC"],
+    },
+  },
+  {
+    title: "Unkommon.ai",
+    tagline: "An AI receptionist that answers the phone and books the meeting",
+    description:
+      "A full-stack AI website on a serverless AWS backend: a React site with an AI chatbot and a Vapi voice receptionist that answer questions, book appointments, and capture leads.",
+    highlights: [
+      "Built and deployed the site and serverless backend end to end, across three Lambdas behind API Gateway, with infrastructure as code in AWS SAM",
+      "Cut chatbot latency and Bedrock spend by front-running a Trie-based intent classifier ahead of Claude Haiku 4.5 streaming responses, so common questions never reach the model",
+      "Hardened it with a WAFv2 web ACL, HMAC-verified webhooks, least-privilege IAM, and Secrets Manager, over a DynamoDB data layer with Global Secondary Indexes, tested through a GitHub Actions pytest pipeline",
+    ],
     stack: [
       "React",
       "TypeScript",
       "AWS Lambda",
-      "Bedrock",
+      "API Gateway",
       "DynamoDB",
-      "Cognito",
+      "Bedrock",
       "AWS SAM",
+      "WAF",
       "Vapi",
     ],
     link: "https://unkommon.ai",
     github: "https://github.com/medysaly/unkommon",
-    badge: "Featured",
+    badge: "Flagship",
+    image: "/projects/unkommon.jpg",
+  },
+  {
+    title: "Company Policy RAG",
+    tagline: "Ask your documents anything, then measure whether it answered well",
+    description:
+      "Retrieval-augmented generation over policy documents, with hybrid retrieval and cross-encoder reranking, scored against a real evaluation set rather than vibes.",
+    highlights: [
+      "Built a RAG pipeline with hybrid retrieval (dense embeddings and BM25) and cross-encoder reranking, measured with RAGAS at 1.00 faithfulness and 1.00 context precision on a 10-question evaluation set",
+      "Engineered the ingestion and chunking pipeline with unit tests and a GitHub Actions CI pipeline, documenting the key retrieval design tradeoffs",
+      "Served it through a FastAPI backend with a Streamlit UI, containerized with Docker and deployed on Hugging Face Spaces",
+    ],
+    stack: [
+      "Python",
+      "FastAPI",
+      "Streamlit",
+      "BM25",
+      "Cross-encoder",
+      "RAGAS",
+      "Docker",
+    ],
+    link: "https://huggingface.co/spaces/medysaly/company-policy-rag",
+    github: "https://github.com/medysaly/company-policy-rag",
+    // Not "Live demo". The Hugging Face Space is currently returning a
+    // capacity error, so the badge points at the measured result instead.
+    badge: "RAGAS 1.00",
+    panel: {
+      label: "retrieval pipeline",
+      steps: [
+        "query",
+        "hybrid retrieve",
+        "cross-encoder rerank",
+        "generate",
+        "RAGAS score",
+      ],
+      tags: ["FastAPI", "Streamlit", "Docker", "1.00 faith."],
+    },
   },
   {
     title: "Bees Knees AI",
+    tagline: "A marketing site with a chatbot that costs 90% less to run",
     description:
-      "Live marketing site for an AI agency with an embedded chatbot (Buzz) built on Claude Sonnet 4. Streaming SSE, prompt caching for ~90% cost reduction, per-IP rate limiting, and full security headers (HSTS, CSP, Permissions-Policy). Cal.com booking integration and a custom WebGL shader hero.",
+      "Live marketing site for an AI agency with an embedded chatbot (Buzz) built on Claude. Streaming responses over SSE, prompt caching, per-IP rate limiting, and a full security header policy.",
+    highlights: [
+      "Prompt caching cut inference cost roughly 90%",
+      "Hardened with HSTS, CSP, and Permissions-Policy headers",
+      "Cal.com booking flow and a custom WebGL shader hero",
+    ],
     stack: [
       "Next.js 16",
       "React 19",
@@ -46,92 +192,156 @@ const featured: Project[] = [
     ],
     link: "https://beesknees.ai",
     github: "https://github.com/medysaly/beesknees-website",
-    badge: "Live Site",
-  },
-  {
-    title: "Company Policy RAG System",
-    description:
-      "Production-grade RAG system with hybrid search, cross-encoder reranking, and RAGAS evaluation metrics. Upload any document and ask questions in natural language. Built with Python, LangChain, FastAPI, deployed on Hugging Face.",
-    stack: [
-      "Python",
-      "LangChain",
-      "FastAPI",
-      "BM25",
-      "Sentence Transformers",
-      "RAGAS",
-    ],
-    link: "https://huggingface.co/spaces/medysaly/company-policy-rag",
-    github: "https://github.com/medysaly/company-policy-rag",
-    badge: "Live Demo",
+    badge: "Live site",
+    image: "/projects/beesknees.jpg",
   },
 ];
 
-function LinkIcon() {
+/** Stand-in for projects with no live site: a real pipeline, not a mock UI. */
+function SpecPanel({ panel }: { panel: Panel }) {
   return (
-    <svg
-      className="h-3.5 w-3.5"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-      />
-    </svg>
-  );
-}
-
-function GithubIcon() {
-  return (
-    <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-    </svg>
-  );
-}
-
-function ProjectItem({ project }: { project: Project }) {
-  return (
-    <div className="rounded-lg border border-white/[0.04] p-5 transition-colors hover:border-white/[0.12] hover:bg-white/[0.02]">
-      <div className="flex items-start justify-between gap-4">
-        <h3 className="font-display text-base font-medium text-white">
-          {project.title}
-        </h3>
-        {project.badge && (
-          <span className="flex-shrink-0 rounded border border-accent/25 bg-accent/[0.06] px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-accent-glow">
-            {project.badge}
-          </span>
-        )}
-      </div>
-
-      <p className="mt-2 font-body text-sm leading-relaxed text-neutral-400">
-        {project.description}
+    // Wash lives on the parent column so screenshot and panel cards match.
+    <div className="flex h-full w-full flex-col justify-center gap-5 px-7 py-8 sm:px-9">
+      <p className="font-mono text-[11px] uppercase tracking-widest text-muted-light">
+        {panel.label}
       </p>
 
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        {project.stack.map((tech) => (
+      <ul className="space-y-2">
+        {panel.steps.map((step, i) => (
+          <li key={step} className="flex items-center gap-2.5">
+            <span className="font-mono text-[11px] text-muted-light">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span
+              aria-hidden
+              className="h-px flex-shrink-0 bg-line"
+              style={{ width: 14 + i * 10 }}
+            />
+            <span className="font-display text-[13px] font-semibold tracking-[-0.02em] text-ink sm:text-[14px]">
+              {step}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <div className="flex flex-wrap gap-1.5">
+        {panel.tags.map((tag) => (
           <span
-            key={tech}
-            className="rounded bg-white/[0.03] px-2 py-0.5 font-mono text-[10px] text-neutral-500"
+            key={tag}
+            className="rounded-md border border-line bg-white/70 px-2 py-0.5 font-mono text-[11px] text-muted"
           >
-            {tech}
+            {tag}
           </span>
         ))}
       </div>
+    </div>
+  );
+}
 
-      {(project.link || project.github) && (
-        <div className="mt-4 flex flex-wrap gap-2">
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  return (
+    // Visual beside the text rather than above it, so the whole card fits on
+    // screen without vertical scrolling. Stacks back to vertical on mobile.
+    <article className="flex w-[88vw] max-w-[940px] flex-shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-line bg-white transition-colors duration-300 hover:border-muted-light sm:flex-row">
+      {/* Visual. The screenshots are 16:10, but this column is tall and narrow,
+          so cropping them to fill it slices the page mid-word. So the shot sits
+          whole inside a browser frame, centred on the same wash the
+          architecture panels use, and the two card types stay consistent. */}
+      <div className="relative flex w-full flex-shrink-0 items-center justify-center overflow-hidden border-b border-line-soft bg-[linear-gradient(150deg,#f7f9fc_0%,#eef2fb_100%)] sm:w-[42%] sm:border-b-0 sm:border-r">
+        {project.image ? (
+          <div className="w-full p-6 sm:p-7">
+            <div className="overflow-hidden rounded-lg border border-line bg-white shadow-card">
+              <div className="flex items-center gap-1.5 border-b border-line-soft bg-paper-soft px-3 py-2">
+                <span className="h-2 w-2 rounded-full bg-line" />
+                <span className="h-2 w-2 rounded-full bg-line" />
+                <span className="h-2 w-2 rounded-full bg-line" />
+                {project.link && (
+                  <span className="ml-1.5 truncate font-mono text-[10px] text-muted-light">
+                    {new URL(project.link).hostname.replace(/^www\./, "")}
+                  </span>
+                )}
+              </div>
+              <div className="relative aspect-[16/10] w-full">
+                {/* Eager on purpose. These cards live in a horizontally
+                    translated track, so the browser reads the far ones as
+                    off-screen and defers them: the last screenshot then
+                    arrives blank and pops in mid-scroll. Two images. */}
+                <Image
+                  src={project.image}
+                  alt={`${project.title} screenshot`}
+                  fill
+                  loading="eager"
+                  sizes="(max-width: 640px) 80vw, 340px"
+                  className="object-cover object-top"
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          project.panel && <SpecPanel panel={project.panel} />
+        )}
+      </div>
+
+      {/* Caption */}
+      <div className="min-w-0 flex-1 p-6 sm:p-7">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <span className="font-mono text-[12px] text-muted-light">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <h3 className="font-display text-[20px] font-bold tracking-[-0.03em] text-ink sm:text-[22px]">
+            {project.title}
+          </h3>
+          {project.badge && (
+            <span className="rounded-md bg-accent-soft px-2 py-0.5 font-mono text-[11.5px] text-accent">
+              {project.badge}
+            </span>
+          )}
+        </div>
+
+        <p className="mt-1.5 font-body text-[14.5px] text-accent sm:text-[15px]">
+          {project.tagline}
+        </p>
+
+        <p className="mt-3 font-body text-[14px] leading-[1.6] text-ink-soft sm:text-[14.5px]">
+          {project.description}
+        </p>
+
+        <ul className="mt-4 space-y-2">
+          {project.highlights.map((point) => (
+            <li
+              key={point}
+              className="flex gap-2.5 font-body text-[13px] leading-relaxed text-muted"
+            >
+              <span
+                aria-hidden
+                className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-accent"
+              />
+              {point}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {project.stack.map((tech) => (
+            <span
+              key={tech}
+              className="rounded-md bg-paper-soft px-2 py-1 font-mono text-[11.5px] text-muted"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-5 flex flex-wrap gap-2.5">
           {project.link && (
             <a
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group/btn inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-neutral-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 font-display text-[13px] font-semibold text-white transition-opacity duration-300 hover:opacity-80"
             >
-              <LinkIcon />
-              View Live
+              View live
+              <ArrowUpRightIcon className="h-3 w-3" />
             </a>
           )}
           {project.github && (
@@ -139,36 +349,238 @@ function ProjectItem({ project }: { project: Project }) {
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="group/btn inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-neutral-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+              className={`inline-flex items-center gap-2 rounded-full px-4 py-2 font-display text-[13px] font-semibold transition-colors duration-300 ${
+                project.link
+                  ? "border border-line bg-white text-ink hover:border-ink"
+                  : "bg-ink text-white transition-opacity hover:opacity-80"
+              }`}
             >
-              <GithubIcon />
-              Source
+              <GithubIcon className="h-3 w-3" />
+              {project.link ? "Source" : "View source"}
             </a>
           )}
         </div>
-      )}
+      </div>
+    </article>
+  );
+}
+
+function ProgressCue({
+  active,
+  onSelect,
+  hint,
+}: {
+  active: number;
+  onSelect: (i: number) => void;
+  hint: string;
+}) {
+  return (
+    <div className="mx-auto mt-8 flex max-w-6xl items-center justify-center gap-4 px-6 lg:px-8">
+      <span className="font-mono text-[13px] text-muted">
+        {String(active + 1).padStart(2, "0")}
+        <span className="text-muted-light">
+          {" "}
+          / {String(featured.length).padStart(2, "0")}
+        </span>
+      </span>
+
+      <div className="flex items-center gap-1.5">
+        {featured.map((project, i) => (
+          <button
+            key={project.title}
+            type="button"
+            onClick={() => onSelect(i)}
+            aria-label={`Go to ${project.title}`}
+            aria-current={i === active}
+            className={`h-1 rounded-full transition-all duration-300 ${
+              i === active ? "w-8 bg-ink" : "w-4 bg-line hover:bg-muted-light"
+            }`}
+          />
+        ))}
+      </div>
+
+      <span className="hidden font-mono text-[13px] text-muted-light sm:inline">
+        {hint}
+      </span>
+    </div>
+  );
+}
+
+/** Plain swipeable rail for touch, narrow screens, and anyone who has asked
+ *  for reduced motion. */
+function Rail() {
+  const railRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  // Cards snap to start, so the leading card is the one the counter shows.
+  const syncActive = useCallback(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const lead = rail.scrollLeft + rail.offsetLeft;
+    const cards = Array.from(rail.children) as HTMLElement[];
+    let nearest = 0;
+    let best = Infinity;
+    cards.forEach((card, i) => {
+      const gap = Math.abs(card.offsetLeft - lead);
+      if (gap < best) {
+        best = gap;
+        nearest = i;
+      }
+    });
+    setActive(nearest);
+  }, []);
+
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+    syncActive();
+    rail.addEventListener("scroll", syncActive, { passive: true });
+    window.addEventListener("resize", syncActive);
+    return () => {
+      rail.removeEventListener("scroll", syncActive);
+      window.removeEventListener("resize", syncActive);
+    };
+  }, [syncActive]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="mt-12"
+    >
+      <div
+        ref={railRef}
+        // Padding lines the first card up with the section heading's content
+        // edge. scroll-padding has to match it: snap-start aligns to the
+        // padding edge, so without it the browser scrolls the padding straight
+        // back off and the card sits at x=0.
+        className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-2 scroll-pl-6 lg:px-[max(2rem,calc((100vw-72rem)/2+2rem))] lg:scroll-pl-[max(2rem,calc((100vw-72rem)/2+2rem))]"
+      >
+        {featured.map((project, i) => (
+          <ProjectCard key={project.title} project={project} index={i} />
+        ))}
+      </div>
+
+      <ProgressCue
+        active={active}
+        onSelect={(i) => {
+          const card = railRef.current?.children[i] as HTMLElement | undefined;
+          card?.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "start",
+          });
+        }}
+        hint="keep scrolling →"
+      />
+    </motion.div>
+  );
+}
+
+/** Pinned mode: the section holds the viewport while downward scroll is spent
+ *  travelling sideways across the cards, then releases the page. The wrapper is
+ *  one viewport tall plus exactly the horizontal distance, so no scroll is
+ *  invented or swallowed. It is the same scroll, redirected. */
+function PinnedTrack() {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [distance, setDistance] = useState(0);
+  const [active, setActive] = useState(0);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const track = trackRef.current;
+      if (!track) return;
+      // scrollWidth counts the leading padding but drops the trailing one on an
+      // overflowing flex row, so add it back, or the travel stops short
+      // and the last card ends flush against the right edge.
+      const padRight = parseFloat(getComputedStyle(track).paddingRight) || 0;
+      setDistance(
+        Math.max(0, track.scrollWidth + padRight - window.innerWidth),
+      );
+    };
+
+    measure();
+    window.addEventListener("resize", measure);
+
+    // Screenshots that decode late change the track width.
+    const images = Array.from(trackRef.current?.querySelectorAll("img") ?? []);
+    images.forEach((img) => img.addEventListener("load", measure));
+
+    return () => {
+      window.removeEventListener("resize", measure);
+      images.forEach((img) => img.removeEventListener("load", measure));
+    };
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: wrapperRef,
+    offset: ["start start", "end end"],
+  });
+
+  const x = useTransform(scrollYProgress, [0, 1], [0, -distance]);
+
+  useMotionValueEvent(scrollYProgress, "change", (p) => {
+    setActive(Math.round(p * (featured.length - 1)));
+  });
+
+  const goTo = (i: number) => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    const ratio = featured.length > 1 ? i / (featured.length - 1) : 0;
+    window.scrollTo({
+      top: wrapper.offsetTop + ratio * distance,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <div ref={wrapperRef} style={{ height: `calc(100vh + ${distance}px)` }}>
+      <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
+        <motion.div
+          ref={trackRef}
+          style={{ x }}
+          className="flex gap-5 px-[max(2rem,calc((100vw-72rem)/2+2rem))] will-change-transform"
+        >
+          {featured.map((project, i) => (
+            <ProjectCard key={project.title} project={project} index={i} />
+          ))}
+        </motion.div>
+
+        <ProgressCue active={active} onSelect={goTo} hint="scroll to advance →" />
+      </div>
     </div>
   );
 }
 
 export default function Projects() {
-  return (
-    <section id="projects" className="mt-24 scroll-mt-24">
-      <SectionHeading title="Projects" />
+  // Pinning takes over the wheel, so it is opt-in: pointer-precise devices with
+  // room to show a card, and never when reduced motion is requested. Everyone
+  // else keeps the plain rail. Resolved after mount so SSR markup stays stable.
+  const [pinned, setPinned] = useState(false);
 
-      <div className="space-y-3">
-        {featured.map((project, i) => (
-          <motion.div
-            key={project.title}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.4, delay: i * 0.05 }}
-          >
-            <ProjectItem project={project} />
-          </motion.div>
-        ))}
+  useEffect(() => {
+    const query = window.matchMedia(
+      "(min-width: 1024px) and (min-height: 700px) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+    );
+    const apply = () => setPinned(query.matches);
+    apply();
+    query.addEventListener("change", apply);
+    return () => query.removeEventListener("change", apply);
+  }, []);
+
+  return (
+    <section id="projects" className="scroll-mt-20 py-24 lg:py-28">
+      <div className="mx-auto max-w-6xl px-6 lg:px-8">
+        <SectionHeading
+          title="Selected work"
+          lead="five projects I shipped end to end: architecture, code, deployment, and the bill"
+        />
       </div>
+
+      {pinned ? <PinnedTrack /> : <Rail />}
     </section>
   );
 }

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { fraunces, ibmPlexSans, jetbrainsMono } from "./fonts";
+import { geistMono, geistSans } from "./fonts";
+import Navbar from "@/components/Navbar";
+import CalEmbed from "@/components/CalEmbed";
 
 export const metadata: Metadata = {
   title: "Mehdi Salhi | Cloud & DevOps Engineer",
@@ -48,10 +50,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${fraunces.variable} ${ibmPlexSans.variable} ${jetbrainsMono.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable}`}
     >
-      <body className="min-h-screen bg-bg text-neutral-200 antialiased">
+      <body className="min-h-screen bg-paper font-body text-ink-soft antialiased">
+        <Navbar />
         {children}
+        <CalEmbed />
       </body>
     </html>
   );
