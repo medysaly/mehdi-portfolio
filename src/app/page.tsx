@@ -6,7 +6,6 @@ import Certifications from "@/components/Certifications";
 import Coursework from "@/components/Coursework";
 import Contact from "@/components/Contact";
 import SocialRail from "@/components/SocialRail";
-import ChatWidget from "@/components/ChatWidget";
 import MarineWash from "@/components/MarineWash";
 
 export default function Home() {
@@ -49,8 +48,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-
-      <ChatWidget />
     </>
   );
 }

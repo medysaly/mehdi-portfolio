@@ -22,18 +22,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-### Environment
-
-```
-NEXT_PUBLIC_CHATBOT_API_URL=https://<api-id>.execute-api.us-east-1.amazonaws.com/chat
-```
-
-Goes in `.env.local`. Without it the chat widget renders but every message
-returns its error fallback.
-
-The API's CORS allows `mehdisalhi.com` only, so the chat cannot answer from
-localhost. That is expected: the widget, its animation, and its composer all
-work locally, but real replies need the deployed origin.
+No environment variables are needed. The site is fully static.
 
 ## Scripts
 
@@ -68,7 +57,6 @@ src/
 │   ├── Certifications.tsx # Degree and certs, real badge art
 │   ├── Coursework.tsx     # Filterable coursework grid
 │   ├── Contact.tsx        # Email, booking, socials
-│   ├── ChatWidget.tsx     # Floating dock that expands upward in place
 │   ├── Navbar.tsx         # Sticky nav with scroll-spy
 │   ├── SocialRail.tsx     # Fixed capsule of social links
 │   ├── MarineWash.tsx     # Shared gradient wash, hero and footer
@@ -83,12 +71,10 @@ section past the detection line, so that array has to stay in the page's
 order. Reordering sections without reordering it breaks the highlight
 silently.
 
-## Chatbot
+## Chatbot (not on the site)
 
-The widget posts to `chatbot-handler`, a Python Lambda behind API Gateway in
-`us-east-1` that calls Claude through Bedrock and logs each exchange to
-DynamoDB. Its source, including the system prompt that holds everything the
-bot knows, lives here:
+The site had a chat widget answering questions about Mehdi. It was taken off
+for being more complication than a portfolio needs. Its backend still exists:
 
 ```
 backend/chatbot/
@@ -96,17 +82,25 @@ backend/chatbot/
 └── deploy.sh            # package, back up, upload, smoke test
 ```
 
-Editing the bot's personality or its facts means editing that file and
-running:
+`chatbot-handler` is a Python Lambda behind API Gateway in `us-east-1` that
+calls Claude through Bedrock and logs each exchange to DynamoDB. The source is
+kept here deliberately: it once existed nowhere but inside the deployed
+function, and finding out what the bot was told took downloading the running
+code.
 
-```bash
-./backend/chatbot/deploy.sh
-```
+**The endpoint is still live and open to the internet.** Removing the widget
+removed the only thing that used it, not the thing itself. It takes
+unauthenticated POSTs, caps neither input length nor total spend, and its CORS
+rule stops browsers on other origins but not `curl`. Until the API is deleted
+or throttled to zero, anyone who knows the URL can spend Bedrock credit on
+this account.
 
-The script backs up the deployed code before replacing it, and pins the
-timeout at 15s with 512MB. Do not let those drift back down: the Lambda
-default of 3s does not fit a cold start plus a Bedrock call, which fails only
-the first message a visitor sends and looks fine on a retry.
+If it comes back, three things to fix first: cap the question length in the
+handler, reject a non-string `question` (it currently 500s), and drop the
+stage throttle well below 2 requests per second. Also keep the timeout at 15s
+with 512MB, since the Lambda default of 3s does not fit a cold start plus a
+Bedrock call, which fails only a visitor's first message and looks fine on a
+retry.
 
 ## License
 
