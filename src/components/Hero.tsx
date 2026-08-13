@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BookCallButton, ResumeButton } from "./cta";
+import { BookCallButton, glassPill, GlassLabel, ResumeButton } from "./cta";
 import { GradientBackground } from "./ui/marine-horizon";
+import { LiquidButton } from "./ui/liquid-glass-button";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
@@ -86,17 +87,18 @@ export default function Hero() {
             transition={{ duration: 0.6, ease }}
             className="mt-9 flex flex-wrap items-center justify-center gap-3"
           >
-            <a
-              href="#projects"
-              className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3.5 font-display text-[15px] font-semibold text-white transition-opacity duration-300 hover:opacity-80"
-            >
-              See what I&apos;ve built
-              <span className="transition-transform duration-300 group-hover:translate-y-0.5">
-                &darr;
-              </span>
-            </a>
-            <ResumeButton />
-            <BookCallButton />
+            <LiquidButton asChild size="xl" className={glassPill}>
+              <a href="#projects" className="group">
+                <GlassLabel>
+                  See what I&apos;ve built
+                  <span className="transition-transform duration-300 group-hover:translate-y-0.5">
+                    &darr;
+                  </span>
+                </GlassLabel>
+              </a>
+            </LiquidButton>
+            <ResumeButton glass />
+            <BookCallButton glass />
           </motion.div>
 
           {/* Status line. Carries the personality the floating bubble used to,

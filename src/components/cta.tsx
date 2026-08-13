@@ -1,6 +1,6 @@
 "use client";
 
-import type { MouseEvent } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import {
   calAttrs,
   CalendarIcon,
@@ -9,6 +9,7 @@ import {
   RESUME_FILENAME,
   RESUME_URL,
 } from "./icons";
+import { LiquidButton } from "./ui/liquid-glass-button";
 
 type Size = "md" | "lg";
 
@@ -26,10 +27,46 @@ const iconSize: Record<Size, string> = {
 };
 
 /**
+ * Glass reads as glass only over something worth refracting, so it is opt-in
+ * per placement rather than the default: the hero sits on the gradient, the
+ * contact block sits on flat white where the same treatment nearly vanishes.
+ */
+export const glassPill =
+  "rounded-full font-display text-[15px] font-semibold text-ink h-[52px] px-6";
+
+/** Above the button's shadow layer, which paints at z-0. */
+export function GlassLabel({ children }: { children: ReactNode }) {
+  return (
+    <span className="relative z-10 inline-flex items-center gap-2">
+      {children}
+    </span>
+  );
+}
+
+/**
  * Recruiter path one: take the PDF and go. `download` names the saved file so
  * it does not land in someone's downloads folder as a bare slug.
  */
-export function ResumeButton({ size = "md" }: { size?: Size }) {
+export function ResumeButton({
+  size = "md",
+  glass = false,
+}: {
+  size?: Size;
+  glass?: boolean;
+}) {
+  if (glass) {
+    return (
+      <LiquidButton asChild size="xl" className={glassPill}>
+        <a href={RESUME_URL} download={RESUME_FILENAME}>
+          <GlassLabel>
+            <DownloadIcon className={iconSize.md} />
+            Download resume
+          </GlassLabel>
+        </a>
+      </LiquidButton>
+    );
+  }
+
   return (
     <a
       href={RESUME_URL}
@@ -62,7 +99,26 @@ function openInPopup(e: MouseEvent<HTMLAnchorElement>) {
   }
 }
 
-export function BookCallButton({ size = "md" }: { size?: Size }) {
+export function BookCallButton({
+  size = "md",
+  glass = false,
+}: {
+  size?: Size;
+  glass?: boolean;
+}) {
+  if (glass) {
+    return (
+      <LiquidButton asChild size="xl" className={glassPill}>
+        <a href={CAL_URL} onClick={openInPopup} {...calAttrs}>
+          <GlassLabel>
+            <CalendarIcon className={iconSize.md} />
+            Book a call
+          </GlassLabel>
+        </a>
+      </LiquidButton>
+    );
+  }
+
   return (
     <a
       href={CAL_URL}

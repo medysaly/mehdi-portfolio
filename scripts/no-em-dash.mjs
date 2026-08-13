@@ -21,22 +21,25 @@ const BANNED = [
   ["&#x2014;", "&#x2014; entity"],
 ];
 
-async function walk(dir) {
+async function walk(dir, recurse = true) {
   const out = [];
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     if (entry.name === "node_modules" || entry.name.startsWith(".")) continue;
     const full = join(dir, entry.name);
-    if (entry.isDirectory()) out.push(...(await walk(full)));
-    else if (EXTS.has(extname(entry.name))) out.push(full);
+    if (entry.isDirectory()) {
+      if (recurse) out.push(...(await walk(full)));
+    } else if (EXTS.has(extname(entry.name))) out.push(full);
   }
   return out;
 }
 
 const hits = [];
-for (const root of ROOTS) {
+// "." non-recursively picks up the root config files (tailwind.config.ts and
+// friends), which sat unchecked while three em dashes lived in them.
+for (const root of [".", ...ROOTS]) {
   let files = [];
   try {
-    files = await walk(root);
+    files = await walk(root, root !== ".");
   } catch {
     continue; // optional directory
   }

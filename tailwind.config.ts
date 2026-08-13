@@ -13,7 +13,7 @@ const config: Config = {
         paper: "#ffffff",
         "paper-soft": "#f5f5f5",
 
-        // Ink — near-black headings, #333 body, #666 secondary
+        // Ink: near-black headings, #333 body, #666 secondary
         ink: "#000000",
         "ink-soft": "#333333",
         muted: "#666666",
@@ -23,10 +23,24 @@ const config: Config = {
         line: "#e8e8e8",
         "line-soft": "#f0f0f0",
 
-        // Accent — pure blue used for eyebrows, links, and the status dot
+        // Accent: pure blue used for eyebrows, links, and the status dot
         accent: "#0066ff",
         "accent-hover": "#0052cc",
         "accent-soft": "#eef4ff",
+
+        // shadcn-shaped aliases, so components written against that
+        // vocabulary resolve against this palette instead of silently
+        // emitting classes Tailwind never generates. Deliberately aliases,
+        // not a second palette: there is still one source of truth above.
+        primary: "#000000",
+        "primary-foreground": "#ffffff",
+        secondary: "#f5f5f5",
+        "secondary-foreground": "#000000",
+        destructive: "#dc2626",
+        background: "#ffffff",
+        input: "#e8e8e8",
+        ring: "#0066ff",
+        "accent-foreground": "#ffffff",
       },
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],
@@ -57,7 +71,7 @@ const config: Config = {
           "50%": { transform: "translateY(6px)", opacity: "0.4" },
         },
         // The reference's side-quest rail slides one full copy of the track,
-        // then snaps back — the duplicated children make the seam invisible.
+        // then snaps back. The duplicated children make the seam invisible.
         marquee: {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(-50%)" },
