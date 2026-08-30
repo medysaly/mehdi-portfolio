@@ -5,18 +5,19 @@ import Navbar from "@/components/Navbar";
 import CalEmbed from "@/components/CalEmbed";
 
 export const metadata: Metadata = {
-  title: "Mehdi Salhi | Cloud & DevOps Engineer",
+  title: "Mehdi Salhi | AI Engineer",
   description:
-    "Cloud & DevOps engineer building on AWS. AWS Certified Solutions Architect Associate & Cloud Practitioner. Built Unkommon.ai. Based in Stamford, CT.",
+    "AI engineer building LLM agents and RAG systems on AWS. Amazon Bedrock, SageMaker, Hugging Face. AWS Certified Solutions Architect Associate. Built Unkommon.ai. Based in Stamford, CT.",
   keywords: [
-    "Cloud Engineer",
-    "DevOps Engineer",
+    "AI Engineer",
+    "LLM Engineer",
+    "RAG",
+    "AI Agents",
+    "Amazon Bedrock",
+    "Amazon SageMaker",
+    "Prompt Engineering",
+    "AI Infrastructure",
     "AWS Certified",
-    "AWS Solutions Architect",
-    "Terraform",
-    "Kubernetes",
-    "Infrastructure as Code",
-    "CI/CD",
     "Unkommon",
     "Stamford CT",
   ],
@@ -26,18 +27,18 @@ export const metadata: Metadata = {
     apple: "/mehdi.png",
   },
   openGraph: {
-    title: "Mehdi Salhi | Cloud & DevOps Engineer",
+    title: "Mehdi Salhi | AI Engineer",
     description:
-      "Cloud & DevOps engineer building on AWS. AWS Certified Solutions Architect Associate & Cloud Practitioner. Built Unkommon.ai.",
+      "AI engineer building LLM agents and RAG systems on AWS. Amazon Bedrock, SageMaker, Hugging Face. Built Unkommon.ai.",
     url: "https://mehdisalhi.com",
     siteName: "Mehdi Salhi",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mehdi Salhi | Cloud & DevOps Engineer",
+    title: "Mehdi Salhi | AI Engineer",
     description:
-      "Cloud & DevOps engineer building on AWS. AWS Certified Solutions Architect Associate & Cloud Practitioner. Built Unkommon.ai.",
+      "AI engineer building LLM agents and RAG systems on AWS. Amazon Bedrock, SageMaker, Hugging Face. Built Unkommon.ai.",
     creator: "@medysaly",
   },
 };

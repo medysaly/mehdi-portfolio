@@ -15,6 +15,19 @@ type SkillGroup = {
 
 const skills: SkillGroup[] = [
   {
+    name: "AI",
+    full: true,
+    items: [
+      "Amazon Bedrock",
+      "Amazon SageMaker",
+      "Hugging Face",
+      "OpenRouter",
+      "LLMs",
+      "RAG",
+      "prompt engineering",
+    ],
+  },
+  {
     name: "AWS",
     full: true,
     items: [
@@ -57,31 +70,52 @@ const skills: SkillGroup[] = [
     name: "Languages & Tools",
     items: ["Python", "Bash", "Linux", "Git", "YAML", "JavaScript/TypeScript", "SQL"],
   },
-  {
-    name: "AI",
-    full: true,
-    items: [
-      "Amazon Bedrock",
-      "Amazon SageMaker",
-      "Hugging Face",
-      "OpenRouter",
-      "LLMs",
-      "RAG",
-      "prompt engineering",
-    ],
-  },
 ];
 
 // One bordered container subdivided by hairlines, not a grid of separate
 // cards. That is the defining trait of the reference's grouped lists.
-const cellBorders = [
-  "sm:col-span-2 border-b",
-  "border-b sm:border-r",
-  "border-b",
-  "border-b sm:border-r",
-  "border-b",
-  "sm:col-span-2",
-];
+//
+// The hairlines used to be a hand-written array indexed by position, which
+// silently produced a broken grid the moment a group moved or a `full` flag
+// changed. This walks the groups instead and works out each cell's row and
+// column, so the borders stay correct whatever order the list is in.
+function cellLayout(groups: SkillGroup[]) {
+  const cells: { row: number; col: number; full: boolean }[] = [];
+  let row = 0;
+  let col = 0;
+
+  for (const group of groups) {
+    if (group.full) {
+      if (col === 1) row += 1; // close a half-filled row first
+      cells.push({ row, col: 0, full: true });
+      row += 1;
+      col = 0;
+    } else {
+      cells.push({ row, col, full: false });
+      if (col === 1) {
+        row += 1;
+        col = 0;
+      } else {
+        col = 1;
+      }
+    }
+  }
+
+  const lastRow = cells.reduce((max, c) => Math.max(max, c.row), 0);
+
+  return cells.map((c) => {
+    const hasNeighbour = cells.some((o) => o.row === c.row && o.col === 1);
+    return [
+      c.full ? "sm:col-span-2" : "",
+      c.row !== lastRow ? "border-b" : "",
+      !c.full && c.col === 0 && hasNeighbour ? "sm:border-r" : "",
+    ]
+      .filter(Boolean)
+      .join(" ");
+  });
+}
+
+const cellBorders = cellLayout(skills);
 
 export default function About() {
   return (
@@ -110,21 +144,21 @@ export default function About() {
 
             <div className="mt-8 space-y-6 font-body text-lead text-ink-soft">
               <p>
-                I&apos;m Mehdi, a Cloud &amp; DevOps engineer finishing a B.S. in
-                Computer Science at SNHU (November 2026). I&apos;m AWS Certified
-                as a Solutions Architect Associate and Cloud Practitioner.
+                I&apos;m Mehdi, an AI engineer finishing a B.S. in Computer
+                Science at SNHU (November 2026). I build AI agents, LLM apps,
+                and RAG systems, mostly on Amazon Bedrock.
               </p>
               <p>
-                My focus is infrastructure that runs itself: provisioned with
-                Terraform, containerized with Docker, and wired through CI/CD so
-                a merge is the only manual step. I&apos;m currently going deeper
-                on Kubernetes.
+                My focus is the part that decides whether an AI product actually
+                works: retrieval quality, evaluation you can trust, latency, and
+                what it costs per request. I&apos;m currently going deeper on
+                agent tooling and evals.
               </p>
               <p>
-                I also build the applications that run on top: AI agents, LLM
-                apps, and RAG systems. That&apos;s what makes me useful on an
-                infrastructure team. I know what the workload actually needs,
-                because I&apos;ve built the workload.
+                I&apos;m also AWS Certified as a Solutions Architect Associate,
+                and that&apos;s the difference I bring. Plenty of people can
+                prototype a model. I can put one behind an API, deploy it,
+                secure it, and keep it running.
               </p>
             </div>
           </motion.div>
