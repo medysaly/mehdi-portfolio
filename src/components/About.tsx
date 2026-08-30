@@ -144,20 +144,17 @@ export default function About() {
 
             <div className="mt-8 space-y-6 font-body text-lead text-ink-soft">
               <p>
-                I&apos;m Mehdi, a cloud and AI engineer finishing a B.S. in
-                Computer Science at SNHU (November 2026). I&apos;m AWS Certified
-                as a Solutions Architect Associate and Cloud Practitioner.
+                I&apos;m Mehdi, a cloud and AI engineer who loves building
+                things from scratch. There&apos;s nothing better than watching
+                an idea turn into a working system, whether that&apos;s the
+                infrastructure running on AWS or the AI agents and apps that
+                live on top of it.
               </p>
               <p>
-                My focus is infrastructure that runs itself, provisioned with
-                Terraform and wired through CI/CD so a merge is the only manual
-                step, with least-privilege IAM and sane networking underneath.
-              </p>
-              <p>
-                I also build what runs on top: AI agents, LLM apps, and RAG
-                systems on Amazon Bedrock. That combination is the point. Plenty
-                of people can prototype a model. I can put one behind an API,
-                deploy it, secure it, and keep it running.
+                Right now I&apos;m going deeper into AI engineering and agentic
+                AI, building projects on AWS and having fun with hackathons
+                along the way. Always open to chatting about new ideas and
+                opportunities!
               </p>
             </div>
           </motion.div>
