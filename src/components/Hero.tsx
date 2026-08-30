@@ -51,7 +51,7 @@ export default function Hero() {
             transition={{ duration: 0.6, ease }}
             className="mt-6 max-w-2xl font-body text-lead text-ink-soft"
           >
-            An AI engineer who builds on AWS.
+            An AI and cloud engineer who builds on AWS.
             <br className="hidden sm:inline" /> I build LLM agents and RAG
             systems, and the infrastructure that runs them.
           </motion.p>

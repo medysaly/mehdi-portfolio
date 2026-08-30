@@ -144,21 +144,23 @@ export default function About() {
 
             <div className="mt-8 space-y-6 font-body text-lead text-ink-soft">
               <p>
-                I&apos;m Mehdi, an AI engineer finishing a B.S. in Computer
-                Science at SNHU (November 2026). I build AI agents, LLM apps,
-                and RAG systems, mostly on Amazon Bedrock.
+                I&apos;m Mehdi, an AI and cloud engineer finishing a B.S. in
+                Computer Science at SNHU (November 2026). I build AI agents, LLM
+                apps, and RAG systems, mostly on Amazon Bedrock, and I&apos;m
+                AWS Certified as a Solutions Architect Associate and Cloud
+                Practitioner.
               </p>
               <p>
-                My focus is the part that decides whether an AI product actually
-                works: retrieval quality, evaluation you can trust, latency, and
-                what it costs per request. I&apos;m currently going deeper on
-                agent tooling and evals.
+                On the AI side my focus is the part that decides whether a
+                product actually works: retrieval quality, evaluation you can
+                trust, latency, and what it costs per request.
               </p>
               <p>
-                I&apos;m also AWS Certified as a Solutions Architect Associate,
-                and that&apos;s the difference I bring. Plenty of people can
-                prototype a model. I can put one behind an API, deploy it,
-                secure it, and keep it running.
+                On the cloud side it&apos;s infrastructure that runs itself,
+                provisioned with Terraform and wired through CI/CD so a merge is
+                the only manual step. The two halves are the point. Plenty of
+                people can prototype a model. I can put one behind an API,
+                deploy it, secure it, and keep it running.
               </p>
             </div>
           </motion.div>
