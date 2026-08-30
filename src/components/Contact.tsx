@@ -32,10 +32,11 @@ export default function Contact() {
           {/* Names each route in the order they appear below it: the email
               button, the booking button, then the social row. */}
           <p className="mx-auto mt-6 max-w-xl font-body text-lead text-ink-soft">
-            Hiring AI or cloud engineers? Or just want to talk about agents,
-            retrieval, or what it takes to run them on AWS? Send me an email,
-            put time straight on my calendar, or find me on LinkedIn. Whichever
-            you pick, I&apos;ll get back to you within a day.
+            Hiring cloud or AI engineers? Or just want to talk about AWS,
+            infrastructure as code, or what it takes to run an agent in
+            production? Send me an email, put time straight on my calendar, or
+            find me on LinkedIn. Whichever you pick, I&apos;ll get back to you
+            within a day.
           </p>
 
           <a

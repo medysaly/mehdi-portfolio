@@ -15,19 +15,6 @@ type SkillGroup = {
 
 const skills: SkillGroup[] = [
   {
-    name: "AI",
-    full: true,
-    items: [
-      "Amazon Bedrock",
-      "Amazon SageMaker",
-      "Hugging Face",
-      "OpenRouter",
-      "LLMs",
-      "RAG",
-      "prompt engineering",
-    ],
-  },
-  {
     name: "AWS",
     full: true,
     items: [
@@ -46,6 +33,19 @@ const skills: SkillGroup[] = [
       "Bedrock",
       "IAM",
       "VPC",
+    ],
+  },
+  {
+    name: "AI",
+    full: true,
+    items: [
+      "Amazon Bedrock",
+      "Amazon SageMaker",
+      "Hugging Face",
+      "OpenRouter",
+      "LLMs",
+      "RAG",
+      "prompt engineering",
     ],
   },
   {
@@ -144,22 +144,19 @@ export default function About() {
 
             <div className="mt-8 space-y-6 font-body text-lead text-ink-soft">
               <p>
-                I&apos;m Mehdi, an AI and cloud engineer finishing a B.S. in
-                Computer Science at SNHU (November 2026). I build AI agents, LLM
-                apps, and RAG systems, mostly on Amazon Bedrock, and I&apos;m
-                AWS Certified as a Solutions Architect Associate and Cloud
-                Practitioner.
+                I&apos;m Mehdi, a cloud and AI engineer finishing a B.S. in
+                Computer Science at SNHU (November 2026). I&apos;m AWS Certified
+                as a Solutions Architect Associate and Cloud Practitioner.
               </p>
               <p>
-                On the AI side my focus is the part that decides whether a
-                product actually works: retrieval quality, evaluation you can
-                trust, latency, and what it costs per request.
+                My focus is infrastructure that runs itself, provisioned with
+                Terraform and wired through CI/CD so a merge is the only manual
+                step, with least-privilege IAM and sane networking underneath.
               </p>
               <p>
-                On the cloud side it&apos;s infrastructure that runs itself,
-                provisioned with Terraform and wired through CI/CD so a merge is
-                the only manual step. The two halves are the point. Plenty of
-                people can prototype a model. I can put one behind an API,
+                I also build what runs on top: AI agents, LLM apps, and RAG
+                systems on Amazon Bedrock. That combination is the point. Plenty
+                of people can prototype a model. I can put one behind an API,
                 deploy it, secure it, and keep it running.
               </p>
             </div>

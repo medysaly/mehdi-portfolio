@@ -5,20 +5,20 @@ import Navbar from "@/components/Navbar";
 import CalEmbed from "@/components/CalEmbed";
 
 export const metadata: Metadata = {
-  title: "Mehdi Salhi | AI & Cloud Engineer",
+  title: "Mehdi Salhi | Cloud & AI Engineer",
   description:
-    "AI and cloud engineer building LLM agents and RAG systems on AWS, and the infrastructure that runs them. AWS Certified Solutions Architect Associate. Built Unkommon.ai. Based in Stamford, CT.",
+    "Cloud and AI engineer building on AWS. Infrastructure as code, CI/CD, and the LLM agents and RAG systems that run on top. AWS Certified Solutions Architect Associate. Built Unkommon.ai. Based in Stamford, CT.",
   keywords: [
-    "AI Engineer",
     "Cloud Engineer",
-    "LLM Engineer",
-    "RAG",
-    "AI Agents",
-    "Amazon Bedrock",
-    "Amazon SageMaker",
     "AWS Certified",
+    "AWS Solutions Architect",
     "Terraform",
     "Infrastructure as Code",
+    "CI/CD",
+    "AI Engineer",
+    "LLM Engineer",
+    "RAG",
+    "Amazon Bedrock",
     "Unkommon",
     "Stamford CT",
   ],
@@ -28,18 +28,18 @@ export const metadata: Metadata = {
     apple: "/mehdi.png",
   },
   openGraph: {
-    title: "Mehdi Salhi | AI & Cloud Engineer",
+    title: "Mehdi Salhi | Cloud & AI Engineer",
     description:
-      "AI and cloud engineer building LLM agents and RAG systems on AWS, and the infrastructure that runs them. Built Unkommon.ai.",
+      "Cloud and AI engineer building on AWS. Infrastructure as code, CI/CD, and the LLM agents and RAG systems that run on top. Built Unkommon.ai.",
     url: "https://mehdisalhi.com",
     siteName: "Mehdi Salhi",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mehdi Salhi | AI & Cloud Engineer",
+    title: "Mehdi Salhi | Cloud & AI Engineer",
     description:
-      "AI and cloud engineer building LLM agents and RAG systems on AWS, and the infrastructure that runs them. Built Unkommon.ai.",
+      "Cloud and AI engineer building on AWS. Infrastructure as code, CI/CD, and the LLM agents and RAG systems that run on top. Built Unkommon.ai.",
     creator: "@medysaly",
   },
 };
