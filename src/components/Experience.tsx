@@ -25,8 +25,9 @@ const roles: Role[] = [
     current: true,
     badge: "/badges/extern.png",
     detail: [
-      "Building AI-agent workflows in n8n that research product trends across Amazon, Instagram, and Pinterest and surface top-selling products to a data dashboard",
-      "Automating multi-source data collection and trend analysis with AI agents, LLMs, and API integrations",
+      "Build AI business-intelligence agents in n8n (self-hosted on Docker) that turn market and product data into decision-ready reports for Wayfair's rugs category",
+      "Orchestrate multiple LLM providers (Google Gemini, Mistral, OpenRouter, Hugging Face) with prompt engineering and multi-step reasoning for classification, normalization, and analysis",
+      "Engineer resilient data pipelines that pull product data from multiple retailers through APIs and web scraping, normalize it into clean JSON, and assemble it into styled HTML reports",
     ],
   },
 ];
