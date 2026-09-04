@@ -16,12 +16,13 @@ type Cert = {
 
 const certs: Cert[] = [
   {
-    // First, because a degree is the credential recruiters filter on. Dated
-    // "Expected" rather than a bare year: the others are earned, this one is
-    // three months out, and a matching year would read as already conferred.
+    // First, because a degree is the credential recruiters filter on.
+    // Conferred 1 September 2026, so it carries a month rather than the bare
+    // year the certifications use: a fresh graduation date is worth being
+    // precise about while it is still recent.
     name: "B.S. Computer Science",
     issuer: "Southern New Hampshire University",
-    date: "Expected Nov 2026",
+    date: "Sep 2026",
     // The shield alone. The full lockup is a wide shield-plus-wordmark, and
     // its wordmark would be a few pixels tall in a 56px slot.
     badge: "/badges/snhu.png",

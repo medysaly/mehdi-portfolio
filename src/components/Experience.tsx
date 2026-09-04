@@ -178,7 +178,7 @@ export default function Experience() {
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           title="Where I've been"
-          lead="building AI agent workflows while I finish the degree"
+          lead="building AI agent workflows and automation"
         />
 
         <motion.div
