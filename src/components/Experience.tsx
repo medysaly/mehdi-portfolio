@@ -27,7 +27,7 @@ const roles: Role[] = [
     meta: "Remote",
     dates: "Sep 2026 – Present",
     current: true,
-    mark: "FK",
+    badge: "/badges/funktasy.png",
   },
   {
     org: "Extern",
