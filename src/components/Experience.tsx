@@ -12,11 +12,23 @@ type Role = {
   dates: string;
   current?: boolean;
   /** Org logo, trimmed and squared in /public/badges. */
-  badge: string;
-  detail: string[];
+  badge?: string;
+  /** Monogram tile for an org with no logo art yet, same size as a badge. */
+  mark?: string;
+  /** Omit until the bullets are written. The row then renders flat, with no
+      toggle, rather than expanding onto an empty list. */
+  detail?: string[];
 };
 
 const roles: Role[] = [
+  {
+    org: "Funktasy",
+    title: "Technology & Automation Lead",
+    meta: "Remote",
+    dates: "Sep 2026 – Present",
+    current: true,
+    mark: "FK",
+  },
   {
     org: "Extern",
     title: "AI Agent Engineering Extern",
@@ -43,14 +55,13 @@ function Row({
 }) {
   const [open, setOpen] = useState(defaultOpen);
 
-  return (
-    <div className={isLast ? "" : "border-b border-line-soft"}>
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        className="flex w-full items-center gap-4 px-5 py-5 text-left transition-colors hover:bg-paper-soft/60 sm:px-6"
-      >
+  // A role with no bullets yet still belongs in the list, but there is nothing
+  // to open, so it renders as a plain row without the toggle affordance.
+  const expandable = Boolean(role.detail?.length);
+
+  const head = (
+    <>
+      {role.badge ? (
         <Image
           src={role.badge}
           alt=""
@@ -59,51 +70,77 @@ function Row({
           sizes="56px"
           className="h-14 w-14 flex-shrink-0 object-contain"
         />
+      ) : (
+        <span className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-[#eef2fb] font-display text-[15px] font-bold tracking-tight text-[#274a78]">
+          {role.mark}
+        </span>
+      )}
 
-        <span className="min-w-0 flex-1">
-          <span className="flex flex-wrap items-center gap-2">
-            <span className="font-display text-[17px] font-semibold leading-snug tracking-[-0.03em] text-ink sm:text-[18px]">
-              {role.org}
-            </span>
-            {role.current && (
-              <span className="flex items-center gap-1.5 rounded-md bg-accent-soft px-2 py-0.5 font-mono text-[11.5px] text-accent">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-                </span>
-                current
+      <span className="min-w-0 flex-1">
+        <span className="flex flex-wrap items-center gap-2">
+          <span className="font-display text-[17px] font-semibold leading-snug tracking-[-0.03em] text-ink sm:text-[18px]">
+            {role.org}
+          </span>
+          {role.current && (
+            <span className="flex items-center gap-1.5 rounded-md bg-accent-soft px-2 py-0.5 font-mono text-[11.5px] text-accent">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
               </span>
-            )}
-          </span>
-          <span className="mt-0.5 block truncate font-mono text-[12.5px] text-muted sm:text-[13px]">
-            {role.title} · {role.meta}
-          </span>
+              current
+            </span>
+          )}
         </span>
-
-        <span className="hidden flex-shrink-0 font-mono text-[13px] text-muted sm:block">
-          {role.dates}
+        <span className="mt-0.5 block truncate font-mono text-[12.5px] text-muted sm:text-[13px]">
+          {role.title} · {role.meta}
         </span>
+      </span>
 
-        <span
-          aria-hidden
-          className={`flex h-5 w-5 flex-shrink-0 items-center justify-center text-muted-light transition-transform duration-300 ${
-            open ? "rotate-45" : ""
-          }`}
+      <span className="hidden flex-shrink-0 font-mono text-[13px] text-muted sm:block">
+        {role.dates}
+      </span>
+    </>
+  );
+
+  return (
+    <div className={isLast ? "" : "border-b border-line-soft"}>
+      {expandable ? (
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          className="flex w-full items-center gap-4 px-5 py-5 text-left transition-colors hover:bg-paper-soft/60 sm:px-6"
         >
-          <svg
-            viewBox="0 0 16 16"
-            className="h-4 w-4"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={1.5}
+          {head}
+
+          <span
+            aria-hidden
+            className={`flex h-5 w-5 flex-shrink-0 items-center justify-center text-muted-light transition-transform duration-300 ${
+              open ? "rotate-45" : ""
+            }`}
           >
-            <path strokeLinecap="round" d="M8 3v10M3 8h10" />
-          </svg>
-        </span>
-      </button>
+            <svg
+              viewBox="0 0 16 16"
+              className="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path strokeLinecap="round" d="M8 3v10M3 8h10" />
+            </svg>
+          </span>
+        </button>
+      ) : (
+        <div className="flex w-full items-center gap-4 px-5 py-5 sm:px-6">
+          {head}
+          {/* Keeps the org names and dates aligned with the expandable rows,
+              which reserve this much width for their toggle. */}
+          <span aria-hidden className="h-5 w-5 flex-shrink-0" />
+        </div>
+      )}
 
       <AnimatePresence initial={false}>
-        {open && (
+        {expandable && open && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
@@ -115,7 +152,7 @@ function Row({
               <li className="font-mono text-[12.5px] text-muted sm:hidden">
                 {role.dates}
               </li>
-              {role.detail.map((line) => (
+              {role.detail?.map((line) => (
                 <li
                   key={line}
                   className="flex gap-3 font-body text-[15px] leading-relaxed text-muted"
@@ -156,7 +193,7 @@ export default function Experience() {
               key={role.org}
               role={role}
               isLast={i === roles.length - 1}
-              defaultOpen={i === 0}
+              defaultOpen={i === roles.findIndex((r) => r.detail?.length)}
             />
           ))}
         </motion.div>
