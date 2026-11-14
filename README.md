@@ -1,6 +1,6 @@
 # mehdi-portfolio
 
-Personal portfolio for Mehdi Salhi. Cloud and DevOps on AWS, plus the AI that runs on top of it.
+Personal portfolio for Mehdi Salhi. Cloud and AI engineering on AWS, from infrastructure to the systems that run on it.
 
 **Live:** [mehdisalhi.com](https://mehdisalhi.com)
 
@@ -10,7 +10,7 @@ Personal portfolio for Mehdi Salhi. Cloud and DevOps on AWS, plus the AI that ru
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS
 - **Animation:** Framer Motion
-- **Type:** Geist and Geist Mono, one family throughout, loaded through `next/font`
+- **Type:** Geist and Geist Mono, loaded from the `geist` package
 - **Deployment:** Vercel
 
 ## Getting Started
@@ -31,7 +31,7 @@ No environment variables are needed. The site is fully static.
 | `npm run dev` | Start dev server |
 | `npm run build` | Production build, runs `check:dashes` first |
 | `npm run start` | Serve production build |
-| `npm run lint` | Run ESLint |
+| `npm run lint` | Opens Next.js's ESLint setup prompt; ESLint is not configured yet |
 | `npm run check:dashes` | Fail on any em dash in copy or comments |
 
 ## House style

@@ -38,8 +38,8 @@ type Project = {
   panel?: Panel;
 };
 
-// Copy follows the resume (Mehdi_Salhi_Cloud_Engineer.pdf), with architecture
-// detail filled in from each repo's README.
+// Copy follows the resume, with architecture detail filled in from each
+// project's README.
 const featured: Project[] = [
   {
     title: "AWS Cost Watchdog",

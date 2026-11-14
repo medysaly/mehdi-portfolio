@@ -7,7 +7,7 @@
 //
 // Kept as a faithful copy of the export so a new recipe can replace this file
 // wholesale. Any toning down for a given surface belongs at the call site,
-// not in here. See Hero for how it is softened there.
+// not in here. See MarineWash for how it is softened on the page.
 export function GradientBackground({ className }: { className?: string }) {
   return (
     <div
