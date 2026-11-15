@@ -17,6 +17,12 @@ type Role = {
   /** Omit until the bullets are written. The row then renders flat, with no
       toggle, rather than expanding onto an empty list. */
   detail?: string[];
+  clientEngagement?: {
+    name: string;
+    title: string;
+    dates: string;
+    detail: string[];
+  };
 };
 
 const roles: Role[] = [
@@ -31,6 +37,17 @@ const roles: Role[] = [
       "Built the AI platform on AWS with Python, infrastructure as code, and automated tests in GitHub Actions",
       "Own the website, AI chatbot, and voice receptionist that answer questions, book appointments, and capture leads",
     ],
+    clientEngagement: {
+      name: "ISA GRUTMAN",
+      title: "Cloud & IT Consultant",
+      dates: "Sep 2026 – Present",
+      detail: [
+        "Leading a Microsoft 365 to Google Workspace migration across email, contacts, calendars, and tasks, including account setup, licenses, and aliases",
+        "Troubleshooting migration errors, reviewing import logs, and managing incremental imports ahead of the email cutover",
+        "Customizing Shopify theme code and CSS for reusable page templates, navigation, and responsive layouts, with changes reviewed in an unpublished theme",
+        "Documenting configurations, implementation decisions, and validation steps for maintenance and handoff",
+      ],
+    },
   },
   {
     org: "Funktasy",
@@ -71,7 +88,7 @@ function Row({
 
   // A role with no bullets yet still belongs in the list, but there is nothing
   // to open, so it renders as a plain row without the toggle affordance.
-  const expandable = Boolean(role.detail?.length);
+  const expandable = Boolean(role.detail?.length || role.clientEngagement);
 
   const head = (
     <>
@@ -156,7 +173,7 @@ function Row({
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <ul className="space-y-2.5 px-5 pb-6 pl-[3.75rem] sm:px-6 sm:pl-[4.25rem]">
+            <ul className="space-y-2.5 px-5 pl-[3.75rem] sm:px-6 sm:pl-[4.25rem]">
               {role.detail?.map((line) => (
                 <li
                   key={line}
@@ -170,6 +187,28 @@ function Row({
                 </li>
               ))}
             </ul>
+            {role.clientEngagement && (
+              <div className="mx-5 mt-6 border-l-2 border-accent/30 pb-1 pl-5 sm:mx-6 sm:ml-[4.25rem]">
+                <p className="font-mono text-[12px] text-accent">client engagement</p>
+                <div className="mt-1 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <h4 className="font-display text-[16px] font-semibold text-ink">
+                    {role.clientEngagement.name} · {role.clientEngagement.title}
+                  </h4>
+                  <span className="font-mono text-[12.5px] text-muted">
+                    {role.clientEngagement.dates}
+                  </span>
+                </div>
+                <ul className="mt-3 space-y-2.5">
+                  {role.clientEngagement.detail.map((line) => (
+                    <li key={line} className="flex gap-3 font-body text-[15px] leading-relaxed text-muted">
+                      <span aria-hidden className="mt-2 h-1 w-1 flex-shrink-0 rounded-full bg-accent" />
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <div className="h-6" aria-hidden />
           </motion.div>
         )}
       </AnimatePresence>
