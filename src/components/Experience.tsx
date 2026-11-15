@@ -21,6 +21,18 @@ type Role = {
 
 const roles: Role[] = [
   {
+    org: "Unkommon",
+    title: "Founder & Cloud/AI Engineer",
+    meta: "Cloud & AI consultancy",
+    dates: "Jan 2026 – Present",
+    mark: "U",
+    detail: [
+      "Founded Unkommon and lead its cloud and AI engineering, from product architecture through deployment",
+      "Built the AI platform on AWS with Python, infrastructure as code, and automated tests in GitHub Actions",
+      "Own the website, AI chatbot, and voice receptionist that answer questions, book appointments, and capture leads",
+    ],
+  },
+  {
     org: "Funktasy",
     title: "Technology & Automation Lead",
     meta: "Remote",
