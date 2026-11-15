@@ -10,7 +10,6 @@ type Role = {
   title: string;
   meta: string;
   dates: string;
-  current?: boolean;
   /** Org logo, trimmed and squared in /public/badges. */
   badge?: string;
   /** Monogram tile for an org with no logo art yet, same size as a badge. */
@@ -25,21 +24,24 @@ const roles: Role[] = [
     org: "Funktasy",
     title: "Technology & Automation Lead",
     meta: "Remote",
-    dates: "Sep 2026 – Present",
-    current: true,
+    dates: "Aug–Nov 2026",
     badge: "/badges/funktasy.png",
+    detail: [
+      "Worked on ClickUp workflow automation to replace slow manual processes",
+      "Built event-driven release workflow automations on AWS with Terraform, Lambda, and EventBridge to streamline handoffs across teams",
+      "Built Python AI content automation tools for the social media team using multi-agent workflows, LLMs through MCP, and source data from Apify",
+    ],
   },
   {
     org: "Extern",
     title: "AI Agent Engineering Extern",
     meta: "Wayfair AI Agent Engineering Externship · Remote",
-    dates: "Jul 2026 – Present",
-    current: true,
+    dates: "Jul–Sep 2026",
     badge: "/badges/extern.png",
     detail: [
-      "Build AI business-intelligence agents in n8n (self-hosted on Docker) that turn market and product data into decision-ready reports for Wayfair's rugs category",
-      "Orchestrate multiple LLM providers (Google Gemini, Mistral, OpenRouter, Hugging Face) with prompt engineering and multi-step reasoning for classification, normalization, and analysis",
-      "Engineer resilient data pipelines that pull product data from multiple retailers through APIs and web scraping, normalize it into clean JSON, and assemble it into styled HTML reports",
+      "Built AI business-intelligence agents in n8n (self-hosted on Docker) that turned market and product data into decision-ready reports for Wayfair's rugs category",
+      "Orchestrated multiple LLM providers (Google Gemini, Mistral, OpenRouter, Hugging Face) with prompt engineering and multi-step reasoning for classification, normalization, and analysis",
+      "Engineered data pipelines that pulled product data from multiple retailers through APIs and web scraping, normalized it into clean JSON, and assembled it into styled HTML reports",
     ],
   },
 ];
@@ -81,18 +83,12 @@ function Row({
           <span className="font-display text-[17px] font-semibold leading-snug tracking-[-0.03em] text-ink sm:text-[18px]">
             {role.org}
           </span>
-          {role.current && (
-            <span className="flex items-center gap-1.5 rounded-md bg-accent-soft px-2 py-0.5 font-mono text-[11.5px] text-accent">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-              </span>
-              current
-            </span>
-          )}
         </span>
         <span className="mt-0.5 block truncate font-mono text-[12.5px] text-muted sm:text-[13px]">
           {role.title} · {role.meta}
+        </span>
+        <span className="mt-1 block font-mono text-[12.5px] text-muted sm:hidden">
+          {role.dates}
         </span>
       </span>
 
@@ -149,9 +145,6 @@ function Row({
             className="overflow-hidden"
           >
             <ul className="space-y-2.5 px-5 pb-6 pl-[3.75rem] sm:px-6 sm:pl-[4.25rem]">
-              <li className="font-mono text-[12.5px] text-muted sm:hidden">
-                {role.dates}
-              </li>
               {role.detail?.map((line) => (
                 <li
                   key={line}
