@@ -32,6 +32,7 @@ type Project = {
   stack: string[];
   link?: string;
   github?: string;
+  githubLabel?: string;
   badge?: string;
   /** Live screenshot. Projects without one fall back to `panel`. */
   image?: string;
@@ -41,6 +42,38 @@ type Project = {
 // Copy follows the resume, with architecture detail filled in from each
 // project's README.
 const featured: Project[] = [
+  {
+    title: "CloudClimb",
+    tagline: "AWS Track Lead for a containerized app with private PostgreSQL",
+    description:
+      "An ongoing team project deploying Memos on AWS with Terraform-managed networking, a private RDS PostgreSQL database, and scoped access to secrets and infrastructure.",
+    highlights: [
+      "Deployed Dockerized Memos on EC2 with private RDS PostgreSQL, Secrets Manager, and scoped IAM; troubleshot SSH connectivity and verified database persistence",
+      "Provisioned six subnets across two Availability Zones with Terraform, including route tables and security groups; documented the setup and reviewed peer pull requests",
+    ],
+    stack: [
+      "EC2",
+      "RDS PostgreSQL",
+      "Docker",
+      "Terraform",
+      "VPC",
+      "Secrets Manager",
+      "IAM",
+    ],
+    github: "https://github.com/CloudClimb/cloudclimb-projects/tree/main/project-01/aws",
+    githubLabel: "Project repo",
+    badge: "Ongoing",
+    panel: {
+      label: "private AWS application stack",
+      steps: [
+        "Dockerized Memos on EC2",
+        "six subnets across two AZs",
+        "private RDS PostgreSQL",
+        "Secrets Manager + IAM",
+      ],
+      tags: ["Terraform", "VPC routing", "security groups", "peer review"],
+    },
+  },
   {
     title: "AWS Cost Watchdog",
     tagline: "A FinOps watchdog that found a $21/month zombie subscription on day one",
@@ -356,7 +389,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               }`}
             >
               <GithubIcon className="h-3 w-3" />
-              {project.link ? "Source" : "View source"}
+              {project.githubLabel ?? (project.link ? "Source" : "View source")}
             </a>
           )}
         </div>
@@ -584,7 +617,7 @@ export default function Projects() {
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         <SectionHeading
           title="Selected work"
-          lead="five projects I shipped end to end: architecture, code, deployment, and the bill"
+          lead="cloud infrastructure, automation, and AI work from architecture through deployment"
         />
       </div>
 
