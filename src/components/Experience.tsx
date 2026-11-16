@@ -21,6 +21,7 @@ type Role = {
     name: string;
     title: string;
     dates: string;
+    logo: string;
     detail: string[];
   };
 };
@@ -41,6 +42,7 @@ const roles: Role[] = [
       name: "ISA GRUTMAN",
       title: "Cloud & IT Consultant",
       dates: "Sep 2026 – Present",
+      logo: "/badges/isa-grutman.png",
       detail: [
         "Leading a Microsoft 365 to Google Workspace migration across email, contacts, calendars, and tasks, including account setup, licenses, and aliases",
         "Troubleshooting migration errors, reviewing import logs, and managing incremental imports ahead of the email cutover",
@@ -190,7 +192,15 @@ function Row({
             {role.clientEngagement && (
               <div className="mx-5 mt-6 border-l-2 border-accent/30 pb-1 pl-5 sm:mx-6 sm:ml-[4.25rem]">
                 <p className="font-mono text-[12px] text-accent">client engagement</p>
-                <div className="mt-1 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <Image
+                  src={role.clientEngagement.logo}
+                  alt=""
+                  width={1200}
+                  height={99}
+                  sizes="224px"
+                  className="mt-3 h-auto w-56 max-w-full"
+                />
+                <div className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                   <h4 className="font-display text-[16px] font-semibold text-ink">
                     {role.clientEngagement.name} · {role.clientEngagement.title}
                   </h4>
