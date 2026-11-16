@@ -31,7 +31,7 @@ const roles: Role[] = [
     title: "Founder & Cloud/AI Engineer",
     meta: "Cloud & AI consultancy",
     dates: "Jan 2026 – Present",
-    mark: "U",
+    badge: "/badges/unkommon.png",
     detail: [
       "Founded Unkommon and lead its cloud and AI engineering, from product architecture through deployment",
       "Built the AI platform on AWS with Python, infrastructure as code, and automated tests in GitHub Actions",
